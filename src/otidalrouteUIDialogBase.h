@@ -52,12 +52,10 @@ private:
 
 protected:
 	
-	wxSplitterWindow* m_splitter1;
-	wxPanel* m_panel1;
-	wxListCtrl* m_lPositions;
+	
 	wxPanel* m_panel2;
-	wxButton* m_bHourlyCTS;
-	wxButton* m_bSingleCTS;
+	wxButton* m_bCalcDR;
+	wxButton* m_bCalcETA;
 	wxTextCtrl* m_tSpeed;
 	wxMenuBar* m_menubar3;
 	wxMenu* m_menu2;
@@ -73,16 +71,10 @@ protected:
 	// Virtual event handlers, overide them in your derived class
 	virtual void OnClose(wxCloseEvent& event) { event.Skip(); }
 	virtual void OnSize(wxSizeEvent& event) { event.Skip(); }
-	virtual void HourlyCTS(wxCommandEvent& event) { event.Skip(); }
-	virtual void SingleCTS(wxCommandEvent& event) { event.Skip(); }
-	virtual void OnNewPosition(wxCommandEvent& event) { event.Skip(); }
-	virtual void OnUpdateBoat(wxCommandEvent& event) { event.Skip(); }
-	virtual void OnDeletePosition(wxCommandEvent& event) { event.Skip(); }
-	virtual void OnDeleteAllPositions(wxCommandEvent& event) { event.Skip(); }
-
+	virtual void DRCalculate(wxCommandEvent& event) { event.Skip(); }
+	virtual void ETACalculate(wxCommandEvent& event) { event.Skip(); }
 	virtual void OnSummary(wxCommandEvent& event) { event.Skip(); }
-	virtual void OnNewRoute(wxCommandEvent& event) { event.Skip(); }
-	virtual void OnDeleteRoute(wxCommandEvent& event) { event.Skip(); }
+	virtual void OnShowTables(wxCommandEvent& event) { event.Skip(); }
 	virtual void OnDeleteAllRoutes(wxCommandEvent& event) { event.Skip(); }
 	virtual void OnInformation(wxCommandEvent& event) { event.Skip(); }
 	virtual void OnAbout(wxCommandEvent& event) { event.Skip(); }
@@ -93,13 +85,10 @@ public:
 	wxTextCtrl* m_textCtrl4;
 
 	wxTextCtrl* m_tRouteName;
+	wxCheckBox* m_cbGPX;
+	wxChoice* m_choiceDepartureTimes;
 
-	void otidalrouteOnContextMenu(wxMouseEvent &event)
-	{
-		this->PopupMenu(m_menu2, event.GetPosition());
-	}
-
-	otidalrouteUIDialogBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500, 364), long style = wxCAPTION | wxCLOSE_BOX | wxFRAME_FLOAT_ON_PARENT | wxSYSTEM_MENU | wxTAB_TRAVERSAL);
+	otidalrouteUIDialogBase(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(500, 364), long style = wxCAPTION | wxCLOSE_BOX | wxFRAME_FLOAT_ON_PARENT | wxSYSTEM_MENU | wxTAB_TRAVERSAL | wxRESIZE_BORDER);
 
 	~otidalrouteUIDialogBase();
 
@@ -166,77 +155,23 @@ private:
 
 protected:
 
-	wxComboBox* m_cStart;
-	wxStaticText* m_staticText28;
-	//wxStaticText* m_staticText29;
-	wxButton* m_bGribTime;
-	wxStaticText* m_staticText30;
-	wxTextCtrl* m_tRouteName;
-	//wxTextCtrl* m_tCTS;
-	wxButton* m_bRouteName;
-	wxComboBox* m_cEnd;
-	
 	wxButton* m_bDelete;
 	wxButton* m_bSelect;
 	wxButton* m_bGenerate;
 	wxButton* m_bClose;
 
 	// Virtual event handlers, overide them in your derived class
-	virtual void OnUpdateDate(wxDateEvent& event) { event.Skip(); }
-	virtual void OnGribTime(wxCommandEvent& event) { event.Skip(); }
-	virtual void OnUpdate(wxCommandEvent& event) { event.Skip(); }
-
-	virtual void OnCurrentTime(wxCommandEvent& event) { event.Skip(); }
 	void OnDelete(wxCommandEvent& event);
 	void OnInformation(wxCommandEvent& event);
-	void OnGenerate(wxCommandEvent& event) ; 
+	void OnGenerate(wxCommandEvent& event);
 	void OnClose(wxCommandEvent& event);
 
 public:
 	otidalroute_pi *pPlugIn;
-	wxDatePickerCtrl* m_dpStartDate;
 	wxListBox* m_lRoutes;
-	void AddSource(wxString name);
-	void RemoveSource(wxString name);
-	void ClearSources();
 
-
-	ConfigurationDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Tidal Route Configuration"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE);
+	ConfigurationDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Tidal Routes"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE);
 	~ConfigurationDialog();
-
-};
-
-///////////////////////////////////////////////////////////////////////////////
-/// Class NewPositionDialog
-///////////////////////////////////////////////////////////////////////////////
-class NewPositionDialog : public wxDialog
-{
-private:
-
-protected:
-	wxStaticText* m_staticText140;
-	wxStaticText* m_staticText142;
-	wxStaticText* m_staticText143;
-	wxStaticText* m_staticText144;
-	
-	wxStaticText* m_staticText145;
-	wxStaticText* m_staticText146;
-	wxStaticText* m_staticText147;
-	
-	wxStdDialogButtonSizer* m_sdbSizer4;
-	wxButton* m_sdbSizer4OK;
-	wxButton* m_sdbSizer4Cancel;
-
-public:
-	wxTextCtrl* m_tName;
-	wxTextCtrl* m_tLatitudeDegrees;
-	wxTextCtrl* m_tLatitudeMinutes;
-	wxTextCtrl* m_tLongitudeDegrees;
-	wxTextCtrl* m_tLongitudeMinutes;
-	wxChoice* m_cNS;
-	wxChoice* m_cEW;
-	NewPositionDialog(wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("New Tidal Route Position"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize(471, 170), long style = wxDEFAULT_DIALOG_STYLE);
-	~NewPositionDialog();
 
 };
 

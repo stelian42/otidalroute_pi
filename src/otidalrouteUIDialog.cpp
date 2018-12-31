@@ -52,8 +52,6 @@
 #include "AboutDialog.h"
 
 
-
-
 class GribRecordSet;
 class TidalRoute;
 class ConfigurationDialog;
@@ -61,6 +59,7 @@ class RouteProp;
 class AboutDialog;
 
 using namespace std;
+
 
 
 #define FAIL(X) do { error = X; goto failed; } while(0)
@@ -152,7 +151,7 @@ static void CMGWithCurrent(double &BG, double &VBG, double C, double VC, double 
 
 
 otidalrouteUIDialog::otidalrouteUIDialog(wxWindow *parent, otidalroute_pi *ppi)
-	: otidalrouteUIDialogBase(parent), m_ConfigurationDialog(this, wxID_ANY, _("Tidal Route Configuration"),
+	: otidalrouteUIDialogBase(parent), m_ConfigurationDialog(this, wxID_ANY, _("Tidal Routes"),
 	wxDefaultPosition, wxSize(-1, -1), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
 	pParent = parent;
@@ -181,11 +180,6 @@ otidalrouteUIDialog::otidalrouteUIDialog(wxWindow *parent, otidalroute_pi *ppi)
 
     }
 
-	m_lPositions->InsertColumn(POSITION_NAME, _("Name"),0,25);
-	m_lPositions->InsertColumn(POSITION_LAT, _("Lat"));
-	m_lPositions->InsertColumn(POSITION_LON, _("Lon"));
-
-	UpdateColumns(); 
 
 	m_default_configuration_path = ppi->StandardPath()
 		+ _T("otidalroute_config.xml");
@@ -206,6 +200,9 @@ otidalrouteUIDialog::otidalrouteUIDialog(wxWindow *parent, otidalroute_pi *ppi)
 
 	m_tSpeed->SetValue(_T("5"));
 	m_dtNow = wxDateTime::Now(); 
+
+	wxString initStartDate = m_dtNow.Format(_T("%Y-%m-%d  %H:%M"));
+	m_textCtrl1->SetValue(initStartDate);
 
 	b_showTidalArrow = false;
 
@@ -257,42 +254,13 @@ void otidalrouteUIDialog::OnClose( wxCloseEvent& event )
     pPlugIn->OnotidalrouteDialogClose();
 }
 
-
-void otidalrouteUIDialog::OnNewRoute(wxCommandEvent& event)
+void otidalrouteUIDialog::OnShowTables(wxCommandEvent& event)
 {
 	b_showTidalArrow = false;
 	GetParent()->Refresh();
 	m_ConfigurationDialog.Show();
 }
 
-void otidalrouteUIDialog::OnDeleteRoute(wxCommandEvent& event)
-{
-	if (m_TidalRoutes.empty()){
-		wxMessageBox(_("No routes have been calculated"));
-		return;
-	}
-	else {
-		m_ConfigurationDialog.Show();
-	}
-
-	GetParent()->Refresh();
-}
-/*
-void otidalrouteUIDialog::OnDelete()
-{
-	wxString rn;
-	
-	rn = m_tRouteName->GetValue();
-
-	for (std::list<TidalRoute>::iterator it = pPlugIn->m_potidalrouteDialog->m_TidalRoutes.begin();
-		it != pPlugIn->m_potidalrouteDialog->m_TidalRoutes.end(); it++) {
-		if ((*it).Name == rn) {
-			pPlugIn->m_potidalrouteDialog->m_TidalRoutes.erase(it);
-						
-		}
-	}
-}
-*/
 void otidalrouteUIDialog::OnDeleteAllRoutes(wxCommandEvent& event)
 {
 	if (m_TidalRoutes.empty()){
@@ -422,15 +390,9 @@ void otidalrouteUIDialog::OnSummary(wxCommandEvent& event)
 }
 
 
-void otidalrouteUIDialog::ShowTable(){
-	//
-	// this shown from right-click context menu
-	//
+void otidalrouteUIDialog::OnShowRouteTable(){
+	
 	wxString name;
-	if (m_tRouteName->GetValue() == _("")){
-		wxMessageBox(_("Please select or generate a route"));
-		return;
-	}
 
 	for (std::list<TidalRoute>::iterator it = m_TidalRoutes.begin();
 		it != m_TidalRoutes.end(); it++) {
@@ -445,7 +407,7 @@ void otidalrouteUIDialog::ShowTable(){
 		}
 	}
 
-	RouteProp* routetable = new RouteProp(this, 7000, _T("Tidal Route Table"), wxPoint(200, 200), wxSize(650, 800), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+	RouteProp* routetable = new RouteProp(this, 7000, _T("Tidal Routes"), wxPoint(200, 200), wxSize(650, 800), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
 
 	int in = 0;
 
@@ -453,7 +415,9 @@ void otidalrouteUIDialog::ShowTable(){
 	wxString lon;
 	wxString etd;
 	wxString cts;
+	wxString smg;
 	wxString dis;
+	wxString brg;
 	wxString set;
 	wxString rat;
 
@@ -470,15 +434,8 @@ void otidalrouteUIDialog::ShowTable(){
 
 			routetable->m_TotalDistCtl->SetValue((*it).Distance);
 			routetable->m_TimeEnrouteCtl->SetValue((*it).Time);
-			routetable->m_StartTimeCtl->SetValue((*it).StartTime);
-			wxString t;
-			if ((*it).Type == _T("h")){
-				t = _T("Adjust Each Hour");
-			}
-			else if ((*it).Type == _T("s")){
-				t = _T("Maintain Single Course");
-			}
-			routetable->m_TypeRouteCtl->SetValue(t);
+			routetable->m_StartTimeCtl->SetValue((*it).StartTime);			
+			routetable->m_TypeRouteCtl->SetValue((*it).Type);
 
 			for (std::list<Position>::iterator itp = (*it).m_positionslist.begin();
 				itp != (*it).m_positionslist.end(); itp++) {
@@ -488,7 +445,9 @@ void otidalrouteUIDialog::ShowTable(){
 				lon = (*itp).lon;
 				etd = (*itp).time;
 				cts = (*itp).CTS;
+				smg = (*itp).SMG;
 				dis = (*itp).distTo;
+				brg = (*itp).brgTo;
 				set = (*itp).set;
 				rat = (*itp).rate;
 
@@ -528,7 +487,9 @@ void otidalrouteUIDialog::GetTable(wxString myRoute){
 	wxString lon;
 	wxString etd;
 	wxString cts;
+	wxString smg;
 	wxString dis;
+	wxString brg;
 	wxString set;
 	wxString rat;
 
@@ -546,14 +507,7 @@ void otidalrouteUIDialog::GetTable(wxString myRoute){
 			routetable->m_TotalDistCtl->SetValue((*it).Distance);
 			routetable->m_TimeEnrouteCtl->SetValue((*it).Time);
 			routetable->m_StartTimeCtl->SetValue((*it).StartTime);
-			wxString t;
-			if ((*it).Type == _T("h")){
-				t = _T("Adjust Each Hour");
-			}
-			else if ((*it).Type == _T("s")){
-				t = _T("Maintain Single Course");
-			}
-			routetable->m_TypeRouteCtl->SetValue(t);
+			routetable->m_TypeRouteCtl->SetValue((*it).Type);
 
 			for (std::list<Position>::iterator itp = (*it).m_positionslist.begin();
 				itp != (*it).m_positionslist.end(); itp++) {
@@ -563,16 +517,20 @@ void otidalrouteUIDialog::GetTable(wxString myRoute){
 				lon = (*itp).lon;
 				etd = (*itp).time;
 				cts = (*itp).CTS;
+				smg = (*itp).SMG;
 				dis = (*itp).distTo;
+				brg = (*itp).brgTo;
 				set = (*itp).set;
 				rat = (*itp).rate;
 
 				routetable->m_wpList->InsertItem(in, _T(""), -1);
 				routetable->m_wpList->SetItem(in, 1, name);
-				routetable->m_wpList->SetItem(in, 2, dis);
+				routetable->m_wpList->SetItem(in, 2, dis);	
+				routetable->m_wpList->SetItem(in, 3, brg);
 				routetable->m_wpList->SetItem(in, 4, lat);
 				routetable->m_wpList->SetItem(in, 5, lon);
 				routetable->m_wpList->SetItem(in, 6, etd);
+				routetable->m_wpList->SetItem(in, 7, smg);
 				routetable->m_wpList->SetItem(in, 8, cts);
 				routetable->m_wpList->SetItem(in, 9, set);
 				routetable->m_wpList->SetItem(in, 10, rat);
@@ -586,126 +544,64 @@ void otidalrouteUIDialog::GetTable(wxString myRoute){
 
 }
 
-void otidalrouteUIDialog::AddPosition(double lat, double lon)
-{
-	wxTextEntryDialog pd(this, _("Enter Name"), _("New Position"));
-	if (pd.ShowModal() == wxID_OK)
-		AddPosition(lat, lon, pd.GetValue());
-}
 
-void otidalrouteUIDialog::AddPosition(double lat, double lon, wxString name)
-{
-	for (std::vector<RouteMapPosition>::iterator it = Positions.begin();
-		it != Positions.end(); it++) {
-		if ((*it).Name == name) {
-			wxMessageDialog mdlg(this, _("This name already exists, replace?\n"),
-				_("Tidal Route"), wxYES | wxNO | wxICON_WARNING);
-			if (mdlg.ShowModal() == wxID_YES) {
-				m_ConfigurationDialog.RemoveSource(name);
+void otidalrouteUIDialog::AddChartRoute(wxString myRoute) {
 
-				long index = m_lPositions->FindItem(0, name);
-				(*it).lat = lat;
-				(*it).lon = lon;
-				m_lPositions->SetItem(index, POSITION_LAT, wxString::Format(_T("%.5f"), lat));
-				m_lPositions->SetItem(index, POSITION_LON, wxString::Format(_T("%.5f"), lon));
+	//wxMessageBox(_("Route name exists"));
 
-				m_ConfigurationDialog.AddSource(name);
-				return;
-			}			
+	PlugIn_Route* newRoute = new PlugIn_Route; // for adding a route on OpenCPN chart display
+	PlugIn_Waypoint*  wayPoint = new PlugIn_Waypoint;
+	
+	double lati, loni, value, value1;
+
+	for (std::list<TidalRoute>::iterator it = m_TidalRoutes.begin();
+		it != m_TidalRoutes.end(); it++) {
+
+		if ((*it).Name == myRoute) {
+			newRoute->m_GUID = (*it).m_GUID;
+			newRoute->m_NameString = (*it).Name;
+			newRoute->m_StartString = (*it).Start;
+			newRoute->m_EndString = (*it).End;
+
+			
+
+			for (std::list<Position>::iterator itp = (*it).m_positionslist.begin();
+				itp != (*it).m_positionslist.end(); itp++) {
+
+				PlugIn_Waypoint*  wayPoint = new PlugIn_Waypoint;
+				
+				wayPoint->m_MarkName = (*itp).name;
+				if (!(*itp).lat.ToDouble(&value)) { /* error! */ }
+				lati = value;
+				if (!(*itp).lon.ToDouble(&value1)) { /* error! */ }
+				loni = value1;
+				wayPoint->m_lat = lati;
+				wayPoint->m_lon = loni;
+				wayPoint->m_MarkDescription = (*itp).time;
+				wayPoint->m_GUID = (*itp).guid;
+				wayPoint->m_IsVisible = (*itp).show_name;				
+				wayPoint->m_IconName = (*itp).icon_name;				
+
+				newRoute->pWaypointList->Append(wayPoint);
+			}
+ 
+			AddPlugInRoute(newRoute, true);
+
+			if ((*it).Type == wxT("ETA")) {
+				wxMessageBox(_("ETA Route has been charted!"));
+			}
+			else if ((*it).Type == wxT("DR")) {
+				wxMessageBox(_("DR Route has been charted!"));
+			}
+			GetParent()->Refresh();
+			break;
+
 		}
+
 	}
 
-	Positions.push_back(RouteMapPosition(name, lat, lon));
-
-	wxListItem item;
-	long index = m_lPositions->InsertItem(m_lPositions->GetItemCount(), item);
-	m_lPositions->SetItem(index, POSITION_NAME, name);
-	m_lPositions->SetColumnWidth(POSITION_NAME, wxLIST_AUTOSIZE);
-
-	m_lPositions->SetItem(index, POSITION_LAT, wxString::Format(_T("%.5f"), lat));
-	m_lPositions->SetItem(index, POSITION_LON, wxString::Format(_T("%.5f"), lon));
-
-	m_ConfigurationDialog.AddSource(name);
-	
 }
 
-#if 0 /* wx widgets only allows users
-to edit the first column, so this doesn't work ????? */
-void otidalrouteUIDialog::OnListLabelEdit(wxListEvent& event)
-{
-	long index = event.GetIndex();
-	int col = event.GetColumn();
-
-	long i = 0;
-	for (std::list<RouteMapPosition>::iterator it = RouteMap::Positions.begin();
-		it != RouteMap::Positions.end(); it++, i++)
-		if (i == index) {
-			if (col == POSITION_NAME) {
-				(*it).Name = event.GetText();
-			}
-			else {
-				double value;
-				event.GetText().ToDouble(&value);
-				if (col == POSITION_LAT)
-					(*it).lat = value;
-				else if (col == POSITION_LON)
-					(*it).lon = value;
-
-				m_lPositions->SetItem(index, col, wxString::Format(_T("%.5f"), value));
-				UpdateConfigurations();
-			}
-		}
-}
-#endif
-
-
-void otidalrouteUIDialog::OnNewPosition(wxCommandEvent& event)
-{
-	NewPositionDialog dlg(this);
-	if (dlg.ShowModal() == wxID_OK) {
-		double lat = 0, lon = 0, lat_minutes = 0, lon_minutes = 0;
-
-		wxString latitude_degrees = dlg.m_tLatitudeDegrees->GetValue();
-		wxString latitude_minutes = dlg.m_tLatitudeMinutes->GetValue();
-		latitude_degrees.ToDouble(&lat);
-		latitude_minutes.ToDouble(&lat_minutes);
-		lat += lat_minutes / 60;
-		if (dlg.m_cNS->GetSelection() == 1){
-			lat = -lat;
-		}
-
-		wxString longitude_degrees = dlg.m_tLongitudeDegrees->GetValue();
-		wxString longitude_minutes = dlg.m_tLongitudeMinutes->GetValue();
-		longitude_degrees.ToDouble(&lon);
-		longitude_minutes.ToDouble(&lon_minutes);
-		lon += lon_minutes / 60;
-
-		if (dlg.m_cEW->GetSelection() == 1){
-			lon = -lon;
-		}
-
-		AddPosition(lat, lon, dlg.m_tName->GetValue());
-	}
-}
-
-void otidalrouteUIDialog::AddConfiguration(RouteMapConfiguration configuration)
-{/*
-	TidalRoute tidalroute; 
-	
-	tidalroute.Start = configuration.Start;
-	tidalroute.End = configuration.End;
-	wxMessageBox(tidalroute.Start);
-	int c = m_lTidalRoutes->GetItemCount();
-
-	wxListItem item;
-	long index = m_lTidalRoutes->InsertItem(c, item);
-	m_lTidalRoutes->SetItem(index, START, tidalroute.Start);
-	m_lTidalRoutes->SetColumnWidth(START, wxLIST_AUTOSIZE);
-
-	//m_mDeleteAll->Enable();
-	//m_mComputeAll->Enable();
-	//m_mExportAll->Enable();*/
-}
 
 void otidalrouteUIDialog::AddTidalRoute(TidalRoute tr)
 {
@@ -714,29 +610,8 @@ void otidalrouteUIDialog::AddTidalRoute(TidalRoute tr)
 	m_ConfigurationDialog.m_lRoutes->Append(it);
 
 }
-void otidalrouteUIDialog::Export()
-{
-
-	PlugIn_Track* newTrack = new PlugIn_Track;
-	newTrack->m_NameString = _("TidalRoute");
-
-	for (std::vector<RouteMapPosition>::iterator it = Positions.begin(); it != Positions.end(); it++) {
-		PlugIn_Waypoint*  newPoint = new PlugIn_Waypoint
-			((*it).lat, (*it).lon, _T("circle"), _("Tidal Route Point"));
-
-		newPoint->m_CreateTime = wxDateTime::Now();
-		newTrack->pWaypointList->Append(newPoint);
-	}
-
-	AddPlugInTrack(newTrack);
-
-	GetParent()->Refresh();
-}
-
 
 void otidalrouteUIDialog::RequestGrib(wxDateTime time)
-
-
 {	
 	wxJSONValue v;
 	time = time.FromUTC();
@@ -759,894 +634,1719 @@ void otidalrouteUIDialog::RequestGrib(wxDateTime time)
 	Unlock();
 }
 
-void otidalrouteUIDialog::SingleCTS(wxCommandEvent& event)
+void otidalrouteUIDialog::DRCalculate(wxCommandEvent& event)
 {
-	//
-	// Calculates single course to maintain to reach final ep before destination
-	//
+	//wxMessageBox(wxT("here"));
+	bool fGPX = m_cbGPX->GetValue();
+	if (fGPX) {
+		CalcDR(event, true, 1);
+	}
+	else {
+		CalcDR(event, false, 1);
+	}
+}
 
-	TidalRoute tr;
-	Position ptr ;
+void otidalrouteUIDialog::ETACalculate(wxCommandEvent& event)
+{
+	//wxMessageBox(wxT("here"));
+	bool fGPX = m_cbGPX->GetValue();
+	if (fGPX) {
+		CalcETA(event, true, 1);
+	}
+	else {
+		CalcETA(event, false, 1);
+	}
+}
 
-	if (m_TidalRoutes.empty()){
-		tr.Name = m_tRouteName->GetValue();
-		tr.Type = _("s");
+void otidalrouteUIDialog::CalcDR(wxCommandEvent& event, bool write_file, int Pattern)
+{
+	
+	if (m_tRouteName->GetValue() == wxEmptyString) {
+		wxMessageBox(_("Please enter a name for the route!"));
+		return;
+	}
+
+	
+	m_choiceDepartureTimes->SetStringSelection(_T("1")); // we only need one DR route
+
+	TidalRoute tr; // tidal route for saving in the config file
+	PlugIn_Route* newRoute = new PlugIn_Route; // for immediate use as a route on OpenCPN chart display
+
+	Position ptr;
+
+	wxString m_RouteName;
+
+	gotMyGPXFile = false; // only load the raw gpx file once for a DR route
+
+	if (m_TidalRoutes.empty()) {
+
+		m_RouteName = m_tRouteName->GetValue() + wxT(".") +wxT("DR");
+		tr.Name = m_RouteName;
+		tr.Type = _("DR");
 	}
 	else {
 		for (std::list<TidalRoute>::iterator it = m_TidalRoutes.begin();
 			it != m_TidalRoutes.end(); it++) {
-			if ((*it).Name == m_tRouteName->GetValue()){
+			m_RouteName = m_tRouteName->GetValue() + wxT(".") + wxT("DR");
+			if ((*it).Name == m_RouteName) {
 				wxMessageBox(_("Route name already exists, please edit the name"));
 				return;
 			}
 			else {
 				tr.m_positionslist.clear();
-				tr.Name = m_tRouteName->GetValue();
-				tr.Type = _("s");
+				tr.Name = m_RouteName;
+				tr.Type = _("DR");
 			}
 		}
 	}
 
-	PlugIn_Route* trk = new PlugIn_Route;
-	PlugIn_Route* newRoute = new PlugIn_Route;
 	newRoute->m_NameString = tr.Name;
-	
-	m_arrowList.clear();
-	Arrow m_arrow;
+	newRoute->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
 
-	double speed;
+	tr.Start = wxT("Start");
+	tr.End = wxT("End");
+	tr.m_GUID = newRoute->m_GUID;
 
-	wxString s = m_tSpeed->GetValue();
-	s.ToDouble(&speed);
 
-	double VBG, BC;
-	double toDist, toBrng;
-	double latR, lonR;
-	double lati, loni, latEP, lonEP;
-	double latN[2], lonN[2];
-	double cts; 
+	if (OpenXML(gotMyGPXFile)) {
 
-	for (std::vector<RouteMapPosition>::iterator it = Positions.begin(); it != Positions.end(); it++){
-		
-		if (m_textCtrl3->GetValue() == _T("") || m_textCtrl4->GetValue() == _T("")){
-			wxMessageBox(_("No route generated"));
-			return;
-		}
-		
-		if ((*it).Name == m_textCtrl3->GetValue()){
-             
-			latN[0] = (*it).lat;
-			lonN[0] = (*it).lon;
-			tr.Start = (*it).Name;			
-		}
+		bool error_occured = false;
 
-		if ((*it).Name == m_textCtrl4->GetValue()){
+		double lat1, lon1;
 
-			latN[1] = (*it).lat;
-			lonN[1] = (*it).lon;
-			tr.End = (*it).Name;		
+
+
+		int num_hours = 1;
+		int n = 0;
+
+		lat1 = 0.0;
+		lon1 = 0.0;
+
+		wxString s;
+		if (write_file) {
+			wxFileDialog dlg(this, _("Export DR Positions in GPX file as"), wxEmptyString, wxEmptyString, _T("GPX files (*.gpx)|*.gpx|All files (*.*)|*.*"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+			if (dlg.ShowModal() == wxID_CANCEL) {
+				error_occured = true;     // the user changed idea...
+				return;
+			}
+
+			s = dlg.GetPath();
+			if (dlg.GetPath() == wxEmptyString) { error_occured = true; if (dbg) printf("Empty Path\n"); }
 		}
 
-	}	
-	//
-	// Get the single course to steer to make the destination
-	//
-	GetCTS_DMG(cts); // this generates the currents list - m_cList
-	//
-	if (m_cList.size() == 0){
-		wxMessageBox(_T("No route created"));
-		return;
-	}
-	//
-	//
-	// 
-	// cts is the single course needed up until the final ep
-	//
-	double tdist = 0; // For accumulating the total distance by adding the distance of each leg
-	double myDist, myBrng;
+		//Validate input ranges
+		if (!error_occured) {
+			if (std::abs(lat1) > 90) { error_occured = true; }
+			if (std::abs(lon1) > 180) { error_occured = true; }
+			if (error_occured) wxMessageBox(_("error in input range validation"));
+		}
 
-	DistanceBearingMercator(latN[1], lonN[1], latN[0], lonN[0], &myDist, &myBrng);
+		//Start writing GPX
+		TiXmlDocument doc;
+		TiXmlDeclaration* decl = new TiXmlDeclaration("1.0", "utf-8", "");
+		doc.LinkEndChild(decl);
+		TiXmlElement * root = new TiXmlElement("gpx");
+		TiXmlElement * Route = new TiXmlElement("rte");
+		TiXmlElement * RouteName = new TiXmlElement("name");
+		TiXmlText * text4 = new TiXmlText(this->m_tRouteName->GetValue().ToUTF8());
 
-	wxDateTime dt;
-	wxString sdt;
-	wxString ddt;
-	wxDateTime dtStart, dtEnd;
-	wxTimeSpan trTime;
-	wxTimeSpan HourSpan, MinuteSpan;
-	double trTimeHours;
+		if (write_file) {
+			doc.LinkEndChild(root);
+			root->SetAttribute("version", "0.1");
+			root->SetAttribute("creator", "otidalroute_pi by Rasbats");
+			root->SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+			root->SetAttribute("xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+			root->SetAttribute("xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
+			root->SetAttribute("xmlns:opencpn", "http://www.opencpn.org");
+			Route->LinkEndChild(RouteName);
+			RouteName->LinkEndChild(text4);
 
-	HourSpan = wxTimeSpan::Hours(1);
-	MinuteSpan = wxTimeSpan::Minutes(30);
+			
+		}
 
-	sdt = m_textCtrl1->GetValue();
-	dt.ParseDateTime(sdt);
-	
-	sdt = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
-	tr.StartTime = sdt;
-	dtStart = dt;
-
-	PlugIn_Waypoint*  newPoint = new PlugIn_Waypoint
-		(latN[0], lonN[0], _T("circle"),tr.Start);
-	newPoint->m_MarkDescription = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
-	newPoint->m_GUID = wxString::Format(_T("%i"), (int) GetRandomNumber(1, 4000000));	
-	newRoute->pWaypointList->Append(newPoint);
-
-	ptr.name = tr.Start; // _T("Start");
-	ptr.time = sdt;
-	ptr.lat = wxString::Format(_T("%8.4f"), latN[0]);
-	ptr.lon = wxString::Format(_T("%8.4f"), lonN[0]);
-	ptr.guid = newPoint->m_GUID;
-	ptr.CTS = wxString::Format(_T("%03.0f"), cts);
-	ptr.distTo = _T("----");
-	ptr.set = _T("----");
-	ptr.rate = _T("----");
-	tr.m_positionslist.push_back(ptr);
-
-	//
-	// initialise start positions
-	//
-	latEP = latN[0];
-	lonEP = lonN[0];	
-
-	latR = latN[0];
-	lonR = lonN[0];
-
-	int sz = m_cList.size();
-	int n = 1;
-	int epCounter = 0;
-	wxString epStringNumber;
-
-	for (std::list<Arrow>::iterator it = m_cList.begin(); it != m_cList.end(); it++){
-
-		destLoxodrome(latR, lonR, (*it).m_dir, (*it).m_force, &lati, &loni);
-		destLoxodrome(lati, loni, cts, speed, &latEP, &lonEP);
-
-		DistanceBearingMercator(latR, lonR, latEP, lonEP, &toDist, &toBrng);
-
-		m_arrow.m_dt = dt;
-		m_arrow.m_lat = (*it).m_lat;
-		m_arrow.m_lon = (*it).m_lon;
-		m_arrow.m_dir = (*it).m_dir;
-		m_arrow.m_force = (*it).m_force;
-		m_arrowList.push_back(m_arrow);
-		
-
-		if ((it != m_cList.end()) && (next(it) == m_cList.end()))
+		switch (Pattern) {
+		case 1:
 		{
-			//
-			// point at the last element of the list
-			//
-		   
-			DistanceBearingMercator(latN[1], lonN[1], latR, lonR, &toDist, &toBrng); //
+			if (dbg) cout << "DR Calculation\n";
+			double speed = 0;
+			int    interval = 1;
 
+			if (!this->m_tSpeed->GetValue().ToDouble(&speed)) { speed = 5.0; } // 5 kts default speed
+
+			speed = speed * interval;			
+
+			double lati, loni;
+			double latN[200], lonN[200];
+			double latF, lonF;
+
+			Position my_point;
+
+			double value, value1;
+
+			for (std::vector<Position>::iterator it = my_positions.begin(); it != my_positions.end(); it++) {
+
+				if (!(*it).lat.ToDouble(&value)) { /* error! */ }
+				lati = value;
+				if (!(*it).lon.ToDouble(&value1)) { /* error! */ }
+				loni = value1;
+
+				waypointName[n] = (*it).wpt_num;
+				//wxMessageBox(waypointName[n]);
+
+				latN[n] = lati;
+				lonN[n] = loni;
+
+				n++;
+			}
+
+			my_positions.clear();
+			n--;
+
+			int routepoints = n + 1;
+
+			double myDist, myBrng, myDistForBrng;
+			myBrng = 0;
+			myDist = 0;
+
+			double myLast, route_dist;
+
+			route_dist = 0;
+			myLast = 0;
+			myDistForBrng = 0;
+			double total_dist = 0;
+			int i, c;
+			bool skip = false;
+			bool inloop = false;
+			bool setF = false;
+
+			latF = latN[0];
+			lonF = lonN[0];
+
+			lati = latN[0];
+			loni = lonN[0];
+
+			double VBG;
+			VBG = 0;
+			int tc_index = 0;
+			c = 0;
+			double myD, myB;
+			double myDI;
+
+			boolean skipleg = false;
+			double lastVBG = 0;
+			double lastVBG1 = 0;
+			double VBG2 = 0;
+			double rdHours = 0;
+			double rdHours1 = 0;
+			double rdHours2 = 0;
+			double rdHours3 = 0;
+			double fttg = 0;
+			double ttg = 0;
+			double ttg1 = 0;
+			double ttg2 = 0;
+			double ttg3 = 0;
+			double rdMiles = 0;
+			double bitDist1 = 0;
+			double bitDist2 = 0;
+			double bitDist3 = 0;
+			double lastBrg = 0;
+			int skipCount = 0;
+
+			bool skip0 = false;
+			bool skip1 = false;
+			int count3MinuteSteps = 0;
+			double spd, dir;
+			spd = 0;
+			dir = 0;
+
+			double iDist = 0;
+			double tdist = 0; // For accumulating the total distance by adding the distance for each leg
+			double ptrDist = 0;
+			double skippedDistance = 0;
+
+			double iTime = 0;
+			double ptrTime = 0;
+			long longMinutes = 0;
+
+
+			int epNumber = 0;
+			wxString epName;
+
+			wxDateTime dt, iPointDT, gdt;
+
+			wxString ddt, sdt;
+			wxTimeSpan HourSpan, MinuteSpan, threeMinuteSpan;
+			HourSpan = wxTimeSpan::Hours(1);
+			MinuteSpan = wxTimeSpan::Minutes(30);
+			threeMinuteSpan = wxTimeSpan::Minutes(3);
+			wxTimeSpan pointMinuteSpan = wxTimeSpan::Minutes(3);
+
+			bool madeETA = false;
+
+			wxDateTime dtStart, dtEnd, interimDateTimeETA;
+			wxTimeSpan trTime;
+			double trTimeHours;
+
+			sdt = m_textCtrl1->GetValue(); // date/time route starts
+			dt.ParseDateTime(sdt);
+
+			sdt = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
+			tr.StartTime = sdt;
+
+			dtStart = dt;
+
+			//
+			// Start of new logic
+			//
+
+			VBG = speed;
+
+			for (i = 0; i < n; i++) {	// n is number of routepoints					
+
+				lastBrg = myBrng;
+				bitDist2 = myDist;
+				lastVBG1 = VBG;
+				DistanceBearingMercator(latN[i + 1], lonN[i + 1], latN[i], lonN[i], &myDist, &myBrng);
+
+				//
+				// set up the waypoint
+				//
+				//
+
+				PlugIn_Waypoint*  newPoint = new PlugIn_Waypoint
+				(latN[i], lonN[i], wxT("Circle"), waypointName[i]);
+				newPoint->m_IconName = wxT("Circle");
+				newPoint->m_MarkDescription = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
+				newPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
+				newRoute->pWaypointList->Append(newPoint);
+
+
+				//
+				// set up a tidal route to save in the config file
+				//
+
+				if (i == 0) {
+
+					interimDateTimeETA = dt;
+
+					ptr.name = waypointName[i];
+					ptr.time = sdt;
+					ptr.lat = wxString::Format(_T("%8.4f"), latN[0]);
+					ptr.lon = wxString::Format(_T("%8.4f"), lonN[0]);
+					ptr.guid = newPoint->m_GUID;
+					ptr.CTS = wxString::Format(_T("%03.0f"), myBrng);
+					ptr.SMG = wxString::Format(_T("%5.1f"), VBG);
+					ptr.distTo = _T("----");
+					ptr.brgTo = _T("----");
+					ptr.set = wxString::Format(_T("%03.0f"), dir);;
+					ptr.rate = wxString::Format(_T("%5.1f"), spd);;
+					ptr.icon_name = wxT("Circle");
+					ptr.show_name = true;
+					tr.m_positionslist.push_back(ptr);
+					tr.Start = wxString::Format(wxT("%i"), i);
+				}
+				else {
+
+					ptr.name = wxString::Format(wxT("%i"), i);
+					if (i == 1 && skipleg) {
+
+						longMinutes = (long)(iTime);
+						pointMinuteSpan = wxTimeSpan::Minutes(longMinutes);
+						iPointDT = dt + pointMinuteSpan;
+						ptr.time = iPointDT.Format(_T(" %a %d-%b-%Y  %H:%M"));
+					}
+					else {
+						if (!madeETA) {
+
+							longMinutes = (long)(ptrTime);
+							pointMinuteSpan = wxTimeSpan::Minutes(longMinutes);
+							iPointDT = interimDateTimeETA + pointMinuteSpan;
+							ptr.time = iPointDT.Format(_T(" %a %d-%b-%Y  %H:%M"));
+
+						}
+						else {  // we made an ETA before we got here
+
+							longMinutes = (long)(ptrTime);
+							pointMinuteSpan = wxTimeSpan::Minutes(longMinutes);
+							iPointDT = dt + pointMinuteSpan;
+							ptr.time = iPointDT.Format(_T(" %a %d-%b-%Y  %H:%M"));
+
+							interimDateTimeETA = iPointDT;
+
+						}
+
+						//wxMessageBox(wxString::Format(wxT("%i"), longMinutes), wxString::Format(wxT("%i"), i));
+
+					}
+
+
+					ptr.name = waypointName[i];
+					ptr.lat = wxString::Format(_T("%8.4f"), latN[i]);
+					ptr.lon = wxString::Format(_T("%8.4f"), lonN[i]);
+					ptr.guid = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
+					ptr.CTS = wxString::Format(_T("%03.0f"), myBrng);
+					ptr.SMG = wxString::Format(_T("%5.1f"), VBG);
+					ptr.distTo = wxString::Format(_T("%5.1f"), ptrDist);
+					ptr.brgTo = wxString::Format(_T("%03.0f"), myBrng);
+					ptr.set = wxString::Format(_T("%03.0f"), dir);
+					ptr.rate = wxString::Format(_T("%5.1f"), spd);
+					ptr.icon_name = wxT("Circle");
+					ptr.show_name = true;
+					tr.m_positionslist.push_back(ptr);
+
+					iDist = 0;
+					ptrDist = 0;
+					iTime = 0;
+					ptrTime = 0;
+
+					madeETA = false;
+
+				}
+
+				//
+				// save the GPX file routepoint
+				//
+
+				my_point.lat = wxString::Format(wxT("%f"), latN[i]);
+				my_point.lon = wxString::Format(wxT("%f"), lonN[i]);
+				my_point.routepoint = 1;
+				my_point.wpt_num = waypointName[i];
+				my_point.name = waypointName[i];
+				my_points.push_back(my_point);
+
+				latF = latN[i];
+				lonF = lonN[i];
+
+				//
+				// we are allowing for two legs to be skipped without the calculation stopping
+				// (this is two consecutive legs of 3 minutes duration)
+				//
+
+				if (myDist < VBG / 20 && i == 0) {  // test whether first leg needs to be skipped
+					fttg = myDist / VBG;
+					//wxMessageBox(wxString::Format(wxT("%f"), fttg), wxString::Format(wxT("%i"), i));
+					//longMinutes = (long)(fttg * 60);
+					iTime = fttg * 60;
+					//pointMinuteSpan = wxTimeSpan::Minutes(longMinutes);
+					skipleg = true;
+					skippedDistance = myDist;
+				}
+
+				if (skipleg) {  // previous leg was skipped
+					//
+					// sailing a leg after the skipped leg
+					//
+					if (i == 0) {
+						//
+						//
+						iDist = skippedDistance;
+						// 
+						//
+					}
+
+					else {
+
+						if (i == 1) {
+							rdHours1 = bitDist2 / lastVBG1;
+							ttg = 0.05 - (rdHours1);
+							rdMiles = ttg * VBG;
+
+							fttg = (rdHours1)+myDist / VBG;
+
+							if (fttg < 0.05) {
+
+								wxMessageBox(_("Unable to calculate ETA over two legs at this speed. \n\n Aborting"), wxT("Problem"));
+								return;
+							}
+							//pointMinuteSpan = wxTimeSpan::Minutes(fttg*60);
+
+							destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+							iDist = rdMiles;  // skipped first leg so no need for skippedDistance this time
+							iTime = (iDist / VBG) * 60;
+							skippedDistance = 0;
+							skipleg = false;
+
+						}
+						else {
+
+							rdHours1 = bitDist1 / lastVBG;
+							rdHours2 = bitDist2 / lastVBG1;
+							ttg = 0.05 - (rdHours1 + rdHours2);
+							rdMiles = ttg * VBG;
+
+							fttg = rdHours1 + rdHours2 + (myDist / VBG);
+							if (fttg < 0.05) {
+
+								wxMessageBox(_("Unable to calculate ETA over two legs at this speed. \n\n Aborting"), wxT("Problem"));
+								return;
+							}
+
+							destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+							iDist = skippedDistance + rdMiles;
+							iTime = (iDist / VBG) * 60;
+							skippedDistance = 0;
+							skipleg = false;
+
+						}
+
+					}
+
+				}
+				else {
+					//
+					// Not sailing a skipped leg
+					//
+
+					if (i == 1) {
+						if (skipleg) {
+							rdHours1 = bitDist2 / lastVBG1;
+							ttg = 0.05 - rdHours1;
+							rdMiles = ttg * VBG;
+
+							fttg = rdHours1 + (myDist / VBG);
+							destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+
+							if (fttg < 0.05) {
+
+								skipleg = true; // two skips and you are out ... first and second legs
+								wxMessageBox(_("Unable to calculate ETA over two legs at this speed. \n\n Aborting"), wxT("Problem"));
+								return;
+
+							}
+							else {
+								pointMinuteSpan = wxTimeSpan::Minutes(fttg * 60);
+								iDist = skippedDistance + rdMiles;
+								iTime = (iDist / VBG) * 60;
+								skippedDistance = 0;
+								skipleg = false;
+							}
+
+						}
+						else {
+							rdHours1 = bitDist1 / lastVBG;
+							ttg = 0.05 - rdHours1;
+							rdMiles = ttg * VBG;
+
+							fttg = rdHours1 + (myDist / VBG);
+							destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+
+
+							if (fttg < 0.05) {
+								skippedDistance = rdMiles;
+								//iTime = (skippedDistance / VBG) * 60;
+								//iDist = skippedDistance;
+								skipleg = true;
+
+							}
+							else {
+								iDist = skippedDistance + rdMiles;
+								iTime = (iDist / VBG) * 60;
+								skippedDistance = 0;
+								skipleg = false;
+							}
+
+						}
+
+					}
+					else {
+						//
+						// i !=1
+						//
+						if (i == 0) {
+
+							rdMiles = VBG / 20;
+
+							fttg = myDist / VBG;
+							destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+							iDist = rdMiles;
+							iTime = (iDist / VBG) * 60;
+						}
+						else {
+							rdHours1 = bitDist1 / lastVBG;
+							ttg = 0.05 - rdHours1;
+							rdMiles = ttg * VBG;
+
+							fttg = rdHours1 + (myDist / VBG);
+							destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+							iDist = rdMiles;
+							iTime = (iDist / VBG) * 60;
+
+							if (fttg < 0.05) {
+								skippedDistance = rdMiles;
+								skipleg = true;
+
+							}
+							else {
+								iDist = skippedDistance + rdMiles;
+								iTime = (iDist / VBG) * 60;
+
+								skippedDistance = 0;
+								skipleg = false;
+							}
+
+						}
+					}
+
+				}
+
+				tdist += iDist;
+				ptrDist = iDist;
+				ptrTime = iTime;
+
+				//wxMessageBox(wxString::Format(wxT("%f"), skippedDistance), wxString::Format(wxT("%i"), i));
+
+				while (fttg > 0.05 && skipleg == false) {
+
+					count3MinuteSteps++;
+
+					latF = lati;
+					lonF = loni;
+
+					DistanceBearingMercator(latN[i + 1], lonN[i + 1], lati, loni, &myD, &myB);
+
+					myDist = myD;
+
+					bitDist1 = myD;
+
+					if (count3MinuteSteps == 20) {
+
+						epNumber++;
+						epName = wxString::Format(wxT("%i"), epNumber);
+						PlugIn_Waypoint*  epPoint = new PlugIn_Waypoint
+						(lati, loni, wxT("Symbol-X-Large-Magenta"), (_T("DR") + epName));
+						epPoint->m_IconName = wxT("Symbol-X-Large-Magenta");
+						epPoint->m_MarkDescription = dt.Format(_T("%a %d-%b-%Y  %H:%M"));
+						epPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
+						newRoute->pWaypointList->Append(epPoint);
+
+						// print mid points for the GPX file
+						my_point.lat = wxString::Format(wxT("%f"), lati);
+						my_point.lon = wxString::Format(wxT("%f"), loni);
+						my_point.routepoint = 0;
+						my_point.wpt_num = _T("DR") + wxString::Format(_T("%i"), epNumber);
+						my_point.name = _T("DR") + wxString::Format(_T("%i"), epNumber);
+						my_points.push_back(my_point);
+
+						//tc_index++;
+						count3MinuteSteps = 0;
+						dt.Add(HourSpan);
+						ddt = dt.Format(_T("%a %d-%b-%Y  %H:%M"));
+						
+
+						ptr.name = _T("DR") + epName;
+						ptr.lat = wxString::Format(_T("%8.4f"), lati);
+						ptr.lon = wxString::Format(_T("%8.4f"), loni);
+						ptr.time = ddt;
+						ptr.guid = epPoint->m_GUID;
+						ptr.distTo = wxString::Format(_T("%.1f"), ptrDist);
+						ptr.brgTo = wxString::Format(_T("%03.0f"), myBrng);
+						ptr.CTS = wxString::Format(_T("%03.0f"), myBrng);
+						ptr.SMG = wxString::Format(_T("%5.1f"), VBG);
+						ptr.set = wxString::Format(_T("%03.0f"), dir);
+						ptr.rate = wxString::Format(_T("%5.1f"), spd);
+						ptr.icon_name = wxT("Symbol-X-Large-Magenta");
+						ptr.show_name = true;
+
+						tr.m_positionslist.push_back(ptr);
+
+						iDist = 0;
+						iTime = 0;
+						ptrDist = 0;
+						ptrTime = 0;
+						madeETA = true;
+
+						
+					}
+
+					destLoxodrome(latF, lonF, myB, VBG / 20, &lati, &loni);
+					// for distances travelled
+					myDI = VBG / 20;
+					//DistanceBearingMercator(latF, lonF, lati, loni, &myDI, &myBI);
+
+
+					fttg = myD / VBG;
+
+					double t;
+					if (fttg < 0.05) {
+						tdist += myD;
+						ptrDist += myD;
+						t = fttg * 60;
+					}
+					else {
+						tdist += myDI;
+						ptrDist += myDI;
+						t = 3;
+					}
+
+					ptrTime += t;
+
+					lastVBG = VBG;  // VBG for the next ETA point		
+
+				}
+
+			}
+
+
+			// End of new logic
+			// print the last routepoint
+			my_point.lat = wxString::Format(wxT("%f"), latN[i]);
+			my_point.lon = wxString::Format(wxT("%f"), lonN[i]);
+			my_point.routepoint = 1;
+			my_point.wpt_num = waypointName[n];
+			my_point.name = waypointName[n];
+			my_points.push_back(my_point);
+			//
 			PlugIn_Waypoint*  endPoint = new PlugIn_Waypoint
-				(latN[1], lonN[1], _T("circle"), tr.End);			
-			
-			CTSWithCurrent(myBrng, VBG, (*it).m_dir, (*it).m_force, BC, speed);
-			
-			int minutesToEnd;		
-			minutesToEnd = (toDist / VBG) * 60;
-		
-			dt.Add(wxTimeSpan::Minutes(minutesToEnd));
+			(latN[n], lonN[n], wxT("Circle"), tr.End);
+
+
+			double minutesToEnd;
+
+			minutesToEnd = (ptrDist / VBG) * 60;
+
+			dt.Add(wxTimeSpan::Minutes((long)minutesToEnd));
 			ddt = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
 
+			endPoint->m_IconName = wxT("Circle");
+			endPoint->m_MarkName = waypointName[n];
 			endPoint->m_MarkDescription = ddt;
 			endPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
+
 			newRoute->pWaypointList->Append(endPoint);
 
 			tr.EndTime = ddt;
+
 			dtEnd = dt;
 			trTime = dtEnd - dtStart;
 			trTimeHours = (double)trTime.GetMinutes() / 60;
 			tr.Time = wxString::Format(_("%.1f"), trTimeHours);
 
-			tdist += toDist;
+			tdist += iDist;
 			tr.Distance = wxString::Format(_("%.1f"), tdist);
 
-			ptr.name = tr.End;
-			ptr.lat = wxString::Format(_T("%8.4f"), latN[1]);
-			ptr.lon = wxString::Format(_T("%8.4f"), lonN[1]);
+			ptr.name = waypointName[i];
+			ptr.lat = wxString::Format(_T("%8.4f"), latN[n]);
+			ptr.lon = wxString::Format(_T("%8.4f"), lonN[n]);
 			ptr.time = ddt;
 			ptr.guid = endPoint->m_GUID;
-			ptr.set = wxString::Format(_T("%03.0f"), (*it).m_dir);
-			ptr.rate = wxString::Format(_T("%5.1f"), (*it).m_force);
+			ptr.set = wxString::Format(_T("%03.0f"), dir);
+			ptr.rate = wxString::Format(_T("%5.1f"), spd);
 			ptr.CTS = _T("----");
-			ptr.distTo = wxString::Format(_T("%.1f"), toDist);
+			ptr.SMG = _T("----");
+			ptr.distTo = wxString::Format(_T("%.1f"), ptrDist);
+			ptr.brgTo = wxString::Format(_T("%03.0f"), myBrng);
+			ptr.icon_name = wxT("Circle");
+			ptr.show_name = true;
+
 			tr.m_positionslist.push_back(ptr);
+			tr.End = wxString::Format(wxT("%i"), i);
+			tr.Type = wxT("DR");
 			m_TidalRoutes.push_back(tr);
 
-			AddPlugInRoute(newRoute);
-			b_showTidalArrow = true;
-			GetParent()->Refresh();
+			//AddPlugInRoute(newRoute); // add the route to OpenCPN routes and display the route on the chart			
 
-			SaveXML(m_default_configuration_path);
+			SaveXML(m_default_configuration_path); // add the route and extra detail (times, CTS etc) to the configuration file
+
 			m_ConfigurationDialog.m_lRoutes->Append(tr.Name);
 			m_ConfigurationDialog.Refresh();
-
-			return;
-
-		}
-	
-		
-		else {
-
-			epCounter++;
-			epStringNumber = _("EP") + wxString::Format(_T("%i"), epCounter);
-
-			PlugIn_Waypoint*  epPoint = new PlugIn_Waypoint
-				(latEP, lonEP, _T("triangle"), epStringNumber);
-			epPoint->m_MarkDescription = dt.Format(_T("%a %d-%b-%Y  %H:%M"));
-			epPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
-			newRoute->pWaypointList->Append(epPoint);			
-			
-			tdist += toDist;
-
-			dt.Add(HourSpan);
-			ddt = dt.Format(_T("%a %d-%b-%Y  %H:%M"));
-
-			ptr.name = epStringNumber;
-			ptr.lat = wxString::Format(_T("%8.4f"), latEP);
-			ptr.lon = wxString::Format(_T("%8.4f"), lonEP);
-			ptr.set = wxString::Format(_T("%03.0f"), (*it).m_dir);
-			ptr.rate = wxString::Format(_T("%5.1f"),(*it).m_force);
-			ptr.time = ddt;
-			ptr.guid = epPoint->m_GUID;
-			if (n == (sz - 1)){
-				// we want the last current data from the list
-				// to display final cts against the last ep 
-				Arrow cArrow = m_cList.back();
-				double cs = cArrow.m_cts;
-				ptr.CTS = wxString::Format(_T("%03.0f"), cs);;
-			}
-			else {
-				ptr.CTS = wxString::Format(_T("%03.0f"), cts);;
-			}
-			ptr.distTo = wxString::Format(_T("%.1f"), toDist);
-			tr.m_positionslist.push_back(ptr);		
-			
-			latR = latEP;
-			lonR = lonEP;
-			n++;
-		}
-
-	
-	}
-
-	
-}
-
-list<Arrow> otidalrouteUIDialog::GetHourlyCurrent(){
-
-	m_cList.clear();
-	Arrow cArrow;
-
-	m_totaltideList.clear();
-
-	double latN[2], lonN[2];
-	double speed; // boat speed through the water
-
-	wxString s = m_tSpeed->GetValue();
-	s.ToDouble(&speed);
-
-	int n = 0;
-	double lati, loni;
-
-
-
-	for (std::vector<RouteMapPosition>::iterator it = Positions.begin(); it != Positions.end(); it++){
-
-		if (m_textCtrl3->GetValue() == _T("") || m_textCtrl4->GetValue() == _T("")){
-
-			wxMessageBox(_("No route chosen"));
-			return m_cList;
-		}
-
-		if ((*it).Name == m_textCtrl3->GetValue()){
-
-			latN[0] = (*it).lat;
-			lonN[0] = (*it).lon;
-		}
-
-		if ((*it).Name == m_textCtrl4->GetValue()){
-
-			latN[1] = (*it).lat;
-			lonN[1] = (*it).lon;
-		}
-	}
-
-	wxDateTime dt;
-	wxString sdt;
-	wxTimeSpan HourSpan, MinuteSpan;
-	HourSpan = wxTimeSpan::Hours(1);
-	MinuteSpan = wxTimeSpan::Minutes(30);
-
-	sdt = m_textCtrl1->GetValue(); // date/time route starts
-	dt.ParseDateTime(sdt);
-
-	double myBrng;
-	double spd; // current
-	double dir; // current
-
-	double VBG;
-	double BC;
-	double latC, lonC;
-	double latR, lonR;
-
-	latC = latN[0];
-	lonC = lonN[0];
-	latR = latN[0];
-	lonR = lonN[0];
-	double DTG; //distance to go
-	VBG = speed; // initial estimate of speed over ground
-
-	double distToGrib;
-	int minutesToGrib;
-
-	do {
-
-		DistanceBearingMercator(latN[1], lonN[1], latR, lonR, &DTG, &myBrng);
-
-		distToGrib = VBG / 2;
-		minutesToGrib = (int)((distToGrib / VBG) * 60);
-
-		dt.Add(wxTimeSpan::Minutes(minutesToGrib));
-
-		destLoxodrome(latR, lonR, myBrng, distToGrib, &lati, &loni); // To get lat/lon for Grib
-
-		bool m_bGrib = GetGribSpdDir(dt, lati, loni, spd, dir);
-		if (!m_bGrib){
-			wxMessageBox(_("Route start date is not compatible with this Grib"));
-			return m_cList;
-		}
-
-		CTSWithCurrent(myBrng, VBG, dir, spd, BC, speed);
-
-		if (VBG > DTG){ break; } // go to make the last arrow
-
-		cArrow.m_dir = dir;
-		cArrow.m_force = spd;
-		cArrow.m_lat = lati;
-		cArrow.m_lon = loni;
-		cArrow.m_cts = BC;
-		m_cList.push_back(cArrow); // first current arrow
-
-		destLoxodrome(latR, lonR, myBrng, VBG, &latC, &lonC);
-
-		latR = latC; // R is on the rhumb line
-		lonR = lonC;
-
-		dt.Subtract(wxTimeSpan::Minutes(minutesToGrib));
-		dt.Add(HourSpan);			
-
-	} while (DTG > VBG);
-
-	   
-	distToGrib = DTG / 2;
-	minutesToGrib = (int)((distToGrib / VBG) * 60);
-
-	dt.Add(wxTimeSpan::Minutes(minutesToGrib));
-
-	destLoxodrome(latR, lonR, myBrng, distToGrib, &lati, &loni); // To get lat/lon for Grib
-
-	bool m_bGrib = GetGribSpdDir(dt, lati, loni, spd, dir);
-	if (!m_bGrib){
-		wxMessageBox(_("Route start date is not compatible with this Grib"));
-		return m_cList;
-	}
-
-	cArrow.m_dir = dir;
-	cArrow.m_force = spd;
-	cArrow.m_lat = lati;
-	cArrow.m_lon = loni;
-	cArrow.m_cts = BC;
-	m_cList.push_back(cArrow); // single current arrow
-
-	return m_cList;	
-	
-}
-
-
-void otidalrouteUIDialog::HourlyCTS(wxCommandEvent& event)
-{
-	//
-	// Calculates hourly course change to reach final destination, staying on the rhumb line
-	//
-
-	TidalRoute tr;
-	Position ptr;
-
-	if (m_TidalRoutes.empty()){
-		tr.Name = m_tRouteName->GetValue();
-		tr.Type = _("h");
-	}
-	else {
-		for (std::list<TidalRoute>::iterator it = m_TidalRoutes.begin();
-			it != m_TidalRoutes.end(); it++) {
-			if ((*it).Name == m_tRouteName->GetValue()){
-				wxMessageBox(_("Route name already exists, please edit the name"));
-				return;
-			}
-			else {
-				tr.m_positionslist.clear();
-				tr.Name = m_tRouteName->GetValue();
-				tr.Type = _("h");
-			}
-		}
-	}
-
-	PlugIn_Route* trk = new PlugIn_Route;
-	PlugIn_Route* newRoute = new PlugIn_Route;
-	newRoute->m_NameString = tr.Name;
-
-	m_arrowList.clear();
-	Arrow m_arrow;
-
-	double speed;
-
-	wxString s = m_tSpeed->GetValue();
-	s.ToDouble(&speed);
-
-	double VBG, BC;
-	double toDist, toBrng;
-	double latR, lonR;
-	double latEP, lonEP, latF, lonF;
-	double latN[2], lonN[2];
-
-	for (std::vector<RouteMapPosition>::iterator it = Positions.begin(); it != Positions.end(); it++){
-
-		if (m_textCtrl3->GetValue() == _T("") || m_textCtrl4->GetValue() == _T("")){
-			wxMessageBox(_("No route generated"));
-			return;
-		}
-
-		if ((*it).Name == m_textCtrl3->GetValue()){
-
-			latN[0] = (*it).lat;
-			lonN[0] = (*it).lon;
-			tr.Start = (*it).Name;
-		}
-
-		if ((*it).Name == m_textCtrl4->GetValue()){
-
-			latN[1] = (*it).lat;
-			lonN[1] = (*it).lon;
-			tr.End = (*it).Name;
-		}
-
-	}
-	//
-	// 
-	//
-	GetHourlyCurrent(); // this generates the currents list - m_cList
-	//
-	if (m_cList.size() == 0){
-		wxMessageBox(_T("No route created"));
-		return;
-	}
-	//
-	//
-	//
-	double tdist = 0; // For accumulating the total distance by adding the distance of each leg
-	double myDist, myBrng;
-
-	DistanceBearingMercator(latN[1], lonN[1], latN[0], lonN[0], &myDist, &myBrng);
-
-	wxDateTime dt;
-	wxString sdt;
-	wxString ddt;
-	wxDateTime dtStart, dtEnd;
-	wxTimeSpan trTime;
-	wxTimeSpan HourSpan, MinuteSpan;
-	double trTimeHours;
-
-	HourSpan = wxTimeSpan::Hours(1);
-	MinuteSpan = wxTimeSpan::Minutes(30);
-
-	sdt = m_textCtrl1->GetValue();
-	dt.ParseDateTime(sdt);
-
-	sdt = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
-	tr.StartTime = sdt;
-	dtStart = dt;
-
-	//
-	// initialise start positions
-	//
-	latEP = latN[0];
-	lonEP = lonN[0];
-
-	latR = latN[0];
-	lonR = lonN[0];
-
-	int sz = m_cList.size();
-
-	int minutesToEnd;
-
-	double dir, force;
-	int epNumber = 0;
-	wxString epName;
-
-
-
-	for (std::list<Arrow>::iterator it = m_cList.begin(); it != m_cList.end(); it++){
-
-		if (it == m_cList.begin()){
-			PlugIn_Waypoint*  newPoint = new PlugIn_Waypoint
-				(latN[0], lonN[0], _T("circle"), tr.Start);
-			newPoint->m_MarkDescription = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
-			newPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
-			newRoute->pWaypointList->Append(newPoint);
-
-			m_arrow.m_dt = dt;
-			m_arrow.m_lat = (*it).m_lat;
-			m_arrow.m_lon = (*it).m_lon;
-			m_arrow.m_dir = (*it).m_dir;
-			m_arrow.m_force = (*it).m_force;
-			m_arrowList.push_back(m_arrow);
-			
-
-			ptr.name = tr.Start; // _T("Start");
-			ptr.time = sdt;
-			ptr.lat = wxString::Format(_T("%8.4f"), latN[0]);
-			ptr.lon = wxString::Format(_T("%8.4f"), lonN[0]);
-			ptr.guid = newPoint->m_GUID;
-			ptr.CTS = wxString::Format(_T("%03.0f"), (*it).m_cts);
-			ptr.distTo = _T("----");
-			ptr.set = _T("----");
-			ptr.rate = _T("----");
-			tr.m_positionslist.push_back(ptr);
-
-			ptr.set = wxString::Format(_T("%03.0f"), (*it).m_dir);
-			ptr.rate = wxString::Format(_T("%3.1f"), (*it).m_force);
-			
-			dir = (*it).m_dir;
-			force = (*it).m_force;
-
-			CTSWithCurrent(myBrng, VBG, dir, force, BC, speed);
-			destLoxodrome(latR, lonR, myBrng, VBG, &latEP, &lonEP);
-            
-			//wxMessageBox(wxString::Format(wxT("%i"), i));
-
-			if (sz == 1){
-
-				PlugIn_Waypoint*  endPoint = new PlugIn_Waypoint
-					(latN[1], lonN[1], _T("circle"), tr.End);								
-
-				minutesToEnd = (myDist / VBG) * 60;
-				//wxMessageBox(wxString::Format(_T("%i"), minutesToEnd));
-
-				dt.Add(wxTimeSpan::Minutes(minutesToEnd));
-				ddt = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
-				tr.EndTime = ddt;
-
-				endPoint->m_MarkDescription = ddt;
-				endPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
-				newRoute->pWaypointList->Append(endPoint);
-				
-				trTimeHours = (double) minutesToEnd / 60;
-				tr.Time = wxString::Format(_("%.1f"), trTimeHours);
-				//wxMessageBox(tr.Time);
-
-
-				tdist = myDist;
-				tr.Distance = wxString::Format(_("%.1f"), tdist);
-
-				ptr.name = tr.End;
-				ptr.lat = wxString::Format(_T("%8.4f"), latN[1]);
-				ptr.lon = wxString::Format(_T("%8.4f"), lonN[1]);
-				ptr.time = ddt;
-				ptr.guid = endPoint->m_GUID;
-				ptr.CTS = _T("----");
-				//ptr.set = wxString::Format(_T("%3.0f"),tempSet);
-				//ptr.rate = wxString::Format(_T("%3.0f"), tempRate);
-				ptr.distTo = wxString::Format(_T("%.1f"), myDist);
-				tr.m_positionslist.push_back(ptr);
-
-				m_TidalRoutes.push_back(tr);
-
-				AddPlugInRoute(newRoute);
-				b_showTidalArrow = true;
-				GetParent()->Refresh();
-
-				SaveXML(m_default_configuration_path);
-				m_ConfigurationDialog.m_lRoutes->Append(tr.Name);
-				m_ConfigurationDialog.Refresh();
-
-				return;
+			GetParent()->Refresh();
+
+			for (std::vector<Position>::iterator itOut = my_points.begin(); itOut != my_points.end(); itOut++) {
+				//wxMessageBox((*it).lat, _T("*it.lat"));
+
+				double value, value1;
+				if (!(*itOut).lat.ToDouble(&value)) { /* error! */ }
+				lati = value;
+				if (!(*itOut).lon.ToDouble(&value1)) { /* error! */ }
+				loni = value1;
+
+				if ((*itOut).routepoint == 1) {
+					if (write_file) { Addpoint(Route, wxString::Format(wxT("%f"), lati), wxString::Format(wxT("%f"), loni), (*itOut).name, wxT("Diamond"), _T("WPT")); }
+				}
+				else {
+					if ((*itOut).routepoint == 0) {
+						if (write_file) { Addpoint(Route, wxString::Format(wxT("%f"), lati), wxString::Format(wxT("%f"), loni), (*itOut).name, wxT("Symbol-X-Large-Magenta"), _T("WPT")); }
+					}
+				}
 
 			}
 
-
-		}
-			
-		else {
-
-			dt.Add(HourSpan);
-
-			epNumber++;
-			epName = wxString::Format(wxT("%i"), epNumber);
-			PlugIn_Waypoint*  epPoint = new PlugIn_Waypoint
-				(latEP, lonEP, _T("triangle"), (_T("EP") + epName));
-			epPoint->m_MarkDescription = dt.Format(_T("%a %d-%b-%Y  %H:%M"));
-			epPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
-			newRoute->pWaypointList->Append(epPoint);
-
-			m_arrow.m_dt = dt;
-			m_arrow.m_lat = (*it).m_lat;
-			m_arrow.m_lon = (*it).m_lon;
-			m_arrow.m_dir = (*it).m_dir;
-			m_arrow.m_force = (*it).m_force;
-			m_arrowList.push_back(m_arrow);
-
-
-			tdist += VBG;
-
-			ddt = dt.Format(_T("%a %d-%b-%Y  %H:%M"));
-
-			ptr.name = _T("EP") + epName;
-			ptr.lat = wxString::Format(_T("%8.4f"), latEP);
-			ptr.lon = wxString::Format(_T("%8.4f"), lonEP);
-			ptr.time = ddt;
-			ptr.guid = epPoint->m_GUID;
-			ptr.distTo = wxString::Format(_T("%.1f"), VBG);
-			ptr.CTS = wxString::Format(_T("%03.0f"), (*it).m_cts);
-			
-
-			tr.m_positionslist.push_back(ptr);
-
-			ptr.set = wxString::Format(_T("%03.0f"), (*it).m_dir);
-			ptr.rate = wxString::Format(_T("%5.1f"), (*it).m_force);
-
-			dir = (*it).m_dir;
-			force = (*it).m_force;
-
-			CTSWithCurrent(myBrng, VBG, dir, force, BC, speed);
-			destLoxodrome(latEP, lonEP, myBrng, VBG, &latR, &lonR);
-
-			latF = latEP;
-			lonF = lonEP;
-			
-			latEP = latR;
-			lonEP = lonR;
-				
-			}
-		
-	}
-
-	DistanceBearingMercator(latN[1], lonN[1], latF, lonF, &toDist, &toBrng); //
-
-	PlugIn_Waypoint*  endPoint = new PlugIn_Waypoint
-		(latN[1], lonN[1], _T("circle"), tr.End);
-
-	Arrow a = m_cList.back();
-	double d = a.m_dir;
-	double f = a.m_force;
-
-	CTSWithCurrent(myBrng, VBG, d, f, BC, speed);
-
-	minutesToEnd = (toDist / VBG) * 60;
-
-	dt.Add(wxTimeSpan::Minutes(minutesToEnd));
-	ddt = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
-
-	endPoint->m_MarkDescription = ddt;
-	endPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
-	newRoute->pWaypointList->Append(endPoint);
-
-	Arrow AList = m_cList.back();
-
-	m_arrow.m_dt = dt;
-	m_arrow.m_lat = AList.m_lat;
-	m_arrow.m_lon = AList.m_lon;
-	//m_arrow.m_dir = AList.m_dir;
-	//m_arrow.m_force = AList.m_force;
-	m_arrowList.push_back(m_arrow);
-
-	tr.EndTime = ddt;
-	dtEnd = dt;
-	trTime = dtEnd - dtStart;
-	trTimeHours = (double)trTime.GetMinutes() / 60;
-	tr.Time = wxString::Format(_("%.1f"), trTimeHours);
-
-	tdist += toDist;
-	tr.Distance = wxString::Format(_("%.1f"), tdist);
-
-	ptr.name = tr.End;
-	ptr.lat = wxString::Format(_T("%8.4f"), latN[1]);
-	ptr.lon = wxString::Format(_T("%8.4f"), lonN[1]);
-	ptr.time = ddt;
-	ptr.guid = endPoint->m_GUID;
-	ptr.CTS = _T("----");
-	//ptr.set = wxString::Format(_T("%3.0f"), AList.m_dir);
-	//ptr.rate = wxString::Format(_T("%5.1f"), AList.m_force);
-	ptr.distTo = wxString::Format(_T("%.1f"), toDist);
-
-	tr.m_positionslist.push_back(ptr);
-
-	m_TidalRoutes.push_back(tr);
-
-	AddPlugInRoute(newRoute);
-	b_showTidalArrow = true;
-	GetParent()->Refresh();
-
-	SaveXML(m_default_configuration_path);
-	m_ConfigurationDialog.m_lRoutes->Append(tr.Name);
-	m_ConfigurationDialog.Refresh();
-	
-}
-
-list<Arrow> otidalrouteUIDialog::GetCTS_DMG(double &CTS)
-{
-	m_cList.clear();
-	Arrow cArrow;
-
-	m_totaltideList.clear();
-
-	double latN[2], lonN[2];
-	double speed;
-
-	wxString s = m_tSpeed->GetValue();
-	s.ToDouble(&speed);
-
-	int n = 0;
-	double lati, loni;
-
-	for (std::vector<RouteMapPosition>::iterator it = Positions.begin(); it != Positions.end(); it++){
-
-		if (m_textCtrl3->GetValue() == _T("") || m_textCtrl4->GetValue() == _T("")){
-
-			wxMessageBox(_("No route chosen"));
-			return m_cList;
-		}
-
-		if ((*it).Name == m_textCtrl3->GetValue()){
-
-			latN[0] = (*it).lat;
-			lonN[0] = (*it).lon;
-		}
-
-		if ((*it).Name == m_textCtrl4->GetValue()){
-
-			latN[1] = (*it).lat;
-			lonN[1] = (*it).lon;
-		}
-	}
-
-	wxDateTime dt, dtStart, dtEnd;
-	wxString sdt;
-	wxTimeSpan HourSpan, MinuteSpan;
-	HourSpan = wxTimeSpan::Hours(1);
-	MinuteSpan = wxTimeSpan::Minutes(30);
-
-	sdt = m_textCtrl1->GetValue();
-	dt.ParseDateTime(sdt);
-
-	dtStart = dt;
-
-	double myDist, myBrng;
-	DistanceBearingMercator(latN[1], lonN[1], latN[0], lonN[0], &myDist, &myBrng);
-
-	double spd;
-	double dir;
-	double DTG;
-	double VBG;
-	double DMG;
-	double BC, TBC;
-	double cDist, cBrng;
-	double latC, lonC;	 // tracks end of current arrow
-	double latTC, lonTC;  // temporary position of current arrow
-	double latV, lonV; // tracks positions on the rhumb line
-	latC = latN[0];
-	lonC = lonN[0];
-	latTC = latN[0]; 
-	lonTC = lonN[0];
-	latV = latN[0];
-	lonV = lonN[0];
-	VBG = speed; // initial estimate of VBG
-
-	double distToGrib;
-	int minutesToGrib;
-
-	double fDist, fBrng;
-	double iCourse, iDist;
-
-	int myLegCounter = 0;
-
-	do {
-		myLegCounter++;
-
-		DistanceBearingMercator(latN[1], lonN[1], latV, lonV, &DTG, &myBrng);
-	
-		distToGrib = VBG / 2;
-		minutesToGrib = (int)((distToGrib / VBG) * 60);
-
-		dt.Add(wxTimeSpan::Minutes(minutesToGrib));
-
-		destLoxodrome(latV, lonV, myBrng, distToGrib, &lati, &loni); // To get lat/lon for Grib
-
-		bool m_bGrib = GetGribSpdDir(dt, lati, loni, spd, dir);
-		if (!m_bGrib){
-			wxMessageBox(_("Route start date is not compatible with this Grib"));
-
-			return m_cList;
-		}
-		
-		destLoxodrome(latC, lonC, dir, spd, &latTC, &lonTC); // To get lat/lon for current arrow end
-		DistanceBearingMercator(latTC, lonTC, latN[0], lonN[0], &cDist, &cBrng); //total current so far
-		CTSWithCurrent(myBrng, DMG, cBrng, cDist, BC, (speed * myLegCounter));	
-
-		destLoxodrome(latN[0], lonN[0], myBrng, DMG, &latV, &lonV);
-		DistanceBearingMercator(latV, lonV, latTC, lonTC,  &iDist, &iCourse);
-		CTSWithCurrent(iCourse, VBG, dir, spd, TBC, speed); // for better interim estimate of SMG
-
-		latC = latTC; // end position current arrow 
-		lonC = lonTC;
-		
-		dt.Subtract(wxTimeSpan::Minutes(minutesToGrib));
-        dt.Add(HourSpan);  // to position 1 hour later
-
-		if (DMG > myDist){
+			my_points.clear();
 			break;
 		}
 
-		cArrow.m_dir = dir;
-		cArrow.m_force = spd;
-		cArrow.m_lat = lati;
-		cArrow.m_lon = loni;
-		cArrow.m_cts = TBC;
-		m_cList.push_back(cArrow);
+		default:
+		{            // Note the colon, not a semicolon
+			cout << "Error, bad input, quitting\n";
+			break;
+		}
+		}
 
-		
-				
-	} while (DMG < myDist);
+		if (write_file) {
 
-	dt.Subtract(HourSpan);  // to position 1 hour earlier
-	myLegCounter--;
+			TiXmlElement * Extensions = new TiXmlElement("extensions");
 
-	destLoxodrome(latC, lonC, (dir + 180), spd, &latTC, &lonTC); // retrace current to previous current position
-	DistanceBearingMercator(latTC, lonTC, latN[0], lonN[0], &cDist, &cBrng); // calculate final total current
-	CTSWithCurrent(myBrng, DMG, cBrng, cDist, BC, (speed * myLegCounter));
+			TiXmlElement * StartN = new TiXmlElement("opencpn:start");
+			TiXmlText * text5 = new TiXmlText(waypointName[0].ToUTF8());
+			Extensions->LinkEndChild(StartN);
+			StartN->LinkEndChild(text5);
 
-	destLoxodrome(latN[0], lonN[0], myBrng, DMG, &latV, &lonV);
-	DistanceBearingMercator(latN[1], lonN[1], latV, lonV, &fDist, &fBrng); // final DTG
-	//fDist = myDist - DMG;
+			TiXmlElement * EndN = new TiXmlElement("opencpn:end");			
+			TiXmlText * text6 = new TiXmlText(waypointName[n].ToUTF8());
+			Extensions->LinkEndChild(EndN);
+			EndN->LinkEndChild(text6);
 
-	if (myLegCounter == 0){
+			Route->LinkEndChild(Extensions);
 
-		DistanceBearingMercator(latN[1], lonN[1], latN[0], lonN[0], &fDist, &fBrng);
-		VBG = speed;
-		latV = latN[0];
-		lonV = lonN[0];
+			root->LinkEndChild(Route);
+			// check if string ends with .gpx or .GPX
+			if (!wxFileExists(s)) {
+				//s = s + _T(".gpx");
+			}
+			wxCharBuffer buffer = s.ToUTF8();
+			if (dbg) std::cout << buffer.data() << std::endl;
+			doc.SaveFile(buffer.data());
+		}
+
+
+
+		//end of if no error occured
+
+		if (error_occured == true) {
+			wxLogMessage(_("Error in calculation. Please check input!"));
+			wxMessageBox(_("Error in calculation. Please check input!"));
+		}
 	}
 
-	distToGrib = fDist / 2;
-	minutesToGrib = (int)((distToGrib / VBG) * 60);
-
-	//wxMessageBox(wxString::Format(wxT("%5.2f"), fDist));
-
-	dt.Add(wxTimeSpan::Minutes(minutesToGrib));
-
-	destLoxodrome(latV, lonV, myBrng, distToGrib, &lati, &loni); // To get lat/lon for Grib
-
-	bool m_bGrib = GetGribSpdDir(dt, lati, loni, spd, dir);
-	if (!m_bGrib){
-		wxMessageBox(_("Route start date is not compatible with this Grib"));
-		return m_cList;
-	}
-
-	CTSWithCurrent(myBrng, VBG, dir, spd, TBC, speed);  // back on the line for last leg
-	
-	cArrow.m_dir = dir;
-	cArrow.m_force = spd;
-	cArrow.m_lat = lati;
-	cArrow.m_lon = loni;
-	cArrow.m_cts = TBC;
-	m_cList.push_back(cArrow); // single current arrow
-
-	CTS = BC;
-	return m_cList;
-
+	wxMessageBox(_("DR Route has been calculated!"));
 }
+
+void otidalrouteUIDialog::CalcETA(wxCommandEvent& event, bool write_file, int Pattern)
+{
+	if (m_tRouteName->GetValue() == wxEmptyString) {
+		wxMessageBox(_("Please enter a name for the route!"));
+		return;
+	}
+
+	if (m_textCtrl1->GetValue() == wxEmptyString) {
+		wxMessageBox(_("Open the GRIB plugin and select a time!"));
+		return;
+	}
+	
+	wxString s_departureTimes = m_choiceDepartureTimes->GetStringSelection();
+	int m_departureTimes = wxAtoi(s_departureTimes);
+	int r = 0;
+	wxString m_RouteName;
+	gotMyGPXFile = false; // only load the raw gpx file once
+
+	for (r = 0; r < m_departureTimes; r++) {
+
+		TidalRoute tr; // tidal route for saving in the config file
+		PlugIn_Route* newRoute = new PlugIn_Route; // for immediate use as a route on OpenCPN chart display
+
+		Position ptr;
+
+		if (m_TidalRoutes.empty()) {
+
+
+
+			m_RouteName = m_tRouteName->GetValue() + wxT(".") + wxString::Format(wxT("%i"), r) + wxT(".") + wxT("EP");
+			tr.Name = m_RouteName;
+			tr.Type = _("ETA");
+		}
+		else {
+			for (std::list<TidalRoute>::iterator it = m_TidalRoutes.begin();
+				it != m_TidalRoutes.end(); it++) {
+				m_RouteName = m_tRouteName->GetValue() + wxT(".") + wxString::Format(wxT("%i"), r) + wxT(".") + wxT("EP");
+				if ((*it).Name == m_RouteName) {
+					wxMessageBox(_("Route name already exists, please edit the name"));
+					return;
+				}
+				else {
+					tr.m_positionslist.clear();
+					tr.Name = m_RouteName;
+					tr.Type = _("ETA");
+				}
+			}
+		}
+
+		newRoute->m_NameString = tr.Name;
+		newRoute->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
+
+		tr.Start = wxT("Start");
+		tr.End = wxT("End");
+		tr.m_GUID = newRoute->m_GUID;
+
+		if (OpenXML(gotMyGPXFile)) {
+
+			bool error_occured = false;
+
+			double lat1, lon1;
+
+
+
+			int num_hours = 1;
+			int n = 0;
+
+			lat1 = 0.0;
+			lon1 = 0.0;
+
+			wxString s;
+			if (write_file) {
+				wxFileDialog dlg(this, _("Export ETA Positions in GPX file as"), wxEmptyString, wxEmptyString, _T("GPX files (*.gpx)|*.gpx|All files (*.*)|*.*"), wxFD_SAVE | wxFD_OVERWRITE_PROMPT);
+				if (dlg.ShowModal() == wxID_CANCEL) {
+					error_occured = true;     // the user changed idea...
+					return;
+				}
+
+				s = dlg.GetPath();
+				if (dlg.GetPath() == wxEmptyString) { error_occured = true; if (dbg) printf("Empty Path\n"); }
+			}
+
+			//Validate input ranges
+			if (!error_occured) {
+				if (std::abs(lat1) > 90) { error_occured = true; }
+				if (std::abs(lon1) > 180) { error_occured = true; }
+				if (error_occured) wxMessageBox(_("error in input range validation"));
+			}
+
+			//Start writing GPX
+			TiXmlDocument doc;
+			TiXmlDeclaration* decl = new TiXmlDeclaration("1.0", "utf-8", "");
+			doc.LinkEndChild(decl);
+			TiXmlElement * root = new TiXmlElement("gpx");
+			TiXmlElement * Route = new TiXmlElement("rte");
+			TiXmlElement * RouteName = new TiXmlElement("name");
+			TiXmlText * text4 = new TiXmlText(this->m_tRouteName->GetValue().ToUTF8());
+
+			if (write_file) {
+				doc.LinkEndChild(root);
+				root->SetAttribute("version", "0.1");
+				root->SetAttribute("creator", "otidalroute_pi by Rasbats");
+				root->SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+				root->SetAttribute("xmlns:gpxx", "http://www.garmin.com/xmlschemas/GpxExtensions/v3");
+				root->SetAttribute("xsi:schemaLocation", "http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd");
+				root->SetAttribute("xmlns:opencpn", "http://www.opencpn.org");
+				Route->LinkEndChild(RouteName);
+				RouteName->LinkEndChild(text4);				
+			}
+
+			switch (Pattern) {
+			case 1:
+			{
+				if (dbg) cout << "ETA Calculation\n";
+				double speed = 0;
+				int    interval = 1;
+
+				if (!this->m_tSpeed->GetValue().ToDouble(&speed)) { speed = 5.0; } // 5 kts default speed
+
+				speed = speed * interval;				
+
+				double lati, loni;
+				double latN[200], lonN[200];
+				double latF, lonF;
+
+				Position my_point;
+
+				double value, value1;
+
+				for (std::vector<Position>::iterator it = my_positions.begin(); it != my_positions.end(); it++) {
+
+					if (!(*it).lat.ToDouble(&value)) { /* error! */ }
+					lati = value;
+					if (!(*it).lon.ToDouble(&value1)) { /* error! */ }
+					loni = value1;
+
+					waypointName[n] = (*it).wpt_num;
+					//wxMessageBox(waypointName[n]);
+
+					latN[n] = lati;
+					lonN[n] = loni;
+
+					n++;
+				}
+
+				my_positions.clear();
+				n--;
+
+				int routepoints = n + 1;
+
+				double myDist, myBrng, myDistForBrng;
+				myBrng = 0;
+				myDist = 0;
+
+				double myLast, route_dist;
+
+				route_dist = 0;
+				myLast = 0;
+				myDistForBrng = 0;
+				double total_dist = 0;
+				int i, c;
+				bool skip = false;
+				bool inloop = false;
+				bool setF = false;
+
+				latF = latN[0];
+				lonF = lonN[0];
+
+				lati = latN[0];
+				loni = lonN[0];
+
+				double VBG, BC;
+				VBG = 0;
+				int tc_index = 0;
+				c = 0;
+				double myD, myB;
+				double myDI;
+
+				boolean skipleg = false;
+				double lastVBG = 0;
+				double lastVBG1 = 0;
+				double VBG2 = 0;
+				double rdHours = 0;
+				double rdHours1 = 0;
+				double rdHours2 = 0;
+				double rdHours3 = 0;
+				double fttg = 0;
+				double ttg = 0;
+				double ttg1 = 0;
+				double ttg2 = 0;
+				double ttg3 = 0;
+				double rdMiles = 0;
+				double bitDist1 = 0;
+				double bitDist2 = 0;
+				double bitDist3 = 0;
+				double lastBrg = 0;
+				int skipCount = 0;
+
+				bool skip0 = false;
+				bool skip1 = false;
+				int count3MinuteSteps = 0;
+				bool m_bGrib;
+				double spd, dir;
+				spd = 0;
+				dir = 0;
+
+				double iDist = 0;
+				double tdist = 0; // For accumulating the total distance by adding the distance for each leg
+				double ptrDist = 0;
+				double skippedDistance = 0;
+
+				double iTime = 0;
+				double ptrTime = 0;
+				long longMinutes = 0;
+
+
+				int epNumber = 0;
+				wxString epName;
+
+				wxDateTime dt, iPointDT, gdt;
+
+				wxString ddt, sdt;
+				wxTimeSpan HourSpan, MinuteSpan, threeMinuteSpan;
+				HourSpan = wxTimeSpan::Hours(1);
+				MinuteSpan = wxTimeSpan::Minutes(30);
+				threeMinuteSpan = wxTimeSpan::Minutes(3);
+				wxTimeSpan pointMinuteSpan = wxTimeSpan::Minutes(3);
+
+				bool madeETA = false;
+
+				wxDateTime dtStart, dtEnd, interimDateTimeETA;
+				wxTimeSpan trTime;
+				double trTimeHours;
+
+				sdt = m_textCtrl1->GetValue(); // date/time route starts
+				dt.ParseDateTime(sdt);
+
+				dt = dt + wxTimeSpan::Hours(r);
+
+				sdt = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
+				tr.StartTime = sdt;
+
+				dtStart = dt;
+
+				//
+				// Start of new logic
+				//
+
+				for (i = 0; i < n; i++) {	// n is number of routepoints					
+
+					lastBrg = myBrng;
+					bitDist2 = myDist;
+					lastVBG1 = VBG;
+					DistanceBearingMercator(latN[i + 1], lonN[i + 1], latN[i], lonN[i], &myDist, &myBrng);
+
+					gdt = dt + MinuteSpan;
+					m_bGrib = GetGribSpdDir(gdt, latN[i], lonN[i], spd, dir);
+					if (!m_bGrib) {
+						wxMessageBox(_("Route start date is not compatible with this Grib \n Or Grib is not available for part of the route"));
+						return;
+					}
+
+					//wxMessageBox(wxString::Format(wxT("%f"), dir));
+
+					CTSWithCurrent(myBrng, VBG, dir, spd, BC, speed);
+
+					if (isnan(VBG)) {
+						wxString str = _("Unable to compute speed over ground with this tide and boat speed, \n\n Aborting");
+						wxMessageBox(str, wxT("Problem"));
+					}
+
+					//
+					// set up the waypoint
+					//
+					//
+
+					PlugIn_Waypoint*  newPoint = new PlugIn_Waypoint
+					(latN[i], lonN[i], wxT("Circle"), waypointName[i]);
+					newPoint->m_IconName = wxT("Circle");
+					newPoint->m_MarkDescription = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
+					newPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
+					newRoute->pWaypointList->Append(newPoint);
+
+					//
+					// set up a tidal route to save in the config file
+					//
+
+					if (i == 0) {
+
+						interimDateTimeETA = dt;
+
+						ptr.name = waypointName[i];
+						ptr.time = sdt;
+						ptr.lat = wxString::Format(_T("%8.4f"), latN[0]);
+						ptr.lon = wxString::Format(_T("%8.4f"), lonN[0]);
+						ptr.guid = newPoint->m_GUID;
+						ptr.CTS = wxString::Format(_T("%03.0f"), BC);
+						ptr.SMG = wxString::Format(_T("%5.1f"), VBG);
+						ptr.distTo = _T("----");
+						ptr.brgTo = _T("----");
+						ptr.set = wxString::Format(_T("%03.0f"), dir);;
+						ptr.rate = wxString::Format(_T("%5.1f"), spd);;
+						ptr.icon_name = wxT("Circle");
+						tr.m_positionslist.push_back(ptr);
+						tr.Start = wxString::Format(wxT("%i"), i);
+					}
+					else {
+
+						ptr.name = wxString::Format(wxT("%i"), i);
+						if (i == 1 && skipleg) {
+
+							longMinutes = (long)(iTime);
+							pointMinuteSpan = wxTimeSpan::Minutes(longMinutes);
+							iPointDT = dt + pointMinuteSpan;
+							ptr.time = iPointDT.Format(_T(" %a %d-%b-%Y  %H:%M"));
+						}
+						else {
+							if (!madeETA) {
+
+								longMinutes = (long)(ptrTime);
+								pointMinuteSpan = wxTimeSpan::Minutes(longMinutes);
+								iPointDT = interimDateTimeETA + pointMinuteSpan;
+								ptr.time = iPointDT.Format(_T(" %a %d-%b-%Y  %H:%M"));
+
+							}
+							else {  // we made an ETA before we got here
+
+								longMinutes = (long)(ptrTime);
+								pointMinuteSpan = wxTimeSpan::Minutes(longMinutes);
+								iPointDT = dt + pointMinuteSpan;
+								ptr.time = iPointDT.Format(_T(" %a %d-%b-%Y  %H:%M"));
+
+								interimDateTimeETA = iPointDT;
+
+							}
+
+							//wxMessageBox(wxString::Format(wxT("%i"), longMinutes), wxString::Format(wxT("%i"), i));
+
+						}
+
+
+						ptr.name = waypointName[i];
+						ptr.lat = wxString::Format(_T("%8.4f"), latN[i]);
+						ptr.lon = wxString::Format(_T("%8.4f"), lonN[i]);
+						ptr.guid = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
+						ptr.CTS = wxString::Format(_T("%03.0f"), BC);
+						ptr.SMG = wxString::Format(_T("%5.1f"), VBG);
+						ptr.distTo = wxString::Format(_T("%5.1f"), ptrDist);
+						ptr.brgTo = wxString::Format(_T("%03.0f"), myBrng);
+						ptr.set = wxString::Format(_T("%03.0f"), dir);
+						ptr.rate = wxString::Format(_T("%5.1f"), spd);
+						ptr.icon_name = wxT("Circle");
+						tr.m_positionslist.push_back(ptr);
+
+						iDist = 0;
+						ptrDist = 0;
+						iTime = 0;
+						ptrTime = 0;
+
+						madeETA = false;
+
+					}
+
+					//
+					// save the GPX file routepoint
+					//
+
+					my_point.lat = wxString::Format(wxT("%f"), latN[i]);
+					my_point.lon = wxString::Format(wxT("%f"), lonN[i]);
+					my_point.routepoint = 1;
+					my_point.wpt_num = waypointName[i];
+					my_point.name = waypointName[i];
+					my_points.push_back(my_point);
+
+					latF = latN[i];
+					lonF = lonN[i];
+
+					//
+					// we are allowing for two legs to be skipped without the calculation stopping
+					// (this is two consecutive legs of 3 minutes duration)
+					//
+
+					if (myDist < VBG / 20 && i == 0) {  // test whether first leg needs to be skipped
+						fttg = myDist / VBG;
+						//wxMessageBox(wxString::Format(wxT("%f"), fttg), wxString::Format(wxT("%i"), i));
+						//longMinutes = (long)(fttg * 60);
+						iTime = fttg * 60;
+						//pointMinuteSpan = wxTimeSpan::Minutes(longMinutes);
+						skipleg = true;
+						skippedDistance = myDist;
+					}
+
+					if (skipleg) {  // previous leg was skipped
+						//
+						// sailing a leg after the skipped leg
+						//
+						if (i == 0) {
+							//
+							//
+							iDist = skippedDistance;
+							// 
+							//
+						}
+
+						else {
+
+							if (i == 1) {
+								rdHours1 = bitDist2 / lastVBG1;
+								ttg = 0.05 - (rdHours1);
+								rdMiles = ttg * VBG;
+
+								fttg = (rdHours1)+myDist / VBG;
+
+								if (fttg < 0.05) {
+
+									wxMessageBox(_("Unable to calculate ETA over two legs at this speed. \n\n Aborting"), wxT("Problem"));
+									return;
+								}
+								//pointMinuteSpan = wxTimeSpan::Minutes(fttg*60);
+
+								destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+								iDist = rdMiles;  // skipped first leg so no need for skippedDistance this time
+								iTime = (iDist / VBG) * 60;
+								skippedDistance = 0;
+								skipleg = false;
+
+							}
+							else {
+
+								rdHours1 = bitDist1 / lastVBG;
+								rdHours2 = bitDist2 / lastVBG1;
+								ttg = 0.05 - (rdHours1 + rdHours2);
+								rdMiles = ttg * VBG;
+
+								fttg = rdHours1 + rdHours2 + (myDist / VBG);
+								if (fttg < 0.05) {
+
+									wxMessageBox(_("Unable to calculate ETA over two legs at this speed. \n\n Aborting"), wxT("Problem"));
+									return;
+								}
+
+								destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+								iDist = skippedDistance + rdMiles;
+								iTime = (iDist / VBG) * 60;
+								skippedDistance = 0;
+								skipleg = false;
+
+							}
+
+						}
+
+					}
+					else {
+						//
+						// Not sailing a skipped leg
+						//
+
+						if (i == 1) {
+							if (skipleg) {
+								rdHours1 = bitDist2 / lastVBG1;
+								ttg = 0.05 - rdHours1;
+								rdMiles = ttg * VBG;
+
+								fttg = rdHours1 + (myDist / VBG);
+								destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+
+								if (fttg < 0.05) {
+
+									skipleg = true; // two skips and you are out ... first and second legs
+									wxMessageBox(_("Unable to calculate ETA over two legs at this speed. \n\n Aborting"), wxT("Problem"));
+									return;
+
+								}
+								else {
+									pointMinuteSpan = wxTimeSpan::Minutes(fttg * 60);
+									iDist = skippedDistance + rdMiles;
+									iTime = (iDist / VBG) * 60;
+									skippedDistance = 0;
+									skipleg = false;
+								}
+
+							}
+							else {
+								rdHours1 = bitDist1 / lastVBG;
+								ttg = 0.05 - rdHours1;
+								rdMiles = ttg * VBG;
+
+								fttg = rdHours1 + (myDist / VBG);
+								destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+
+
+								if (fttg < 0.05) {
+									skippedDistance = rdMiles;
+									//iTime = (skippedDistance / VBG) * 60;
+									//iDist = skippedDistance;
+									skipleg = true;
+
+								}
+								else {
+									iDist = skippedDistance + rdMiles;
+									iTime = (iDist / VBG) * 60;
+									skippedDistance = 0;
+									skipleg = false;
+								}
+
+							}
+
+						}
+						else {
+							//
+							// i !=1
+							//
+							if (i == 0) {
+
+								rdMiles = VBG / 20;
+
+								fttg = myDist / VBG;
+								destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+								iDist = rdMiles;
+								iTime = (iDist / VBG) * 60;
+							}
+							else {
+								rdHours1 = bitDist1 / lastVBG;
+								ttg = 0.05 - rdHours1;
+								rdMiles = ttg * VBG;
+
+								fttg = rdHours1 + (myDist / VBG);
+								destLoxodrome(latF, lonF, myBrng, rdMiles, &lati, &loni);
+								iDist = rdMiles;
+								iTime = (iDist / VBG) * 60;
+
+								if (fttg < 0.05) {
+									skippedDistance = rdMiles;
+									skipleg = true;
+
+								}
+								else {
+									iDist = skippedDistance + rdMiles;
+									iTime = (iDist / VBG) * 60;
+
+									skippedDistance = 0;
+									skipleg = false;
+								}
+
+							}
+						}
+
+					}
+
+					tdist += iDist;
+					ptrDist = iDist;
+					ptrTime = iTime;
+
+					//wxMessageBox(wxString::Format(wxT("%f"), skippedDistance), wxString::Format(wxT("%i"), i));
+
+					while (fttg > 0.05 && skipleg == false) {
+
+						count3MinuteSteps++;
+
+						latF = lati;
+						lonF = loni;
+
+						DistanceBearingMercator(latN[i + 1], lonN[i + 1], lati, loni, &myD, &myB);
+
+						myDist = myD;
+
+						bitDist1 = myD;
+
+						if (count3MinuteSteps == 20) {
+
+							epNumber++;
+							epName = wxString::Format(wxT("%i"), epNumber);
+							PlugIn_Waypoint*  epPoint = new PlugIn_Waypoint
+							(lati, loni, wxT("Triangle"), (_T("EP") + epName));
+							epPoint->m_IconName = wxT("Triangle");
+							epPoint->m_MarkDescription = dt.Format(_T("%a %d-%b-%Y  %H:%M"));
+							epPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
+							newRoute->pWaypointList->Append(epPoint);
+
+							// print mid points for the GPX file
+							my_point.lat = wxString::Format(wxT("%f"), lati);
+							my_point.lon = wxString::Format(wxT("%f"), loni);						
+							my_point.routepoint = 0;
+							my_point.wpt_num = _T("EP") + wxString::Format(_T("%i"), epNumber);
+							my_point.name = _T("EP") + wxString::Format(_T("%i"), epNumber);
+							my_points.push_back(my_point);
+
+							//tc_index++;
+							count3MinuteSteps = 0;
+							dt.Add(HourSpan);
+							ddt = dt.Format(_T("%a %d-%b-%Y  %H:%M"));
+							gdt = dt + MinuteSpan;
+							m_bGrib = GetGribSpdDir(gdt, latF, lonF, spd, dir);
+							//wxMessageBox(wxString::Format(wxT("%f"), dir));
+							if (!m_bGrib) {
+								wxMessageBox(_("Route start date is not compatible with this Grib \n Or Grib is not available for part of the route"));
+								return;
+							}
+							CTSWithCurrent(myB, VBG, dir, spd, BC, speed);
+
+							ptr.name = _T("EP") + epName;
+							ptr.lat = wxString::Format(_T("%8.4f"), lati);
+							ptr.lon = wxString::Format(_T("%8.4f"), loni);
+							ptr.time = ddt;
+							ptr.guid = epPoint->m_GUID;
+							ptr.distTo = wxString::Format(_T("%.1f"), ptrDist);
+							ptr.brgTo = wxString::Format(_T("%03.0f"), myBrng);
+							ptr.CTS = wxString::Format(_T("%03.0f"), BC);
+							ptr.SMG = wxString::Format(_T("%5.1f"), VBG);
+							ptr.set = wxString::Format(_T("%03.0f"), dir);
+							ptr.rate = wxString::Format(_T("%5.1f"), spd);
+							ptr.icon_name = wxT("Triangle");
+
+							tr.m_positionslist.push_back(ptr);
+
+							iDist = 0;
+							iTime = 0;
+							ptrDist = 0;
+							ptrTime = 0;
+							madeETA = true;
+
+							if (isnan(VBG)) {
+
+								//wxString str2 = wxString::Format(wxT("%i"), tc_index);
+								//wxMessageBox(str2, wxT("Problem"));
+								wxString str = _("Unable to compute speed over ground with this tide and boat speed, \n\n Aborting");
+								wxMessageBox(str, wxT("Problem"));
+								return;
+							}
+						}
+
+						destLoxodrome(latF, lonF, myB, VBG / 20, &lati, &loni);
+						// for distances travelled
+						myDI = VBG / 20;
+						//DistanceBearingMercator(latF, lonF, lati, loni, &myDI, &myBI);
+
+
+						fttg = myD / VBG;
+
+						double t;
+						if (fttg < 0.05) {
+							tdist += myD;
+							ptrDist += myD;
+							t = fttg * 60;
+						}
+						else {
+							tdist += myDI;
+							ptrDist += myDI;
+							t = 3;
+						}
+
+						ptrTime += t;
+
+						lastVBG = VBG;  // VBG for the next ETA point		
+
+					}
+
+				}
+
+				// End of new logic
+				// print the last routepoint
+				my_point.lat = wxString::Format(wxT("%f"), latN[i]);
+				my_point.lon = wxString::Format(wxT("%f"), lonN[i]);
+				my_point.routepoint = 1;
+				my_point.wpt_num = waypointName[n];
+				my_point.name = waypointName[n];
+				my_points.push_back(my_point);
+				//
+				PlugIn_Waypoint*  endPoint = new PlugIn_Waypoint
+				(latN[n], lonN[n], wxT("Circle"), tr.End);
+
+
+				double minutesToEnd;
+
+				minutesToEnd = (ptrDist / VBG) * 60;
+
+				dt.Add(wxTimeSpan::Minutes((long)minutesToEnd));
+				ddt = dt.Format(_T(" %a %d-%b-%Y  %H:%M"));
+
+				endPoint->m_IconName = wxT("Circle");
+				endPoint->m_MarkName = waypointName[n];
+				endPoint->m_MarkDescription = ddt;
+				endPoint->m_GUID = wxString::Format(_T("%i"), (int)GetRandomNumber(1, 4000000));
+
+				newRoute->pWaypointList->Append(endPoint);
+
+				tr.EndTime = ddt;
+
+				dtEnd = dt;
+				trTime = dtEnd - dtStart;
+				trTimeHours = (double)trTime.GetMinutes() / 60;
+				tr.Time = wxString::Format(_("%.1f"), trTimeHours);
+
+				tdist += iDist;
+				tr.Distance = wxString::Format(_("%.1f"), tdist);
+
+				ptr.name = waypointName[i];
+				ptr.lat = wxString::Format(_T("%8.4f"), latN[n]);
+				ptr.lon = wxString::Format(_T("%8.4f"), lonN[n]);
+				ptr.time = ddt;
+				ptr.guid = endPoint->m_GUID;
+				ptr.set = wxString::Format(_T("%03.0f"), dir);
+				ptr.rate = wxString::Format(_T("%5.1f"), spd);
+				ptr.CTS = _T("----");
+				ptr.SMG = wxString::Format(_T("%5.1f"), VBG);
+				ptr.distTo = wxString::Format(_T("%.1f"), ptrDist);
+				ptr.brgTo = wxString::Format(_T("%03.0f"), myBrng);
+				ptr.icon_name = wxT("Circle");
+
+				tr.m_positionslist.push_back(ptr);
+				tr.End = wxString::Format(wxT("%i"), i);
+				tr.Type = wxT("ETA");
+				m_TidalRoutes.push_back(tr);
+
+				//AddPlugInRoute(newRoute); // add the route to OpenCPN routes and display the route on the chart			
+
+				SaveXML(m_default_configuration_path); // add the route and extra detail (times, CTS etc) to the configuration file
+
+				m_ConfigurationDialog.m_lRoutes->Append(tr.Name);
+				m_ConfigurationDialog.Refresh();
+				GetParent()->Refresh();
+
+				for (std::vector<Position>::iterator itOut = my_points.begin(); itOut != my_points.end(); itOut++) {
+					//wxMessageBox((*it).lat, _T("*it.lat"));
+
+					double value, value1;
+					if (!(*itOut).lat.ToDouble(&value)) { /* error! */ }
+					lati = value;
+					if (!(*itOut).lon.ToDouble(&value1)) { /* error! */ }
+					loni = value1;
+
+					if ((*itOut).routepoint == 1) {
+						if (write_file) { Addpoint(Route, wxString::Format(wxT("%f"), lati), wxString::Format(wxT("%f"), loni), (*itOut).name, wxT("Diamond"), _T("WPT")); }
+					}
+					else {
+						if ((*itOut).routepoint == 0) {
+							if (write_file) { Addpoint(Route, wxString::Format(wxT("%f"), lati), wxString::Format(wxT("%f"), loni), (*itOut).name, wxT("Triangle"), _T("WPT")); }
+						}
+					}
+
+				}
+
+				my_points.clear();
+				break;
+			}
+
+			default:
+			{            // Note the colon, not a semicolon
+				cout << "Error, bad input, quitting\n";
+				break;
+			}
+			}
+
+			if (write_file) {
+
+				TiXmlElement * Extensions = new TiXmlElement("extensions");
+
+				TiXmlElement * StartN = new TiXmlElement("opencpn:start");
+				TiXmlText * text5 = new TiXmlText(waypointName[0].ToUTF8());
+				Extensions->LinkEndChild(StartN);
+				StartN->LinkEndChild(text5);
+
+				TiXmlElement * EndN = new TiXmlElement("opencpn:end");
+				TiXmlText * text6 = new TiXmlText(waypointName[n].ToUTF8());
+				Extensions->LinkEndChild(EndN);
+				EndN->LinkEndChild(text6);
+
+				Route->LinkEndChild(Extensions);
+
+				root->LinkEndChild(Route);
+				// check if string ends with .gpx or .GPX
+				if (!wxFileExists(s)) {
+					//s = s + _T(".gpx");
+				}
+				wxCharBuffer buffer = s.ToUTF8();
+				if (dbg) std::cout << buffer.data() << std::endl;
+				doc.SaveFile(buffer.data());
+			}
+
+			//end of if no error occured
+
+			if (error_occured == true) {
+				wxLogMessage(_("Error in calculation. Please check input!"));
+				wxMessageBox(_("Error in calculation. Please check input!"));
+			}
+		}
+		GetParent()->Refresh();
+		pPlugIn->m_potidalrouteDialog->Show();
+		
+	}
+	wxMessageBox(_("ETA Routes have been calculated!"));
+}
+
+
+bool otidalrouteUIDialog::OpenXML(bool gotGPXFile)
+{
+	Position my_position;
+
+	my_positions.clear();
+
+	if (!gotGPXFile) {
+
+		int response = wxID_CANCEL;
+
+		wxArrayString file_array;
+		wxString filename;
+		wxFileDialog openDialog(this, _("Import GPX Route file"), m_gpx_path, wxT(""),
+			wxT("GPX files (*.gpx)|*.gpx|All files (*.*)|*.*"),
+			wxFD_OPEN | wxFD_MULTIPLE);
+		response = openDialog.ShowModal();
+
+		if (response == wxID_OK) {
+			openDialog.GetPaths(file_array);
+
+			//    Record the currently selected directory for later use
+			if (file_array.GetCount()) {
+				wxFileName fn(file_array[0]);
+				filename = file_array[0];
+				m_gpx_path = fn.GetPath();
+				rawGPXFile = filename;
+				gotMyGPXFile = true;
+			}
+
+		}
+		else if (response = wxID_CANCEL) {
+			gotMyGPXFile = false;
+			return false;
+		}
+
+	}
+
+	TiXmlDocument doc;
+	wxString error;
+	wxProgressDialog *progressdialog = NULL;
+
+
+	if (!doc.LoadFile(rawGPXFile.mb_str())) {
+		FAIL(_("Failed to load file: ") + rawGPXFile);
+	}
+	else {
+		TiXmlElement *root = doc.RootElement();
+		if (!strcmp(root->Value(), "rte"))
+			FAIL(_("rte Invalid xml file"));
+
+		int count = 0;
+		for (TiXmlElement* e = root->FirstChildElement(); e; e = e->NextSiblingElement())
+			count++;
+
+		int i = 0;
+		for (TiXmlElement* e = root->FirstChildElement(); e; e = e->NextSiblingElement(), i++) {
+			if (progressdialog) {
+				if (!progressdialog->Update(i))
+					return true;
+			}
+			else {
+				if (1) {
+					progressdialog = new wxProgressDialog(
+						_("Route"), _("Loading"), count, this,
+						wxPD_CAN_ABORT | wxPD_ELAPSED_TIME | wxPD_REMAINING_TIME);
+				}
+			}
+
+			wxString rte_name;
+			
+			for (TiXmlElement* f = e->FirstChildElement(); f; f = f->NextSiblingElement()) {
+				if (!strcmp(f->Value(), "rtept")) {
+					wxString rte_lat = wxString::FromUTF8(f->Attribute("lat"));
+					wxString rte_lon = wxString::FromUTF8(f->Attribute("lon"));
+					for (TiXmlElement* g = f->FirstChildElement(); g; g = g->NextSiblingElement()) {
+
+						if (!strcmp(g->Value(), "name")) {
+							rte_name = wxString::FromUTF8(g->GetText());
+							my_position.wpt_num = rte_name;
+						}
+					}
+
+					my_position.lat = rte_lat;
+					my_position.lon = rte_lon;
+					
+					my_positions.push_back(my_position);
+				}  	
+			}
+
+		}
+	}
+
+	delete progressdialog;
+	return true;
+
+failed:
+	delete progressdialog;
+
+	wxMessageDialog mdlg(this, error, _("ETA"), wxOK | wxICON_ERROR);
+	mdlg.ShowModal();
+
+	return false;
+}
+
+
+
+void otidalrouteUIDialog::Addpoint(TiXmlElement* Route, wxString ptlat, wxString ptlon, wxString ptname, wxString ptsym, wxString pttype) {
+	//add point
+	TiXmlElement * RoutePoint = new TiXmlElement("rtept");
+	RoutePoint->SetAttribute("lat", ptlat.mb_str());
+	RoutePoint->SetAttribute("lon", ptlon.mb_str());
+
+
+	TiXmlElement * Name = new TiXmlElement("name");
+	TiXmlText * text = new TiXmlText(ptname.mb_str());
+	RoutePoint->LinkEndChild(Name);
+	Name->LinkEndChild(text);
+
+	TiXmlElement * Symbol = new TiXmlElement("sym");
+	TiXmlText * text1 = new TiXmlText(ptsym.mb_str());
+	RoutePoint->LinkEndChild(Symbol);
+	Symbol->LinkEndChild(text1);
+
+	TiXmlElement * Type = new TiXmlElement("type");
+	TiXmlText * text2 = new TiXmlText(pttype.mb_str());
+	RoutePoint->LinkEndChild(Type);
+	Type->LinkEndChild(text2);
+
+	Route->LinkEndChild(RoutePoint);
+	//done adding point
+}
+
 
 bool otidalrouteUIDialog::GetGribSpdDir(wxDateTime dt, double lat, double lon, double &spd, double &dir)
 {	
@@ -1775,7 +2475,7 @@ bool otidalrouteUIDialog::OpenXML(wxString filename, bool reportfailure)
 						goto skipadd;
 					}
 				}
-				AddPosition(lat, lon, name);
+				
 
 			skipadd:;
 
@@ -1812,7 +2512,12 @@ bool otidalrouteUIDialog::OpenXML(wxString filename, bool reportfailure)
 							pos.time = wxString::FromUTF8(f->Attribute("ETD"));
 							pos.guid = wxString::FromUTF8(f->Attribute("GUID"));
 							pos.CTS = wxString::FromUTF8(f->Attribute("CTS"));
+							pos.SMG = wxString::FromUTF8(f->Attribute("SMG"));
 							pos.distTo = wxString::FromUTF8(f->Attribute("Dist"));
+							pos.brgTo = wxString::FromUTF8(f->Attribute("Brng"));
+							pos.set = wxString::FromUTF8(f->Attribute("Set"));
+							pos.rate = wxString::FromUTF8(f->Attribute("Rate"));
+							pos.icon_name = wxString::FromUTF8(f->Attribute("icon_name"));
 
 							m_pos.push_back(pos);
 							
@@ -1880,13 +2585,19 @@ void otidalrouteUIDialog::SaveXML(wxString filename)
 			for (std::list<Position>::iterator itp = (*it).m_positionslist.begin();
 				itp != (*it).m_positionslist.end(); itp++) {
 				TiXmlElement *cp = new TiXmlElement("Route");
+
 				cp->SetAttribute("Waypoint", (*itp).name);
 				cp->SetAttribute("Latitude", (*itp).lat);
 				cp->SetAttribute("Longitude", (*itp).lon);
 				cp->SetAttribute("ETD", (*itp).time);
 				cp->SetAttribute("GUID", (*itp).guid);
 				cp->SetAttribute("CTS", (*itp).CTS);
+				cp->SetAttribute("SMG", (*itp).SMG);
 				cp->SetAttribute("Dist", (*itp).distTo);
+				cp->SetAttribute("Brng", (*itp).brgTo);
+				cp->SetAttribute("Set", (*itp).set);
+				cp->SetAttribute("Rate", (*itp).rate);
+				cp->SetAttribute("icon_name", (*itp).icon_name);
 		
 				TidalRoute->LinkEndChild(cp);
 			}
@@ -1911,83 +2622,8 @@ void otidalrouteUIDialog::SaveXML(wxString filename)
 	}
 }
 
-void otidalrouteUIDialog::OnDeletePosition(wxCommandEvent& event)
-{
-	long index = m_lPositions->GetNextItem(-1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
-	if (index < 0)
-		return;
 
-	wxListItem itm;
-	itm.SetId(index);
-	itm.SetColumn(0);
-	itm.SetMask(wxLIST_MASK_TEXT);
-	m_lPositions->GetItem(itm);
-	wxString name = itm.GetText();
-	for (std::vector<RouteMapPosition>::iterator it = Positions.begin();
-		it != Positions.end(); it++){
-		if ((*it).Name == name) {
-			Positions.erase(it);
-			if (m_textCtrl3->GetValue() == name){
-				m_textCtrl3->Clear();
-			}
-			if (m_textCtrl4->GetValue() == name){
-				m_textCtrl4->Clear();
-			}
-			break;
-		}
-	}
-	m_ConfigurationDialog.RemoveSource(name);
-	m_lPositions->DeleteItem(index);
 
-}
 
-void otidalrouteUIDialog::OnDeleteAllPositions(wxCommandEvent& event)
-{
-	wxMessageDialog mdlg(this, _("Delete all the positions?\n"),
-		_("Delete All Positions"), wxYES | wxNO | wxICON_WARNING);
-	if (mdlg.ShowModal() == wxID_YES) {
-		Positions.clear();
-		m_ConfigurationDialog.ClearSources();
-		m_lPositions->DeleteAllItems();
-		m_textCtrl3->Clear();
-		m_textCtrl4->Clear();
-	}
-}
-
-void otidalrouteUIDialog::UpdateColumns()
-{/*
-	m_lTidalRoutes->DeleteAllColumns();
-
-	for (int i = 0; i < NUM_COLS; i++) {
-
-		columns[i] = m_lTidalRoutes->GetColumnCount();
-		wxString name = column_names[i];
-
-		if (i == STARTTIME || i == ENDTIME) {
-			name += _T(" (");
-
-			name += _("local");
-
-			name += _T(")");
-		}
-
-		m_lTidalRoutes->InsertColumn(columns[i], name);
-
-	}
-	int p = 0;
-	for (std::list<TidalRoute>::iterator it = m_TidalRoutes.begin();
-		it != m_TidalRoutes.end(); it++) {
-	
-		wxListItem item;
-		long index = m_lTidalRoutes->InsertItem(p, item);
-		m_lTidalRoutes->SetItem(index, START, (it)->Start);
-		m_lTidalRoutes->SetColumnWidth(START, wxLIST_AUTOSIZE);
-		//m_lTidalRoutes->SetItemPtrData(i, (wxUIntPtr)&it); // somehow this gets lost
-		//(it)->Update(this); // update utc/local switch to strings of start/end time
-		p++;
-	}
-	*/
-	//OnWeatherRouteSelected(); // update utc/local switch if configuration dialog is visible
-}
 enum { WIND, CURRENT };
 

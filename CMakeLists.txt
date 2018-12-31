@@ -36,6 +36,8 @@ SET(VERSION_MINOR "1")
 INCLUDE("cmake/PluginConfigure.cmake")
 
 SET(SRC_otidalroute
+		src/AboutDialog.cpp
+		src/AboutDialog.h
         src/bbox.cpp
         src/bbox.h
         src/otidalroute_pi.h
@@ -58,7 +60,12 @@ SET(SRC_otidalroute
 	    src/tinyxmlerror.cpp
 		src/tinyxmlparser.cpp
 		src/GribRecord.cpp
-
+		src/Navfunc.cpp
+		src/Navfunc.h
+		src/routeprop.cpp
+		src/routeprop.h
+		src/tableroutes.cpp
+		src/tableroutes.h
 
     )
 

@@ -1,837 +1,479 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: grib_pi 2.2.1111\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-17 10:33+0100\n"
-"PO-Revision-Date: 2010-12-09 22:34+0200\n"
-"Last-Translator: Asko Laite <alaite@netti.fi>\n"
-"Language-Team: Asko Laite <alaite@netti.fi>\n"
-"Language: \n"
+"POT-Creation-Date: 2018-12-31 18:12+0000\n"
+"PO-Revision-Date: 2018-02-08 09:10-0500\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Finnish\n"
+"Language: fi_FI\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Finnish\n"
-"X-Poedit-Country: FINLAND\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Language: fi\n"
+"X-Crowdin-File: /plugins/otcurrent_pi/po/otcurrent_pi.pot\n"
 #
 msgid "      < 0.5 knots"
-msgstr ""
+msgstr "      < 0,5 solmua"
 #
 #, c-format
-msgid " width = %d height = %d\n"
+msgid "%.1f"
 msgstr ""
 #
-#, c-format
-msgid " x = %d y = %d\n"
+msgid "&About"
+msgstr ""
+#
+msgid "&Guide"
 msgstr ""
 #
 msgid ">= 0.5 and < 1.5"
-msgstr ""
+msgstr ">= 0.5 ja < 1.5"
 #
 msgid ">= 1.5 and < 2.5"
-msgstr ""
+msgstr ">= 1.5 ja < 2.5"
 #
 msgid ">= 2.5 and < 3.5"
-msgstr ""
+msgstr ">= 2.5 ja < 3.5"
 #
 msgid ">= 3.5 knots    "
+msgstr ">= 3.5 solmua    "
+#
+msgid "About Author"
 msgstr ""
 #
-msgid "About Tidal Arrows"
+msgid "About Weather Routing"
 msgstr ""
 #
-msgid "Cancel"
+msgid "Bearing"
 msgstr ""
 #
-msgid "Date/Time"
+msgid "CTS"
+msgstr ""
+#
+msgid "Chart Route"
+msgstr ""
+#
+msgid "Close"
+msgstr ""
+#
+msgid "Course to steer"
+msgstr ""
+#
+msgid "DR"
+msgstr ""
+#
+msgid "DR Route has been calculated!"
+msgstr ""
+#
+msgid "DR Route has been charted!"
+msgstr ""
+#
+msgid "Daytime"
+msgstr ""
+#
+msgid "Delete"
+msgstr ""
+#
+msgid "Delete All Routes"
+msgstr ""
+#
+msgid "Delete all routes?\n"
+msgstr ""
+#
+msgid "Depart From"
+msgstr ""
+#
+#, fuzzy
+msgid "Departure Time"
+msgstr "Päivämäärä/aika"
+#
+msgid "Departure Time (Y/m/d h:m)"
+msgstr ""
+#
+msgid "Destination"
 msgstr ""
 #
 msgid "Display tidal direction"
-msgstr ""
+msgstr "Näytä vuoroveden suunta"
 #
 msgid "Display tidal rates (knots)"
+msgstr "Näytä vuorovesikertoimet (solmua)"
+#
+msgid "Distance"
+msgstr ""
+#
+msgid "Duration"
+msgstr ""
+#
+msgid "ETA"
+msgstr ""
+#
+msgid "ETA Route has been charted!"
+msgstr ""
+#
+msgid "ETA Routes have been calculated!"
+msgstr ""
+#
+msgid "End"
+msgstr ""
+#
+msgid "End Time"
+msgstr ""
+#
+msgid "EndTime"
+msgstr ""
+#
+msgid "Error in calculation. Please check input!"
+msgstr ""
+#
+msgid "EvTwilight"
+msgstr ""
+#
+msgid "Export DR Positions in GPX file as"
+msgstr ""
+#
+msgid "Export ETA Positions in GPX file as"
+msgstr ""
+#
+msgid "Failed to load file."
+msgstr ""
+#
+msgid "Failed to load file: "
+msgstr ""
+#
+msgid "Failed to save xml file: "
+msgstr ""
+#
+msgid "File contains duplicate position name, discarding\n"
 msgstr ""
 #
 msgid "Fill Colour"
+msgstr "Täytä väri"
+#
+msgid "From"
 msgstr ""
 #
-msgid "Help"
+msgid "Grib plugin version not supported."
 msgstr ""
 #
-msgid "Next"
+msgid "Import GPX Route file"
 msgstr ""
 #
-msgid "Now"
+msgid "Invalid xml file"
+msgstr ""
+#
+msgid "LMT @ Location"
+msgstr ""
+#
+msgid "Latitude"
+msgstr ""
+#
+msgid "Leg"
+msgstr ""
+#
+msgid "Load"
+msgstr ""
+#
+msgid "Loading"
+msgstr ""
+#
+msgid "Local @ PC"
+msgstr ""
+#
+msgid "Longitude"
+msgstr ""
+#
+msgid "MoTwilight"
+msgstr ""
+#
+msgid "Name"
+msgstr ""
+#
+msgid "Nighttime"
+msgstr ""
+#
+msgid "No routes found. Please make a route"
+msgstr ""
+#
+msgid "No routes have been calculated"
 msgstr ""
 #
 msgid "OK"
 msgstr ""
 #
+msgid "Open the GRIB plugin and select a time!"
+msgstr ""
 #
-#, fuzzy
+msgid "Plan Speed"
+msgstr ""
+#
+msgid "Please enter a name for the route!"
+msgstr ""
+#
+msgid "Please select a route"
+msgstr ""
+#
+msgid "Please select or generate a route"
+msgstr ""
+#
 msgid "Preferences"
-msgstr "GRIB asetukset"
+msgstr "Asetukset"
 #
-msgid "Previous"
+msgid "Properties"
 msgstr ""
 #
-msgid "START Date/Time"
+msgid "Route"
 msgstr ""
 #
-msgid "Select"
+msgid "Route Calculation Type:"
 msgstr ""
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "Select a folder"
-msgstr "Valitse GRIB-hakemisto"
-#
-msgid "Select date/time for current prediction"
+msgid "Route Properties"
 msgstr ""
 #
-msgid "Step (Minutes)"
+msgid "Route Table"
+msgstr ""
+#
+msgid "Route name already exists, please edit the name"
 msgstr ""
 #
 msgid ""
-"Tidal Current\n"
-"--------------------------------------------------------------\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"Use this data with caution.\n"
-"Use in conjunction with Tidal Current Atlases and Tidal Diamonds\n"
-"\n"
-"--------------------------------------------------------------------\n"
-"\n"
-"Note: 1 Rates shown are for a position corresponding to the centre\n"
-"of the base of the arrow. Tidal rate is shown as knots.\n"
-"\n"
+"Route start date is not compatible with this Grib \n"
+" Or Grib is not available for part of the route"
+msgstr ""
+#
+msgid "RouteCalculation Type:"
+msgstr ""
+#
+msgid "RouteName"
+msgstr ""
+#
+msgid "Routes"
+msgstr ""
+#
+msgid "Speed"
+msgstr ""
+#
+msgid "Start"
 msgstr ""
 #
 #, fuzzy
+msgid "Start Time"
+msgstr "Päivämäärä/aika"
+#
+#, fuzzy
+msgid "StartTime"
+msgstr "Päivämäärä/aika"
+#
+msgid "Sunrise"
+msgstr ""
+#
+msgid "Sunset"
+msgstr ""
+#
+msgid ""
+"The oTidalRoute plugin for opencpn is intended to calculate routes based on "
+"computerized tidal data.\n"
+"\n"
+"License: GPLv3+\n"
+"\n"
+"Source Code:\n"
+"https://github.com/rasbats/oTidalRoute_pi\n"
+"\n"
+"Author:\n"
+"Mike Rossiter\n"
+"\n"
+"Many thanks to all translators and testers."
+msgstr ""
+#
 msgid "Tidal Current Arrow Colour"
-msgstr "GRIB Näyttöohjaus"
+msgstr "Vuorovesivirran nuolenväri"
 #
 #, fuzzy
-msgid "Tidal Current Control"
-msgstr "GRIB Näyttöohjaus"
+msgid "Tidal Rate"
+msgstr "Vuorovesi Datakansio"
 #
-msgid "Tidal Data Folder"
+msgid "Tidal Routes"
 msgstr ""
 #
-msgid "Tide Calendar"
+msgid "Tidal Set"
 msgstr ""
 #
-msgid "Time:"
-msgstr ""
-#
-msgid "Using Tide/Current data from:  "
+msgid "TidalRoutingInformation.html"
 msgstr ""
 #
 #, fuzzy
-msgid "otcurrent"
-msgstr "Virran nopeus, solmua"
+msgid "Time"
+msgstr "Päivämäärä/aika"
 #
-#, fuzzy
-msgid "otcurrent PlugIn for OpenCPN"
-msgstr "GRIB moduuli OpenCPN:lle"
+msgid "Time Enroute"
+msgstr ""
+#
+msgid "Times shown as"
+msgstr ""
+#
+msgid "To Waypoint"
+msgstr ""
+#
+msgid "Total Distance"
+msgstr ""
+#
+msgid "Towards"
+msgstr ""
+#
+msgid "Type"
+msgstr ""
+#
+msgid "UTC"
+msgstr ""
 #
 msgid ""
-"otcurrent PlugIn for OpenCPN\n"
-"Provides an overlay of Tidal Current (Stream) Arrows.\n"
+"Unable to calculate ETA over two legs at this speed. \n"
+"\n"
+" Aborting"
+msgstr ""
+#
+msgid ""
+"Unable to compute speed over ground with this tide and boat speed, \n"
+"\n"
+" Aborting"
+msgstr ""
+#
+msgid "Unrecognized xml node"
+msgstr ""
+#
+#, c-format
+msgid "Use versions %d.%d to %d.%d"
+msgstr ""
+#
+msgid "Waypoint Properties"
+msgstr ""
+#
+msgid "Waypoints"
+msgstr ""
+#
+msgid "Weather Routing"
+msgstr ""
+#
+msgid "error in input range validation"
+msgstr ""
+#
+msgid "oTidalRoute"
+msgstr ""
+#
+msgid "oTidalRoute Plugin Version"
+msgstr ""
+#
+msgid "otidalroute"
+msgstr ""
+#
+#, fuzzy
+msgid "otidalroute PlugIn for OpenCPN"
+msgstr "OpenCPN:n vuorovesivirtaus lisäosa"
+#
+msgid ""
+"otidalroute PlugIn for OpenCPN\n"
+"Calculates EP positions/Courses using Grib tidal current data.\n"
 "\n"
 "\t\t\t   "
 msgstr ""
 #
+msgid "rte Invalid xml file"
+msgstr ""
 #
 #
+#~ msgid "About Tidal Arrows"
+#~ msgstr "Tietoja vuorovesi nuolista"
 #
 #
+#~ msgid "Currents"
+#~ msgstr "Virtaukset"
 #
 #
+#~ msgid "Day"
+#~ msgstr "Päivä"
 #
 #
+#~ msgid "Help"
+#~ msgstr "Ohje"
 #
 #
+#~ msgid "High Resolution Display"
+#~ msgstr "Korkean resoluution näyttö"
 #
 #
+#~ msgid "Next"
+#~ msgstr "Seuraava"
 #
 #
+#~ msgid "Now"
+#~ msgstr "Nyt"
 #
 #
+#~ msgid "Previous"
+#~ msgstr "Edellinen"
 #
-#, fuzzy
-msgid "otcurrent Settings"
-msgstr "GRIB asetukset"
 #
+#~ msgid "Select a folder"
+#~ msgstr "Valitse kansio"
 #
 #
-#, fuzzy
-msgid "otcurrentDialogPosX"
-msgstr "Virran nopeus, solmua"
+#~ msgid "Step (Minutes)"
+#~ msgstr "Väli (minuuttia)"
 #
 #
-#
-#, fuzzy
-msgid "otcurrentDialogPosY"
-msgstr "Virran nopeus, solmua"
-#
-#, fuzzy
-msgid "otcurrentDialogSizeX"
-msgstr "Virran nopeus, solmua"
-#
-#, fuzzy
-msgid "otcurrentDialogSizeY"
-msgstr "Virran nopeus, solmua"
-#
-#
-#
-#, fuzzy
-msgid "otcurrentFolder"
-msgstr "Virran nopeus, solmua"
-#
-#
-#, fuzzy
-msgid "otcurrentInterval"
-msgstr "Virran nopeus, solmua"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentUseDirection"
-msgstr "GRIB asetukset"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentUseFillColour"
-msgstr "GRIB asetukset"
-#
-#
-#, fuzzy
-msgid "otcurrentUseRate"
-msgstr "Virran nopeus, solmua"
-#
-#
-#
-#, fuzzy
-#~ msgid "/Settings/otcurrent"
-#~ msgstr "Virran nopeus, solmua"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Colors"
-#~ msgstr "&Sulje"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Current"
-#~ msgstr "Virran nopeus, solmua"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Data Display Preferences"
-#~ msgstr "GRIB asetukset"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "GRIB"
-#~ msgstr "GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "GRIB File Directory"
-#~ msgstr "GRIB-tiedostohakemisto"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Grib"
-#~ msgstr "Grib"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view invisible overlays:"
-#~ msgstr "Zoomaa ulos nähdäksesi GRIB merkitsevän aallonkorkeuden"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Air Temp.(2m) GRIB"
-#~ msgstr "Zoomaa ulos nähdäksesi GRIB pintalämpötilan"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed CURRENT GRIB"
-#~ msgstr "Zoomaa ulos nähdäksesi GRIB virtatiedot"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Clouds Cover GRIB"
-#~ msgstr "Zoomaa ulos nähdäksesi GRIB virtatiedot"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Sea Surf.Temp. GRIB"
-#~ msgstr "Zoomaa ulos nähdäksesi GRIB pintalämpötilan"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Total Rainfall GRIB"
-#~ msgstr "Zoomaa ulos nähdäksesi GRIB sadetiedon"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Pressure"
-#~ msgstr "Ilampaine, mbar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Pressure (MSL)"
-#~ msgstr "Ilampaine, mbar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Sea Temp"
-#~ msgstr "Meriveden pintalämpötila, C"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Show GRIB icon"
-#~ msgstr "Näytä GRIB-ikoni"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Sign.Wave Height"
-#~ msgstr "Merkitsevä aallonkorkeus, m"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Use High Definition Graphics"
-#~ msgstr "Käytä tarkkuusgrafiikkaa"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "WARNING:  QuickScat GRIB data is %d hours old."
-#~ msgstr "VAROITUS:  QuickScat GRIB data on %d tuntia vanhaa."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Direction(10m)"
-#~ msgstr "Tuulen suunta"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Speed and Direction(10m)"
-#~ msgstr "Tuulen suunta"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Speed(10m)"
-#~ msgstr "Tuulen nopeus, solmua"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Wind Speed, Kts."
-#~ msgstr "Tuulen nopeus, solmua"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "tcdata"
-#~ msgstr "GRIB Data"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
 #~ msgid ""
-#~ "tcurrent PlugIn for OpenCPN\n"
-#~ "Provides basic tcurrent file overlay capabilities for several tcurrent "
-#~ "file types.\n"
+#~ "Tidal Current\n"
+#~ "------------------------------------------------------\n"
 #~ "\n"
-#~ "Supported tcurrent file types include:\n"
-#~ "- wind direction and speed\n"
-#~ "- significant wave height\n"
-#~ "- sea surface temperature\n"
-#~ "- surface current direction and speed."
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Use this data with caution.\n"
+#~ "Use in conjunction with Tidal Current Atlases and Tidal Diamonds\n"
+#~ "\n"
+#~ "------------------------------------------------------\n"
+#~ "\n"
+#~ "Note: 1 Rates shown are for a position corresponding to the centre\n"
+#~ "of the base of the arrow. Tidal rate is shown as knots.\n"
+#~ "\n"
 #~ msgstr ""
-#~ "GRIB moduuli  OpenCPN:lle\n"
-#~ "Näyttää kartalla GRIB-tiedon usean tyyppisistä tiedostoista.\n"
+#~ "Vuorovesi virtaus\n"
+#~ "--------------------------------------------------------------\n"
 #~ "\n"
-#~ "Tukee seuraavia GRIB-tiedon sisältöjä:\n"
-#~ "- tuulen suunta ja nopeus\n"
-#~ "- merkitsevä aallonkorkeus\n"
-#~ "- pintaveden lämpötila\n"
-#~ "-virran nopeus ja suunta"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "\n"
+#~ "Käytä tätä tietoa varauksella. \n"
+#~ "Käytä yhdessä vuorovesivitauskartastojen ja vuorovesi ruutujen kanssa\n"
+#~ "\n"
+#~ "--------------------------------------------------------------\n"
+#~ "\n"
+#~ "Huomaa: 1 Lukemat on näytetty sijainnin suhteessa perusnuolen keskustaan.\n"
+#~ "Vuorovesilukema näytetään solmuina.\n"
+#~ "\n"
+#
+#
+#~ msgid "Using Tide/Current data from:  "
+#~ msgstr "Käytetään vuorovesi/virta tietoja lähteestä:  "
+#
+#
+#~ msgid "otcurrent"
+#~ msgstr "vuorovesivirtaus"
+#
+#
+#~ msgid ""
+#~ "otcurrent PlugIn for OpenCPN\n"
+#~ "Provides an overlay of Tidal Current (Stream) Arrows.\n"
+#~ "\n"
+#~ "\t\t\t   "
+#~ msgstr ""
+#~ "OpenCPN vuorovesilisäosa\n"
+#~ "Tuottaa vuorovesivirran suuntanuolien päällyskerroksen.\n"
+#~ "\n"
+#~ "\t\t\t   "

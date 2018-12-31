@@ -44,5 +44,5 @@ AboutDialog::AboutDialog( wxWindow *parent )
 
 void AboutDialog::OnAboutAuthor( wxCommandEvent& event )
 {
-    wxLaunchDefaultBrowser(_T("About Author"));
+   // wxLaunchDefaultBrowser(_T(""));
 }

@@ -55,6 +55,8 @@ extern wxString myVColour[5];
 #define GRIB_MIN_MAJOR 4
 #define GRIB_MIN_MINOR 1
 
+#define ABOUT_AUTHOR_URL "http://mikerossiter.co.uk"
+
 
 //----------------------------------------------------------------------------------------------------------
 //    The PlugIn Class Definition
@@ -120,7 +122,6 @@ public:
       void SetDefaults(void);
       int  GetToolbarToolCount(void);
       void ShowPreferencesDialog( wxWindow* parent );
-	  void OnContextMenuItemCallback(int id);
       void OnToolbarToolCallback(int id);
 
 	  double GetCursorLon(void) { return m_cursor_lon; }

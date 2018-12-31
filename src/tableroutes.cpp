@@ -148,7 +148,7 @@ void TableRoutes::CreateControlsCompact()
                                                           wxDefaultPosition, wxDefaultSize, wxHSCROLL | wxVSCROLL);
     itemlistWin->SetScrollRate(2, 2); 
     
-    m_pListSizer->Add( itemlistWin, 0, wxEXPAND | wxALL, 6 );
+    m_pListSizer->Add( itemlistWin, 1, wxEXPAND | wxALL, 6 );
     
     
     //      Create the list control
@@ -227,13 +227,13 @@ void TableRoutes::CreateControls()
         wxBoxSizer* itemBoxSizerBottom = new wxBoxSizer( wxHORIZONTAL );
         itemBoxSizer1->Add( itemBoxSizerBottom, 0, wxALIGN_LEFT | wxALL | wxEXPAND, 5 );
         
-        wxBoxSizer* itemBoxSizerAux = new wxBoxSizer( wxHORIZONTAL );
-        itemBoxSizerBottom->Add( itemBoxSizerAux, 1, wxALIGN_LEFT | wxALL, 3 );
+        //wxBoxSizer* itemBoxSizerAux = new wxBoxSizer( wxHORIZONTAL );
+        //itemBoxSizerBottom->Add( itemBoxSizerAux, 1, wxALIGN_LEFT | wxALL, 3 );
         
-        m_PrintButton = new wxButton( this, ID_ROUTEPROP_PRINT, _("Print Route"),
-          wxDefaultPosition, wxDefaultSize, 0 );
-        itemBoxSizerAux->Add( m_PrintButton, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 3 );
-        m_PrintButton->Enable( true );            
+        //m_PrintButton = new wxButton( this, ID_ROUTEPROP_PRINT, _("Print Route"),
+        //  wxDefaultPosition, wxDefaultSize, 0 );
+        //itemBoxSizerAux->Add( m_PrintButton, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 3 );
+       // m_PrintButton->Enable( true );            
       
       wxBoxSizer* itemBoxSizer16 = new wxBoxSizer( wxHORIZONTAL );
       itemBoxSizerBottom->Add( itemBoxSizer16, 0, wxALIGN_RIGHT | wxALL, 3 );

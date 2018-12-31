@@ -132,16 +132,21 @@ class NewPositionDialog;
 class Position
 {
 public:
-	//double latD, lonD;
-    wxString lat, lon;
+    wxString lat, lon, wpt_num;
 	wxString name;
 	wxString guid;
 	wxString time;
 	wxString etd;
 	wxString CTS;
+	wxString SMG;
 	wxString distTo;
+	wxString brgTo;
 	wxString set;
 	wxString rate;
+	wxString icon_name;
+	bool show_name;
+	int routepoint;
+
 };
 
 struct RouteMapPosition {
@@ -174,10 +179,8 @@ struct TotalTideArrow
 class TidalRoute
 {
 public:
-	void Update(Position *rpl, bool stateonly = false);
-
-	bool Filtered;
-	wxString Name, Type, Start, StartTime, End, EndTime, Time, Distance//,
+	
+	wxString Name, Type, Start, StartTime, End, EndTime, Time, Distance, m_GUID//,
 		//AvgSpeed, MaxSpeed, AvgSpeedGround, MaxSpeedGround, AvgWind, MaxWind,
 		//AvgCurrent, MaxCurrent, AvgSwell, MaxSwell, UpwindPercentage, PortStarboard,
 		//Tacks, State
@@ -200,7 +203,6 @@ _("End"), _("End Time"), _("Time"), _("Distance")//,
 struct RouteMapConfiguration
 {
 	RouteMapConfiguration() : StartLon(0), EndLon(0), grib_is_data_deficient(false) {} /* avoid waiting forever in update longitudes */
-	bool Update();
 
 	wxString Start, End;
 	wxDateTime StartTime;
@@ -261,7 +263,6 @@ public:
 	void OpenFile( bool newestFile = false );
     
     void SetCursorLatLon( double lat, double lon );
-    void SetFactoryOptions( bool set_val = false );
 
     void SetViewPort( PlugIn_ViewPort *vp );
 	PlugIn_ViewPort *vp;
@@ -288,27 +289,17 @@ public:
 	wxString MakeDateTimeLabel(wxDateTime myDateTime);
 	void OnInformation(wxCommandEvent& event);
 	void OnAbout(wxCommandEvent& event);
-	void ShowTable();
+	void OnShowRouteTable();
 	void GetTable(wxString myRoute);
-	void AddPosition(double lat, double lon);
-	void AddPosition(double lat, double lon, wxString name);
-	void OnNewPosition(wxCommandEvent& event);
+	void AddChartRoute(wxString myRoute);
 	void AddTidalRoute(TidalRoute tr);
-	void AddConfiguration(RouteMapConfiguration configuration);
-	void OnListLabelEdit(wxListEvent& event);
 
-
-	void Export();
 	void RequestGrib(wxDateTime time);
 	virtual void Lock() { routemutex.Lock(); }
 	virtual void Unlock() { routemutex.Unlock(); }
 	void OverGround(double B, double VB, double C, double VC, double &BG, double &VBG);
 	bool OpenXML(wxString filename, bool reportfailure);
 	void SaveXML(wxString filename);
-	void OnDeletePosition(wxCommandEvent& event);
-	void OnDeleteAllPositions(wxCommandEvent& event);
-	void UpdateColumns();
-	void AddConfiguration(ConfigurationDialog configuration);
 
 	double AttributeDouble(TiXmlElement *e, const char *name, double def);
 	vector<RouteMapPosition>Positions;
@@ -321,7 +312,17 @@ public:
 	RouteProp* routetable;
 	wxDateTime m_GribTimelineTime;
 	ConfigurationDialog m_ConfigurationDialog;
+
+	vector<Position> my_positions;
+	vector<Position> my_points;
+
+	wxString rte_start;
+	wxString rte_end;
 	
+	bool OpenXML(bool gotGPXFile);
+	bool gotMyGPXFile;
+	wxString rawGPXFile;
+	void Addpoint(TiXmlElement* Route, wxString ptlat, wxString ptlon, wxString ptname, wxString ptsym, wxString pttype);
 
 protected:
 	bool m_bNeedsGrib;
@@ -335,18 +336,16 @@ private:
     void OnSize( wxSizeEvent& event );
 
 	void OnSummary(wxCommandEvent& event);
-	void OnNewRoute(wxCommandEvent& event);
-	void OnDeleteRoute(wxCommandEvent& event);
-	//void OnDelete();
+	void OnShowTables(wxCommandEvent& event);
+	
 	void OnDeleteAllRoutes(wxCommandEvent& event);
-    void SetInterval( wxCommandEvent& event );
-	//list<Arrow> GetHourlyCurrent(int i0, int i1);
-	list<Arrow> GetHourlyCurrent();
-	void HourlyCTS(wxCommandEvent& event);
-	void SingleCTS(wxCommandEvent& event);
-	bool GetGribSpdDir(wxDateTime dt, double lat, double lon, double &spd, double &dir);
+	void CalcDR(wxCommandEvent& event, bool write_file, int Pattern);
+	void CalcETA(wxCommandEvent& event, bool write_file, int Pattern);
+	
+	void DRCalculate(wxCommandEvent& event);
+	void ETACalculate(wxCommandEvent& event);
 
-	list<Arrow> GetCTS_DMG(double &CTS);
+	bool GetGribSpdDir(wxDateTime dt, double lat, double lon, double &spd, double &dir);
 
 	int GetRandomNumber(int range_min, int range_max);
 	
@@ -372,10 +371,13 @@ private:
 	wxTimeSpan  myTimeOfDay;
 	bool btc_valid;
 
+	bool error_found;
+	bool dbg;
+	wxString     m_gpx_path;
+
+	wxString waypointName[200];
+
 };
-
-
-WX_DECLARE_LIST(RouteMapPosition, Positions);// establish class as list member
 
 #endif
 

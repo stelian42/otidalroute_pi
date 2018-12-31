@@ -1,33 +1,32 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: opencpn 2.1.0b604\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-17 10:33+0100\n"
-"PO-Revision-Date: 2012-06-03 20:54+0200\n"
-"Last-Translator: Hasan Çetin <boraxtr@yahoo.com>\n"
-"Language-Team: Gunther Pilz <service@opencpn.de>\n"
-"Language: \n"
+"POT-Creation-Date: 2018-12-31 18:12+0000\n"
+"PO-Revision-Date: 2018-02-08 09:11-0500\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Turkish\n"
+"Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: German\n"
-"X-Poedit-Country: GERMANY\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Language: tr\n"
+"X-Crowdin-File: /plugins/otcurrent_pi/po/otcurrent_pi.pot\n"
 #
 msgid "      < 0.5 knots"
 msgstr ""
 #
 #, c-format
-msgid " width = %d height = %d\n"
+msgid "%.1f"
 msgstr ""
 #
-#, c-format
-msgid " x = %d y = %d\n"
+msgid "&About"
+msgstr ""
+#
+msgid "&Guide"
 msgstr ""
 #
 msgid ">= 0.5 and < 1.5"
@@ -37,18 +36,64 @@ msgid ">= 1.5 and < 2.5"
 msgstr ""
 #
 msgid ">= 2.5 and < 3.5"
-msgstr ""
+msgstr ">= 2.5ve < 3.5"
 #
 msgid ">= 3.5 knots    "
 msgstr ""
 #
-msgid "About Tidal Arrows"
+msgid "About Author"
 msgstr ""
 #
-msgid "Cancel"
+msgid "About Weather Routing"
 msgstr ""
 #
-msgid "Date/Time"
+msgid "Bearing"
+msgstr ""
+#
+msgid "CTS"
+msgstr ""
+#
+msgid "Chart Route"
+msgstr ""
+#
+msgid "Close"
+msgstr ""
+#
+msgid "Course to steer"
+msgstr ""
+#
+msgid "DR"
+msgstr ""
+#
+msgid "DR Route has been calculated!"
+msgstr ""
+#
+msgid "DR Route has been charted!"
+msgstr ""
+#
+msgid "Daytime"
+msgstr ""
+#
+msgid "Delete"
+msgstr ""
+#
+msgid "Delete All Routes"
+msgstr ""
+#
+msgid "Delete all routes?\n"
+msgstr ""
+#
+msgid "Depart From"
+msgstr ""
+#
+#, fuzzy
+msgid "Departure Time"
+msgstr "Tarih/Saat"
+#
+msgid "Departure Time (Y/m/d h:m)"
+msgstr ""
+#
+msgid "Destination"
 msgstr ""
 #
 msgid "Display tidal direction"
@@ -57,854 +102,310 @@ msgstr ""
 msgid "Display tidal rates (knots)"
 msgstr ""
 #
+msgid "Distance"
+msgstr ""
+#
+msgid "Duration"
+msgstr ""
+#
+msgid "ETA"
+msgstr ""
+#
+msgid "ETA Route has been charted!"
+msgstr ""
+#
+msgid "ETA Routes have been calculated!"
+msgstr ""
+#
+msgid "End"
+msgstr ""
+#
+msgid "End Time"
+msgstr ""
+#
+msgid "EndTime"
+msgstr ""
+#
+msgid "Error in calculation. Please check input!"
+msgstr ""
+#
+msgid "EvTwilight"
+msgstr ""
+#
+msgid "Export DR Positions in GPX file as"
+msgstr ""
+#
+msgid "Export ETA Positions in GPX file as"
+msgstr ""
+#
+msgid "Failed to load file."
+msgstr ""
+#
+msgid "Failed to load file: "
+msgstr ""
+#
+msgid "Failed to save xml file: "
+msgstr ""
+#
+msgid "File contains duplicate position name, discarding\n"
+msgstr ""
+#
 msgid "Fill Colour"
 msgstr ""
 #
-msgid "Help"
+msgid "From"
 msgstr ""
 #
-msgid "Next"
+msgid "Grib plugin version not supported."
 msgstr ""
 #
-msgid "Now"
+msgid "Import GPX Route file"
+msgstr ""
+#
+msgid "Invalid xml file"
+msgstr ""
+#
+msgid "LMT @ Location"
+msgstr ""
+#
+msgid "Latitude"
+msgstr ""
+#
+msgid "Leg"
+msgstr ""
+#
+msgid "Load"
+msgstr ""
+#
+msgid "Loading"
+msgstr ""
+#
+msgid "Local @ PC"
+msgstr ""
+#
+msgid "Longitude"
+msgstr ""
+#
+msgid "MoTwilight"
+msgstr ""
+#
+msgid "Name"
+msgstr ""
+#
+msgid "Nighttime"
+msgstr ""
+#
+msgid "No routes found. Please make a route"
+msgstr ""
+#
+msgid "No routes have been calculated"
 msgstr ""
 #
 msgid "OK"
 msgstr ""
 #
+msgid "Open the GRIB plugin and select a time!"
+msgstr ""
 #
-#, fuzzy
+msgid "Plan Speed"
+msgstr ""
+#
+msgid "Please enter a name for the route!"
+msgstr ""
+#
+msgid "Please select a route"
+msgstr ""
+#
+msgid "Please select or generate a route"
+msgstr ""
+#
 msgid "Preferences"
-msgstr "GRIB Seçenekleri"
-#
-msgid "Previous"
 msgstr ""
 #
-msgid "START Date/Time"
+msgid "Properties"
 msgstr ""
 #
-msgid "Select"
+msgid "Route"
 msgstr ""
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "Select a folder"
-msgstr "GRIB dosyasını seçin"
-#
-msgid "Select date/time for current prediction"
+msgid "Route Calculation Type:"
 msgstr ""
 #
-msgid "Step (Minutes)"
+msgid "Route Properties"
+msgstr ""
+#
+msgid "Route Table"
+msgstr ""
+#
+msgid "Route name already exists, please edit the name"
 msgstr ""
 #
 msgid ""
-"Tidal Current\n"
-"--------------------------------------------------------------\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"Use this data with caution.\n"
-"Use in conjunction with Tidal Current Atlases and Tidal Diamonds\n"
-"\n"
-"--------------------------------------------------------------------\n"
-"\n"
-"Note: 1 Rates shown are for a position corresponding to the centre\n"
-"of the base of the arrow. Tidal rate is shown as knots.\n"
-"\n"
+"Route start date is not compatible with this Grib \n"
+" Or Grib is not available for part of the route"
+msgstr ""
+#
+msgid "RouteCalculation Type:"
+msgstr ""
+#
+msgid "RouteName"
+msgstr ""
+#
+msgid "Routes"
+msgstr ""
+#
+msgid "Speed"
+msgstr ""
+#
+msgid "Start"
 msgstr ""
 #
 #, fuzzy
+msgid "Start Time"
+msgstr "Tarih/Saat"
+#
+#, fuzzy
+msgid "StartTime"
+msgstr "Tarih/Saat"
+#
+msgid "Sunrise"
+msgstr ""
+#
+msgid "Sunset"
+msgstr ""
+#
+msgid ""
+"The oTidalRoute plugin for opencpn is intended to calculate routes based on "
+"computerized tidal data.\n"
+"\n"
+"License: GPLv3+\n"
+"\n"
+"Source Code:\n"
+"https://github.com/rasbats/oTidalRoute_pi\n"
+"\n"
+"Author:\n"
+"Mike Rossiter\n"
+"\n"
+"Many thanks to all translators and testers."
+msgstr ""
+#
 msgid "Tidal Current Arrow Colour"
-msgstr "GRIB Görüntü Denetim Panosu"
+msgstr ""
+#
+msgid "Tidal Rate"
+msgstr ""
+#
+msgid "Tidal Routes"
+msgstr ""
+#
+msgid "Tidal Set"
+msgstr ""
+#
+msgid "TidalRoutingInformation.html"
+msgstr ""
 #
 #, fuzzy
-msgid "Tidal Current Control"
-msgstr "GRIB Görüntü Denetim Panosu"
+msgid "Time"
+msgstr "Tarih/Saat"
 #
-msgid "Tidal Data Folder"
+msgid "Time Enroute"
 msgstr ""
 #
-msgid "Tide Calendar"
+msgid "Times shown as"
 msgstr ""
 #
-msgid "Time:"
+msgid "To Waypoint"
 msgstr ""
 #
-msgid "Using Tide/Current data from:  "
+msgid "Total Distance"
 msgstr ""
 #
+msgid "Towards"
+msgstr ""
 #
+msgid "Type"
+msgstr ""
 #
-#, fuzzy
-msgid "otcurrent"
-msgstr "Akıntı hızı, Kts"
-#
-#, fuzzy
-msgid "otcurrent PlugIn for OpenCPN"
-msgstr "OpenCPN GRIB Eklentisi"
+msgid "UTC"
+msgstr ""
 #
 msgid ""
-"otcurrent PlugIn for OpenCPN\n"
-"Provides an overlay of Tidal Current (Stream) Arrows.\n"
+"Unable to calculate ETA over two legs at this speed. \n"
+"\n"
+" Aborting"
+msgstr ""
+#
+msgid ""
+"Unable to compute speed over ground with this tide and boat speed, \n"
+"\n"
+" Aborting"
+msgstr ""
+#
+msgid "Unrecognized xml node"
+msgstr ""
+#
+#, c-format
+msgid "Use versions %d.%d to %d.%d"
+msgstr ""
+#
+msgid "Waypoint Properties"
+msgstr ""
+#
+msgid "Waypoints"
+msgstr ""
+#
+msgid "Weather Routing"
+msgstr ""
+#
+msgid "error in input range validation"
+msgstr ""
+#
+msgid "oTidalRoute"
+msgstr ""
+#
+msgid "oTidalRoute Plugin Version"
+msgstr ""
+#
+msgid "otidalroute"
+msgstr ""
+#
+msgid "otidalroute PlugIn for OpenCPN"
+msgstr ""
+#
+msgid ""
+"otidalroute PlugIn for OpenCPN\n"
+"Calculates EP positions/Courses using Grib tidal current data.\n"
 "\n"
 "\t\t\t   "
 msgstr ""
 #
+msgid "rte Invalid xml file"
+msgstr ""
 #
 #
+#~ msgid "About Tidal Arrows"
+#~ msgstr "Gelgit Okları hakkında"
 #
 #
+#~ msgid "Help"
+#~ msgstr "Yardım"
 #
 #
+#~ msgid "Next"
+#~ msgstr "Sonraki"
 #
 #
+#~ msgid "Now"
+#~ msgstr "Şimdi"
 #
 #
+#~ msgid "Previous"
+#~ msgstr "Önceki"
 #
 #
+#~ msgid "Select a folder"
+#~ msgstr "Bir klasör seçiniz"
 #
 #
-#
-#
-#
-#, fuzzy
-msgid "otcurrent Settings"
-msgstr "GRIB Seçenekleri"
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentDialogPosX"
-msgstr "Akıntı hızı, Kts"
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentDialogPosY"
-msgstr "Akıntı hızı, Kts"
-#
-#
-#
-#, fuzzy
-msgid "otcurrentDialogSizeX"
-msgstr "Akıntı hızı, Kts"
-#
-#
-#
-#, fuzzy
-msgid "otcurrentDialogSizeY"
-msgstr "Akıntı hızı, Kts"
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentFolder"
-msgstr "Akıntı hızı, Kts"
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentInterval"
-msgstr "Akıntı hızı, Kts"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentUseDirection"
-msgstr "GRIB Seçenekleri"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentUseFillColour"
-msgstr "GRIB Seçenekleri"
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentUseRate"
-msgstr "Akıntı hızı, Kts"
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "/Settings/otcurrent"
-#~ msgstr "Akıntı hızı, Kts"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Colors"
-#~ msgstr "&Kapat"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Current"
-#~ msgstr "Akıntı hızı, Kts"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Data Display Preferences"
-#~ msgstr "GRIB Seçenekleri"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "GRIB"
-#~ msgstr "GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "GRIB File Directory"
-#~ msgstr "GRIB Dosya Klasörü"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Grib"
-#~ msgstr "GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view invisible overlays:"
-#~ msgstr ""
-#~ "Zur Anzeige der ausgeblendeten HTSGW GRIB-Daten bitte herauszoom oder "
-#~ "Maßstab verkleinern."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Air Temp.(2m) GRIB"
-#~ msgstr ""
-#~ "Zur Anzeige der ausgeblendeten GRIB Wassertemperatur bitte herauszoom oder "
-#~ "Maßstab verkleinern."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed CURRENT GRIB"
-#~ msgstr ""
-#~ "Zur Anzeige der ausgeblendeten GRIB Ozean-Strömung bitte herauszoom oder "
-#~ "Maßstab verkleinern."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Clouds Cover GRIB"
-#~ msgstr ""
-#~ "Zur Anzeige der ausgeblendeten GRIB Ozean-Strömung bitte herauszoom oder "
-#~ "Maßstab verkleinern."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Sea Surf.Temp. GRIB"
-#~ msgstr ""
-#~ "Zur Anzeige der ausgeblendeten GRIB Wassertemperatur bitte herauszoom oder "
-#~ "Maßstab verkleinern."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Total Rainfall GRIB"
-#~ msgstr ""
-#~ "Zur Anzeige der ausgeblendeten CRAIN GRIB-Daten bitte herauszoom oder "
-#~ "Maßstab verkleinern."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Pressure"
-#~ msgstr "Basınç, mBar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Pressure (MSL)"
-#~ msgstr "Basınç, mBar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Sea Temp"
-#~ msgstr "Deniz yüzey sıcaklığı, °C"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Show GRIB icon"
-#~ msgstr "GRIB simgesini göster"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Sign.Wave Height"
-#~ msgstr "Belirgin dalga yüksekliği, m"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Use High Definition Graphics"
-#~ msgstr "Yüksek çözünürlükte grafik kullan."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "WARNING:  QuickScat GRIB data is %d hours old."
-#~ msgstr "DİKKAT: Acele GRIB verileri %d saat eskidir."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Direction(10m)"
-#~ msgstr "Rüzgar yönü"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Speed and Direction(10m)"
-#~ msgstr "Rüzgar yönü"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Speed(10m)"
-#~ msgstr "Rüzgar hızı, Kts."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Wind Speed, Kts."
-#~ msgstr "Rüzgar hızı, Kts."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "tcdata"
-#~ msgstr "GRIB Verileri"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid ""
-#~ "tcurrent PlugIn for OpenCPN\n"
-#~ "Provides basic tcurrent file overlay capabilities for several tcurrent "
-#~ "file types.\n"
-#~ "\n"
-#~ "Supported tcurrent file types include:\n"
-#~ "- wind direction and speed\n"
-#~ "- significant wave height\n"
-#~ "- sea surface temperature\n"
-#~ "- surface current direction and speed."
-#~ msgstr ""
-#~ "OpenCPN GRIB Eklentisi\n"
-#~ "Birçok GRIB dosya türünü haritada görüntüler.\n"
-#~ "\n"
-#~ "Desteklenen GRIB dosya türleri:\n"
-#~ "- Rüzgar yönü ve hızı\n"
-#~ "- Belirin dalga yüksekliği\n"
-#~ "- Deniz yüzey suyu sıcaklığı\n"
-#~ "- Yüzey akıntılarının yönü ve hızı."
+#~ msgid "Using Tide/Current data from:  "
+#~ msgstr "Gelgit / Geçerli verileri şu adresten kullan:  "

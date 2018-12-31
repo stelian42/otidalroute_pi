@@ -516,7 +516,7 @@ void RouteProp::CreateControlsCompact()
     
     
     
-    m_pListSizer->Add( itemlistWin, 0, wxEXPAND | wxALL, 6 );
+    m_pListSizer->Add( itemlistWin, 1, wxEXPAND | wxALL, 6 );
     
     
     //      Create the list control
@@ -556,12 +556,11 @@ void RouteProp::CreateControlsCompact()
 
     m_wpList->InsertColumn( 4, _("Latitude"), wxLIST_FORMAT_LEFT, char_size * 11 );
     m_wpList->InsertColumn( 5, _("Longitude"), wxLIST_FORMAT_LEFT, char_size * 11 );
-    m_wpList->InsertColumn( 6, _("ETE/ETD"), wxLIST_FORMAT_LEFT, char_size * 15 );
+    m_wpList->InsertColumn( 6, _("ETA"), wxLIST_FORMAT_LEFT, char_size * 15 );
     m_wpList->InsertColumn( 7, _("Speed"), wxLIST_FORMAT_CENTER, char_size * 9 );
-    m_wpList->InsertColumn( 8, _("CTS"), wxLIST_FORMAT_LEFT, char_size * 11 );
-    m_wpList->InsertColumn( 9, _("T.Set"), wxLIST_FORMAT_LEFT, char_size * 11 );
-
-    m_wpList->InsertColumn( 10, _("T.Rate"), wxLIST_FORMAT_LEFT, char_size * 10 );
+    m_wpList->InsertColumn( 8, _("Course to steer"), wxLIST_FORMAT_LEFT, char_size * 11 );
+    m_wpList->InsertColumn( 9, _("Tidal Set"), wxLIST_FORMAT_LEFT, char_size * 11 );
+    m_wpList->InsertColumn( 10, _("Tidal Rate"), wxLIST_FORMAT_LEFT, char_size * 10 );
 
     
    
@@ -653,7 +652,7 @@ void RouteProp::CreateControls()
                               wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT | wxTOP,
                               5 );
     
-    m_StartTimeLabel = new wxStaticText( itemDialog1, wxID_STATIC, _("Departure Time (m/d/y h:m)"),
+    m_StartTimeLabel = new wxStaticText( itemDialog1, wxID_STATIC, _("Departure Time (Y/m/d h:m)"),
                                          wxDefaultPosition, wxDefaultSize, 0 );
     itemFlexGridSizer6a->Add( m_StartTimeLabel, 0,
                               wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxLEFT | wxRIGHT | wxTOP,
@@ -725,13 +724,13 @@ void RouteProp::CreateControls()
         wxBoxSizer* itemBoxSizerBottom = new wxBoxSizer( wxHORIZONTAL );
         itemBoxSizer1->Add( itemBoxSizerBottom, 0, wxALIGN_LEFT | wxALL | wxEXPAND, 5 );
         
-        wxBoxSizer* itemBoxSizerAux = new wxBoxSizer( wxHORIZONTAL );
-        itemBoxSizerBottom->Add( itemBoxSizerAux, 1, wxALIGN_LEFT | wxALL, 3 );
+        //wxBoxSizer* itemBoxSizerAux = new wxBoxSizer( wxHORIZONTAL );
+        //itemBoxSizerBottom->Add( itemBoxSizerAux, 1, wxALIGN_LEFT | wxALL, 3 );
         
-        m_PrintButton = new wxButton( this, ID_ROUTEPROP_PRINT, _("Print Route"),
-          wxDefaultPosition, wxDefaultSize, 0 );
-        itemBoxSizerAux->Add( m_PrintButton, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 3 );
-        m_PrintButton->Enable( true );            
+        //m_PrintButton = new wxButton( this, ID_ROUTEPROP_PRINT, _("Print Route"),
+         // wxDefaultPosition, wxDefaultSize, 0 );
+        //itemBoxSizerAux->Add( m_PrintButton, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 3 );
+        //m_PrintButton->Enable( true );            
       
       wxBoxSizer* itemBoxSizer16 = new wxBoxSizer( wxHORIZONTAL );
       itemBoxSizerBottom->Add( itemBoxSizer16, 0, wxALIGN_RIGHT | wxALL, 3 );
@@ -759,12 +758,11 @@ void RouteProp::CreateControls()
       
       m_wpList->InsertColumn( 4, _("Latitude"), wxLIST_FORMAT_LEFT, char_size * 11 );
       m_wpList->InsertColumn( 5, _("Longitude"), wxLIST_FORMAT_LEFT, char_size * 11 );
-      m_wpList->InsertColumn( 6, _("ETE/ETD"), wxLIST_FORMAT_LEFT, char_size * 15 );
+      m_wpList->InsertColumn( 6, _("ETA"), wxLIST_FORMAT_LEFT, char_size * 15 );
       m_wpList->InsertColumn( 7, _("Speed"), wxLIST_FORMAT_CENTER, char_size * 9 );
       m_wpList->InsertColumn( 8, _("CTS"), wxLIST_FORMAT_LEFT, char_size * 11 );
-      m_wpList->InsertColumn( 9, _("T.Set"), wxLIST_FORMAT_LEFT, char_size * 11 );
-    
-          m_wpList->InsertColumn( 10, _("T.Rate"), wxLIST_FORMAT_LEFT, char_size * 10 );
+      m_wpList->InsertColumn( 9, _("Tidal Set"), wxLIST_FORMAT_LEFT, char_size * 11 );
+	  m_wpList->InsertColumn( 10, _("Tidal Rate"), wxLIST_FORMAT_LEFT, char_size * 10 );
       
       
       //Set the maximum size of the entire  dialog

@@ -172,8 +172,6 @@ public:
     /// Should we show tooltips?
     static bool ShowToolTips();
 
-    bool SaveChanges(void);
-
     wxTextCtrl  *m_TotalDistCtl;
     wxTextCtrl  *m_PlanSpeedCtl;
     wxTextCtrl	*m_StartTimeCtl;
