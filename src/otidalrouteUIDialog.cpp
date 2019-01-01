@@ -38,7 +38,6 @@
 #include <time.h>
 
 #include "otidalroute_pi.h"
-#include "folder.xpm"
 #include "icons.h"
 #include <wx/arrimpl.cpp>
 

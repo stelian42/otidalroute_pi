@@ -40,6 +40,9 @@ SET(SRC_otidalroute
 		src/AboutDialog.h
         src/bbox.cpp
         src/bbox.h
+		src/GribRecord.cpp
+		src/GribRecord.h
+		src/GribRecordSet.h
         src/otidalroute_pi.h
         src/otidalroute_pi.cpp
         src/otidalrouteOverlayFactory.cpp
@@ -50,16 +53,13 @@ SET(SRC_otidalroute
         src/otidalrouteUIDialog.h
         src/icons.h
         src/icons.cpp
-        src/tcmgr.cpp
-        src/timectrl.cpp
-        src/timectrl.h
+        src/tcmgr.cpp       
         src/tcmgr.h
         src/tinystr.h
 	    src/tinyxml.h
 		src/tinyxml.cpp
 	    src/tinyxmlerror.cpp
-		src/tinyxmlparser.cpp
-		src/GribRecord.cpp
+		src/tinyxmlparser.cpp		
 		src/Navfunc.cpp
 		src/Navfunc.h
 		src/routeprop.cpp

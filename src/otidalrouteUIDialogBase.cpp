@@ -18,7 +18,7 @@ otidalrouteUIDialogBase::otidalrouteUIDialogBase(wxWindow* parent, wxWindowID id
 	wxFlexGridSizer* fgSizer1;
 	fgSizer1 = new wxFlexGridSizer(0, 1, 0, 0);
 	fgSizer1->SetFlexibleDirection(wxBOTH);
-	fgSizer1->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+	fgSizer1->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_ALL);
 
 	wxStaticBoxSizer* sbSizer4;
 	sbSizer4 = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, wxT("Calculation")), wxHORIZONTAL);

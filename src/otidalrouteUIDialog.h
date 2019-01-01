@@ -43,7 +43,7 @@
 #include <wx/progdlg.h>
 #include <list>
 #include <vector>
-
+#include "GribRecordSet.h"
 #include "tcmgr.h"
 #include "wx/dateevt.h"
 #include "wx/stattext.h"
@@ -51,12 +51,10 @@
 #include "wx/dialog.h"
 #include <wx/calctrl.h>
 #include "wx/window.h"
-#include "timectrl.h"
 #include <wx/colordlg.h>
 #include <wx/event.h>
 #include "wx/jsonreader.h"
 #include "wx/jsonwriter.h"
-#include "GribRecordSet.h"
 #include "tinyxml.h"
 #include <wx/scrolwin.h>
 #include <wx/datetime.h>
