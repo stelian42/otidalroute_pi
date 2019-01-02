@@ -1,863 +1,433 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: grib_pi 2.2.1207\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-17 10:33+0100\n"
-"PO-Revision-Date: 2010-12-20 18:23+0200\n"
-"Last-Translator: ΓΙΑΝΝΗΣ <ogog1@otenet.gr>\n"
-"Language-Team: \n"
-"Language: \n"
+"POT-Creation-Date: 2018-12-31 18:12+0000\n"
+"PO-Revision-Date: 2018-02-08 09:11-0500\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Greek\n"
+"Language: el_GR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Language: el\n"
+"X-Crowdin-File: /plugins/otcurrent_pi/po/otcurrent_pi.pot\n"
 #
 msgid "      < 0.5 knots"
-msgstr ""
+msgstr "      < 0.5 κόμβους"
 #
 #, c-format
-msgid " width = %d height = %d\n"
+msgid "%.1f"
 msgstr ""
 #
-#, c-format
-msgid " x = %d y = %d\n"
+msgid "&About"
+msgstr ""
+#
+msgid "&Guide"
 msgstr ""
 #
 msgid ">= 0.5 and < 1.5"
-msgstr ""
+msgstr "> = 0,5 και < 1,5"
 #
 msgid ">= 1.5 and < 2.5"
-msgstr ""
+msgstr "> = 1.5 και < 2.5"
 #
 msgid ">= 2.5 and < 3.5"
-msgstr ""
+msgstr "> = 2.5 και < 3.5"
 #
 msgid ">= 3.5 knots    "
+msgstr "> = 3,5 knots    "
+#
+msgid "About Author"
 msgstr ""
 #
-msgid "About Tidal Arrows"
+msgid "About Weather Routing"
 msgstr ""
 #
-msgid "Cancel"
+msgid "Bearing"
 msgstr ""
 #
-msgid "Date/Time"
+msgid "CTS"
+msgstr ""
+#
+msgid "Chart Route"
+msgstr ""
+#
+msgid "Close"
+msgstr ""
+#
+msgid "Course to steer"
+msgstr ""
+#
+msgid "DR"
+msgstr ""
+#
+msgid "DR Route has been calculated!"
+msgstr ""
+#
+msgid "DR Route has been charted!"
+msgstr ""
+#
+msgid "Daytime"
+msgstr ""
+#
+msgid "Delete"
+msgstr ""
+#
+msgid "Delete All Routes"
+msgstr ""
+#
+msgid "Delete all routes?\n"
+msgstr ""
+#
+msgid "Depart From"
+msgstr ""
+#
+#, fuzzy
+msgid "Departure Time"
+msgstr "Ημερομηνία/Ώρα"
+#
+msgid "Departure Time (Y/m/d h:m)"
+msgstr ""
+#
+msgid "Destination"
 msgstr ""
 #
 msgid "Display tidal direction"
-msgstr ""
+msgstr "Δείξε παλιρροιακή κατεύθυνση"
 #
 msgid "Display tidal rates (knots)"
+msgstr "Δείξε παλιρροιακές ταχύτητες (κόμβους)"
+#
+msgid "Distance"
+msgstr ""
+#
+msgid "Duration"
+msgstr ""
+#
+msgid "ETA"
+msgstr ""
+#
+msgid "ETA Route has been charted!"
+msgstr ""
+#
+msgid "ETA Routes have been calculated!"
+msgstr ""
+#
+msgid "End"
+msgstr ""
+#
+msgid "End Time"
+msgstr ""
+#
+msgid "EndTime"
+msgstr ""
+#
+msgid "Error in calculation. Please check input!"
+msgstr ""
+#
+msgid "EvTwilight"
+msgstr ""
+#
+msgid "Export DR Positions in GPX file as"
+msgstr ""
+#
+msgid "Export ETA Positions in GPX file as"
+msgstr ""
+#
+msgid "Failed to load file."
+msgstr ""
+#
+msgid "Failed to load file: "
+msgstr ""
+#
+msgid "Failed to save xml file: "
+msgstr ""
+#
+msgid "File contains duplicate position name, discarding\n"
 msgstr ""
 #
 msgid "Fill Colour"
+msgstr "Εσωτερικό χρώμα"
+#
+msgid "From"
 msgstr ""
 #
-msgid "Help"
+msgid "Grib plugin version not supported."
 msgstr ""
 #
-msgid "Next"
+msgid "Import GPX Route file"
 msgstr ""
 #
-msgid "Now"
+msgid "Invalid xml file"
+msgstr ""
+#
+msgid "LMT @ Location"
+msgstr ""
+#
+msgid "Latitude"
+msgstr ""
+#
+msgid "Leg"
+msgstr ""
+#
+msgid "Load"
+msgstr ""
+#
+msgid "Loading"
+msgstr ""
+#
+msgid "Local @ PC"
+msgstr ""
+#
+msgid "Longitude"
+msgstr ""
+#
+msgid "MoTwilight"
+msgstr ""
+#
+msgid "Name"
+msgstr ""
+#
+msgid "Nighttime"
+msgstr ""
+#
+msgid "No routes found. Please make a route"
+msgstr ""
+#
+msgid "No routes have been calculated"
 msgstr ""
 #
 msgid "OK"
 msgstr ""
 #
+msgid "Open the GRIB plugin and select a time!"
+msgstr ""
 #
+msgid "Plan Speed"
+msgstr ""
 #
-#, fuzzy
+msgid "Please enter a name for the route!"
+msgstr ""
+#
+msgid "Please select a route"
+msgstr ""
+#
+msgid "Please select or generate a route"
+msgstr ""
+#
 msgid "Preferences"
-msgstr "Ιδιότητες GRIB"
+msgstr "Προτιμήσεις"
 #
-msgid "Previous"
+msgid "Properties"
 msgstr ""
 #
-msgid "START Date/Time"
+msgid "Route"
 msgstr ""
 #
-msgid "Select"
+msgid "Route Calculation Type:"
 msgstr ""
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "Select a folder"
-msgstr "Διάλεξε φάκελο αρχείων GRIB"
-#
-msgid "Select date/time for current prediction"
+msgid "Route Properties"
 msgstr ""
 #
-msgid "Step (Minutes)"
+msgid "Route Table"
+msgstr ""
+#
+msgid "Route name already exists, please edit the name"
 msgstr ""
 #
 msgid ""
-"Tidal Current\n"
-"--------------------------------------------------------------\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"Use this data with caution.\n"
-"Use in conjunction with Tidal Current Atlases and Tidal Diamonds\n"
-"\n"
-"--------------------------------------------------------------------\n"
-"\n"
-"Note: 1 Rates shown are for a position corresponding to the centre\n"
-"of the base of the arrow. Tidal rate is shown as knots.\n"
-"\n"
+"Route start date is not compatible with this Grib \n"
+" Or Grib is not available for part of the route"
 msgstr ""
 #
+msgid "RouteCalculation Type:"
+msgstr ""
+#
+msgid "RouteName"
+msgstr ""
+#
+msgid "Routes"
+msgstr ""
+#
+msgid "Speed"
+msgstr ""
+#
+msgid "Start"
+msgstr ""
 #
 #, fuzzy
+msgid "Start Time"
+msgstr "Ημερομηνία/Ώρα"
+#
+#, fuzzy
+msgid "StartTime"
+msgstr "Ημερομηνία/Ώρα"
+#
+msgid "Sunrise"
+msgstr ""
+#
+msgid "Sunset"
+msgstr ""
+#
+msgid ""
+"The oTidalRoute plugin for opencpn is intended to calculate routes based on "
+"computerized tidal data.\n"
+"\n"
+"License: GPLv3+\n"
+"\n"
+"Source Code:\n"
+"https://github.com/rasbats/oTidalRoute_pi\n"
+"\n"
+"Author:\n"
+"Mike Rossiter\n"
+"\n"
+"Many thanks to all translators and testers."
+msgstr ""
+#
 msgid "Tidal Current Arrow Colour"
-msgstr "Έλεγχος Εμφάνησης GRIB"
-#
-#
-#, fuzzy
-msgid "Tidal Current Control"
-msgstr "Έλεγχος Εμφάνησης GRIB"
-#
-msgid "Tidal Data Folder"
-msgstr ""
-#
-msgid "Tide Calendar"
-msgstr ""
-#
-msgid "Time:"
-msgstr ""
-#
-msgid "Using Tide/Current data from:  "
-msgstr ""
-#
+msgstr "Χρώμα βέλους παλιρροιακού ρεύματος"
 #
 #, fuzzy
-msgid "otcurrent"
-msgstr "Τρέχουσα Ταχύτητα, Kts. "
+msgid "Tidal Rate"
+msgstr "Φάκελος δεδομένων παλίρροιας"
 #
+msgid "Tidal Routes"
+msgstr ""
+#
+msgid "Tidal Set"
+msgstr ""
+#
+msgid "TidalRoutingInformation.html"
+msgstr ""
 #
 #, fuzzy
-msgid "otcurrent PlugIn for OpenCPN"
-msgstr "Επιπρόσθετο GRIB για το OpenCPN"
+msgid "Time"
+msgstr "Ημερομηνία/Ώρα"
+#
+msgid "Time Enroute"
+msgstr ""
+#
+msgid "Times shown as"
+msgstr ""
+#
+msgid "To Waypoint"
+msgstr ""
+#
+msgid "Total Distance"
+msgstr ""
+#
+msgid "Towards"
+msgstr ""
+#
+msgid "Type"
+msgstr ""
+#
+msgid "UTC"
+msgstr ""
 #
 msgid ""
-"otcurrent PlugIn for OpenCPN\n"
-"Provides an overlay of Tidal Current (Stream) Arrows.\n"
+"Unable to calculate ETA over two legs at this speed. \n"
+"\n"
+" Aborting"
+msgstr ""
+#
+msgid ""
+"Unable to compute speed over ground with this tide and boat speed, \n"
+"\n"
+" Aborting"
+msgstr ""
+#
+msgid "Unrecognized xml node"
+msgstr ""
+#
+#, c-format
+msgid "Use versions %d.%d to %d.%d"
+msgstr ""
+#
+msgid "Waypoint Properties"
+msgstr ""
+#
+msgid "Waypoints"
+msgstr ""
+#
+msgid "Weather Routing"
+msgstr ""
+#
+msgid "error in input range validation"
+msgstr ""
+#
+msgid "oTidalRoute"
+msgstr ""
+#
+msgid "oTidalRoute Plugin Version"
+msgstr ""
+#
+msgid "otidalroute"
+msgstr ""
+#
+#, fuzzy
+msgid "otidalroute PlugIn for OpenCPN"
+msgstr "Πρόσθετο otcurrent για το OpenCPN"
+#
+msgid ""
+"otidalroute PlugIn for OpenCPN\n"
+"Calculates EP positions/Courses using Grib tidal current data.\n"
 "\n"
 "\t\t\t   "
 msgstr ""
 #
+msgid "rte Invalid xml file"
+msgstr ""
 #
 #
+#~ msgid "About Tidal Arrows"
+#~ msgstr "Για τα παλιρροιακά βέλη"
 #
 #
+#~ msgid "Help"
+#~ msgstr "Βοήθεια"
 #
 #
+#~ msgid "Next"
+#~ msgstr "Επόμενο"
 #
 #
+#~ msgid "Now"
+#~ msgstr "Τώρα"
 #
 #
+#~ msgid "Previous"
+#~ msgstr "Προηγούμενο"
 #
 #
+#~ msgid "Select a folder"
+#~ msgstr "Επιλέξτε ένα φάκελο"
 #
 #
+#~ msgid "Step (Minutes)"
+#~ msgstr "Βήμα (λεπτά)"
 #
 #
+#~ msgid "Using Tide/Current data from:  "
+#~ msgstr "Χρήση δεδομένων παλίρροιας/ρευμάτων από:  "
 #
-#, fuzzy
-msgid "otcurrent Settings"
-msgstr "Ιδιότητες GRIB"
 #
+#~ msgid "otcurrent"
+#~ msgstr "otcurrent"
 #
 #
-#
-#, fuzzy
-msgid "otcurrentDialogPosX"
-msgstr "Τρέχουσα Ταχύτητα, Kts. "
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentDialogPosY"
-msgstr "Τρέχουσα Ταχύτητα, Kts. "
-#
-#
-#, fuzzy
-msgid "otcurrentDialogSizeX"
-msgstr "Τρέχουσα Ταχύτητα, Kts. "
-#
-#
-#, fuzzy
-msgid "otcurrentDialogSizeY"
-msgstr "Τρέχουσα Ταχύτητα, Kts. "
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentFolder"
-msgstr "Τρέχουσα Ταχύτητα, Kts. "
-#
-#
-#
-#, fuzzy
-msgid "otcurrentInterval"
-msgstr "Τρέχουσα Ταχύτητα, Kts. "
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentUseDirection"
-msgstr "Ιδιότητες GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "otcurrentUseFillColour"
-msgstr "Ιδιότητες GRIB"
-#
-#
-#
-#, fuzzy
-msgid "otcurrentUseRate"
-msgstr "Τρέχουσα Ταχύτητα, Kts. "
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "/Settings/otcurrent"
-#~ msgstr "Τρέχουσα Ταχύτητα, Kts. "
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Colors"
-#~ msgstr "&Κλείσιμο"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Current"
-#~ msgstr "Τρέχουσα Ταχύτητα, Kts. "
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Data Display Preferences"
-#~ msgstr "Ιδιότητες GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "GRIB"
-#~ msgstr "GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "GRIB File Directory"
-#~ msgstr "Φάκελος Αρχείων GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Grib"
-#~ msgstr "Grib"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view invisible overlays:"
-#~ msgstr "Παρακαλώ μεγένθυνε ή σμίκρυνε για να δείς καλυμμένα HTSGW GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Air Temp.(2m) GRIB"
-#~ msgstr "Παρακαλώ μεγένθυνε ή σμίκρυνε για να δείς καλυμμένα SEATEMP GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed CURRENT GRIB"
-#~ msgstr ""
-#~ "Παρακαλώ μεγένθυνε ή σμίκρυνε για να δείς καλυμμένα OCEAN CURRENT GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Clouds Cover GRIB"
-#~ msgstr ""
-#~ "Παρακαλώ μεγένθυνε ή σμίκρυνε για να δείς καλυμμένα OCEAN CURRENT GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Sea Surf.Temp. GRIB"
-#~ msgstr "Παρακαλώ μεγένθυνε ή σμίκρυνε για να δείς καλυμμένα SEATEMP GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Total Rainfall GRIB"
-#~ msgstr "Παρακαλώ μεγένθυνε ή σμίκρυνε για να δείς καλυμμένα CRAIN GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Pressure"
-#~ msgstr "Ατμ. Πίεση, mBar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Pressure (MSL)"
-#~ msgstr "Ατμ. Πίεση, mBar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Sea Temp"
-#~ msgstr "Θερμοκρασία Επιφανείας, C "
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Show GRIB icon"
-#~ msgstr "Δείξε εικόνα GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Sign.Wave Height"
-#~ msgstr "Διακριτό ύψος Κύματος, m(μέτρα) "
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Use High Definition Graphics"
-#~ msgstr "Χρησιμοποίησε Γραφικά Υψηλής Ευκρίνιας"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "WARNING:  QuickScat GRIB data is %d hours old."
-#~ msgstr ""
-#~ "ΠΡΟΣΟΧΗ:  Τα στοιχεία του αρχείου GRIB από το QuickScat είναι  %d  Ώρες "
-#~ "παλιά."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Direction(10m)"
-#~ msgstr "Διεύθυνση Ανέμου"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Speed and Direction(10m)"
-#~ msgstr "Διεύθυνση Ανέμου"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Speed(10m)"
-#~ msgstr "Ταχύτητα Ανέμου, Kts"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Wind Speed, Kts."
-#~ msgstr "Ταχύτητα Ανέμου, Kts"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "tcdata"
-#~ msgstr "Στοιχεία GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
 #~ msgid ""
-#~ "tcurrent PlugIn for OpenCPN\n"
-#~ "Provides basic tcurrent file overlay capabilities for several tcurrent "
-#~ "file types.\n"
+#~ "otcurrent PlugIn for OpenCPN\n"
+#~ "Provides an overlay of Tidal Current (Stream) Arrows.\n"
 #~ "\n"
-#~ "Supported tcurrent file types include:\n"
-#~ "- wind direction and speed\n"
-#~ "- significant wave height\n"
-#~ "- sea surface temperature\n"
-#~ "- surface current direction and speed."
+#~ "\t\t\t   "
 #~ msgstr ""
-#~ "Επιπρόσθετο GRIB για το OpenCPN\n"
-#~ "Παρέχει Δυνατότητες εμφάνησης αρχείων GRIB για διάφορα αρχεία GRIB.\n"
+#~ "Πρόσθετο otcurrent για το OpenCPN\n"
+#~ " Δείχνει τα παλιρροιακά ρεύματα (ροή) ως βέλη.\n"
 #~ "\n"
-#~ "Οι υποστηριζόμενοι τύποι αρχείων GRIB περιλαμβάνουν:\n"
-#~ "-  κατεύθυνση και ταχύτητα ανέμου\n"
-#~ "-  διακριτό ύψος κύματος\n"
-#~ "-  Θερμοκρασία Επιφανείας\n"
-#~ "-  επίκαιρη επιφανειακή κατεύθυνση και ταχύτητα."
+#~ "\t\t\t   "

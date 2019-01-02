@@ -153,26 +153,9 @@ public:
 	
     void SetDialogTitle(const wxString & title);
 	void OnRoutepropOkClick( wxCommandEvent& event );
-	/*
-    void OnRoutepropCancelClick( wxCommandEvent& event );
-    
-    void OnPlanSpeedCtlUpdated( wxCommandEvent& event );
-    void OnStartTimeCtlUpdated( wxCommandEvent& event );
-    void OnTimeZoneSelected( wxCommandEvent& event );
-    void OnRoutepropListClick( wxListEvent& event );
-    void OnRoutepropSplitClick( wxCommandEvent& event );
-    void OnRoutepropExtendClick( wxCommandEvent& event );
-    void OnRoutepropPrintClick( wxCommandEvent& event );
-    void OnRoutepropCopyTxtClick( wxCommandEvent& event );
-    void OnRoutePropMenuSelected( wxCommandEvent &event );
-    bool IsThisRouteExtendable();
-    void OnEvtColDragEnd(wxListEvent& event);
-    void InitializeList();
-    */
+	
     /// Should we show tooltips?
     static bool ShowToolTips();
-
-    bool SaveChanges(void);
 
     wxTextCtrl  *m_TotalDistCtl;
     wxTextCtrl  *m_PlanSpeedCtl;
@@ -208,8 +191,7 @@ public:
     int         m_nSelected; // index of point selected in Properties dialog row
     int         m_tz_selection;
 
-    wxDateTime	 m_starttime; // kept as UTC
-//    wxRadioBox	*pDispTz;
+    wxDateTime	  m_starttime; // kept as UTC
     wxStaticText  *m_staticText1;
     wxStaticText  *m_staticText2;
     wxStaticText  *m_staticText3;
@@ -240,13 +222,6 @@ public:
     bool m_bcompact;
     
 };
-
-//    LatLonTextCtrl Specification
-//    We need a derived wxText control for lat/lon input in the MarkProp dialog
-//    Specifically, we need to catch loss-of-focus events and signal the parent dialog
-//    to update the mark's lat/lon dynamically.
-
-
 
 
 #endif // _ROUTEPROP_H_

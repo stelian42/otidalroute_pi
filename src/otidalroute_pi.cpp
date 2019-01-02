@@ -126,27 +126,15 @@ int otidalroute_pi::Init(void)
           m_leftclick_tool_id = InsertPlugInTool(_T(""), _img_otidalroute, _img_otidalroute, wxITEM_CHECK,
                                                  _("otidalroute"), _T(""), NULL,
                                                  otidalroute_TOOL_POSITION, 0, this);	  
-	  wxMenu dummy_menu;
-	  m_position_menu_id = AddCanvasContextMenuItem
-		  (new wxMenuItem(&dummy_menu, -1, _("Tidal Route Position")), this);
-	  SetCanvasContextMenuItemViz(m_position_menu_id, true);
-
-	  m_table_menu_id = AddCanvasContextMenuItem
-		  (new wxMenuItem(&dummy_menu, -1, _("Tidal Route Table")), this);
-	  SetCanvasContextMenuItemViz(m_table_menu_id, true);
 	 
-	  //    Get a pointer to the opencpn configuration object
-
 
 
       return (WANTS_OVERLAY_CALLBACK |
               WANTS_OPENGL_OVERLAY_CALLBACK |
-              WANTS_CURSOR_LATLON       |
               WANTS_TOOLBAR_CALLBACK    |
               INSTALLS_TOOLBAR_TOOL     |
               WANTS_CONFIG              |
               WANTS_PREFERENCES         |
-			  WANTS_MOUSE_EVENTS		|
               WANTS_PLUGIN_MESSAGING
             );
 }
@@ -299,29 +287,10 @@ void otidalroute_pi::ShowPreferencesDialog( wxWindow* parent )
 	
 }
 
-void otidalroute_pi::OnContextMenuItemCallback(int id)
-{
-	if (!m_potidalrouteDialog)
-		return;
-	
-	if (id == m_position_menu_id){
-		m_cursor_lat = GetCursorLat();
-		m_cursor_lon = GetCursorLon();
-		m_potidalrouteDialog->AddPosition(m_cursor_lat, m_cursor_lon);
-	}
-	if (id == m_table_menu_id)
-		m_potidalrouteDialog->ShowTable();
-		
-	//m_potidalrouteDialog->Reset();
-
-}
-
 
 void otidalroute_pi::OnToolbarToolCallback(int id)
 {
     
-
-
 	if(!m_potidalrouteDialog)
     {
 		       		
@@ -420,13 +389,16 @@ void otidalroute_pi::SetPluginMessage(wxString &message_id, wxString &message_bo
 		wxJSONValue v;
 		r.Parse(message_body, &v);
 
-		wxDateTime time;
+		wxDateTime time, adjTime;
 		time.Set
 			(v[_T("Day")].AsInt(), (wxDateTime::Month)v[_T("Month")].AsInt(), v[_T("Year")].AsInt(),
 			v[_T("Hour")].AsInt(), v[_T("Minute")].AsInt(), v[_T("Second")].AsInt());
 
+		wxTimeSpan correctTCTime = wxTimeSpan::Minutes(30);
+		adjTime = time - correctTCTime;
+
 		wxString dt;
-		dt = time.Format(_T("%Y-%m-%d  %H:%M "));
+		dt = adjTime.Format(_T("%Y-%m-%d  %H:%M "));
 
 		if (m_potidalrouteDialog){
 			m_potidalrouteDialog->m_GribTimelineTime = time.ToUTC();

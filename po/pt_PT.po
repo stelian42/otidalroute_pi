@@ -1,726 +1,433 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
 msgid ""
 msgstr ""
-"Project-Id-Version: opencpn 1.3.6 (Pt01)\n"
+"Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-17 10:33+0100\n"
-"PO-Revision-Date: 2010-02-05 16:06+0100\n"
-"Last-Translator: as <as400big@gmail.com>\n"
-"Language-Team: Minhota <zemaria@zemaria.biz>\n"
-"Language: \n"
+"POT-Creation-Date: 2018-12-31 18:12+0000\n"
+"PO-Revision-Date: 2018-02-08 09:11-0500\n"
+"Last-Translator: nohal <pavel@kalian.cz>\n"
+"Language-Team: Portuguese\n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Portuguese\n"
-"X-Poedit-Country: PORTUGAL\n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: crowdin.com\n"
+"X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Language: pt-PT\n"
+"X-Crowdin-File: /plugins/otcurrent_pi/po/otcurrent_pi.pot\n"
 #
 msgid "      < 0.5 knots"
-msgstr ""
+msgstr "      < 0.5 nós"
 #
 #, c-format
-msgid " width = %d height = %d\n"
+msgid "%.1f"
 msgstr ""
 #
-#, c-format
-msgid " x = %d y = %d\n"
+msgid "&About"
+msgstr ""
+#
+msgid "&Guide"
 msgstr ""
 #
 msgid ">= 0.5 and < 1.5"
-msgstr ""
+msgstr ">= 0.5 e < 1.5"
 #
 msgid ">= 1.5 and < 2.5"
-msgstr ""
+msgstr ">= 1.5 e < 2.5"
 #
 msgid ">= 2.5 and < 3.5"
-msgstr ""
+msgstr ">= 2.5 e < 3.5"
 #
 msgid ">= 3.5 knots    "
+msgstr ">= 3.5 nós    "
+#
+msgid "About Author"
 msgstr ""
 #
-msgid "About Tidal Arrows"
+msgid "About Weather Routing"
 msgstr ""
 #
-msgid "Cancel"
+msgid "Bearing"
 msgstr ""
 #
-msgid "Date/Time"
+msgid "CTS"
+msgstr ""
+#
+msgid "Chart Route"
+msgstr ""
+#
+msgid "Close"
+msgstr ""
+#
+msgid "Course to steer"
+msgstr ""
+#
+msgid "DR"
+msgstr ""
+#
+msgid "DR Route has been calculated!"
+msgstr ""
+#
+msgid "DR Route has been charted!"
+msgstr ""
+#
+msgid "Daytime"
+msgstr ""
+#
+msgid "Delete"
+msgstr ""
+#
+msgid "Delete All Routes"
+msgstr ""
+#
+msgid "Delete all routes?\n"
+msgstr ""
+#
+msgid "Depart From"
+msgstr ""
+#
+#, fuzzy
+msgid "Departure Time"
+msgstr "Data/Hora"
+#
+msgid "Departure Time (Y/m/d h:m)"
+msgstr ""
+#
+msgid "Destination"
 msgstr ""
 #
 msgid "Display tidal direction"
-msgstr ""
+msgstr "Apresentar a direção das marés"
 #
 msgid "Display tidal rates (knots)"
+msgstr "Apresentar taxas das marés (nós)"
+#
+msgid "Distance"
+msgstr ""
+#
+msgid "Duration"
+msgstr ""
+#
+msgid "ETA"
+msgstr ""
+#
+msgid "ETA Route has been charted!"
+msgstr ""
+#
+msgid "ETA Routes have been calculated!"
+msgstr ""
+#
+msgid "End"
+msgstr ""
+#
+msgid "End Time"
+msgstr ""
+#
+msgid "EndTime"
+msgstr ""
+#
+msgid "Error in calculation. Please check input!"
+msgstr ""
+#
+msgid "EvTwilight"
+msgstr ""
+#
+msgid "Export DR Positions in GPX file as"
+msgstr ""
+#
+msgid "Export ETA Positions in GPX file as"
+msgstr ""
+#
+msgid "Failed to load file."
+msgstr ""
+#
+msgid "Failed to load file: "
+msgstr ""
+#
+msgid "Failed to save xml file: "
+msgstr ""
+#
+msgid "File contains duplicate position name, discarding\n"
 msgstr ""
 #
 msgid "Fill Colour"
+msgstr "Cor de enchimento"
+#
+msgid "From"
 msgstr ""
 #
-msgid "Help"
+msgid "Grib plugin version not supported."
 msgstr ""
 #
-msgid "Next"
+msgid "Import GPX Route file"
 msgstr ""
 #
-msgid "Now"
+msgid "Invalid xml file"
+msgstr ""
+#
+msgid "LMT @ Location"
+msgstr ""
+#
+msgid "Latitude"
+msgstr ""
+#
+msgid "Leg"
+msgstr ""
+#
+msgid "Load"
+msgstr ""
+#
+msgid "Loading"
+msgstr ""
+#
+msgid "Local @ PC"
+msgstr ""
+#
+msgid "Longitude"
+msgstr ""
+#
+msgid "MoTwilight"
+msgstr ""
+#
+msgid "Name"
+msgstr ""
+#
+msgid "Nighttime"
+msgstr ""
+#
+msgid "No routes found. Please make a route"
+msgstr ""
+#
+msgid "No routes have been calculated"
 msgstr ""
 #
 msgid "OK"
 msgstr ""
 #
+msgid "Open the GRIB plugin and select a time!"
+msgstr ""
+#
+msgid "Plan Speed"
+msgstr ""
+#
+msgid "Please enter a name for the route!"
+msgstr ""
+#
+msgid "Please select a route"
+msgstr ""
+#
+msgid "Please select or generate a route"
+msgstr ""
+#
 msgid "Preferences"
+msgstr "Preferências"
+#
+msgid "Properties"
 msgstr ""
 #
-msgid "Previous"
+msgid "Route"
 msgstr ""
 #
-msgid "START Date/Time"
+msgid "Route Calculation Type:"
 msgstr ""
 #
-msgid "Select"
+msgid "Route Properties"
 msgstr ""
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-msgid "Select a folder"
-msgstr "Pasta de Ficheiros GRIB"
-#
-msgid "Select date/time for current prediction"
+msgid "Route Table"
 msgstr ""
 #
-msgid "Step (Minutes)"
+msgid "Route name already exists, please edit the name"
 msgstr ""
 #
 msgid ""
-"Tidal Current\n"
-"--------------------------------------------------------------\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"\n"
-"Use this data with caution.\n"
-"Use in conjunction with Tidal Current Atlases and Tidal Diamonds\n"
-"\n"
-"--------------------------------------------------------------------\n"
-"\n"
-"Note: 1 Rates shown are for a position corresponding to the centre\n"
-"of the base of the arrow. Tidal rate is shown as knots.\n"
-"\n"
+"Route start date is not compatible with this Grib \n"
+" Or Grib is not available for part of the route"
 msgstr ""
 #
+msgid "RouteCalculation Type:"
+msgstr ""
 #
+msgid "RouteName"
+msgstr ""
 #
+msgid "Routes"
+msgstr ""
+#
+msgid "Speed"
+msgstr ""
+#
+msgid "Start"
+msgstr ""
 #
 #, fuzzy
+msgid "Start Time"
+msgstr "Data/Hora"
+#
+#, fuzzy
+msgid "StartTime"
+msgstr "Data/Hora"
+#
+msgid "Sunrise"
+msgstr ""
+#
+msgid "Sunset"
+msgstr ""
+#
+msgid ""
+"The oTidalRoute plugin for opencpn is intended to calculate routes based on "
+"computerized tidal data.\n"
+"\n"
+"License: GPLv3+\n"
+"\n"
+"Source Code:\n"
+"https://github.com/rasbats/oTidalRoute_pi\n"
+"\n"
+"Author:\n"
+"Mike Rossiter\n"
+"\n"
+"Many thanks to all translators and testers."
+msgstr ""
+#
 msgid "Tidal Current Arrow Colour"
-msgstr "Controlo Visualização GRIB"
-#
-#
-#
+msgstr "Cores das Setas de Corrente"
 #
 #, fuzzy
-msgid "Tidal Current Control"
-msgstr "Controlo Visualização GRIB"
+msgid "Tidal Rate"
+msgstr "Pasta de dados de marés"
 #
-msgid "Tidal Data Folder"
+msgid "Tidal Routes"
 msgstr ""
 #
-msgid "Tide Calendar"
+msgid "Tidal Set"
 msgstr ""
 #
-msgid "Time:"
+msgid "TidalRoutingInformation.html"
 msgstr ""
 #
-msgid "Using Tide/Current data from:  "
+#, fuzzy
+msgid "Time"
+msgstr "Data/Hora"
+#
+msgid "Time Enroute"
 msgstr ""
 #
-msgid "otcurrent"
+msgid "Times shown as"
 msgstr ""
 #
-msgid "otcurrent PlugIn for OpenCPN"
+msgid "To Waypoint"
+msgstr ""
+#
+msgid "Total Distance"
+msgstr ""
+#
+msgid "Towards"
+msgstr ""
+#
+msgid "Type"
+msgstr ""
+#
+msgid "UTC"
 msgstr ""
 #
 msgid ""
-"otcurrent PlugIn for OpenCPN\n"
-"Provides an overlay of Tidal Current (Stream) Arrows.\n"
+"Unable to calculate ETA over two legs at this speed. \n"
+"\n"
+" Aborting"
+msgstr ""
+#
+msgid ""
+"Unable to compute speed over ground with this tide and boat speed, \n"
+"\n"
+" Aborting"
+msgstr ""
+#
+msgid "Unrecognized xml node"
+msgstr ""
+#
+#, c-format
+msgid "Use versions %d.%d to %d.%d"
+msgstr ""
+#
+msgid "Waypoint Properties"
+msgstr ""
+#
+msgid "Waypoints"
+msgstr ""
+#
+msgid "Weather Routing"
+msgstr ""
+#
+msgid "error in input range validation"
+msgstr ""
+#
+msgid "oTidalRoute"
+msgstr ""
+#
+msgid "oTidalRoute Plugin Version"
+msgstr ""
+#
+msgid "otidalroute"
+msgstr ""
+#
+#, fuzzy
+msgid "otidalroute PlugIn for OpenCPN"
+msgstr "Extensão otcurrent para OpenCPN"
+#
+msgid ""
+"otidalroute PlugIn for OpenCPN\n"
+"Calculates EP positions/Courses using Grib tidal current data.\n"
 "\n"
 "\t\t\t   "
 msgstr ""
 #
-msgid "otcurrent Settings"
-msgstr ""
-#
-msgid "otcurrentDialogPosX"
-msgstr ""
-#
-msgid "otcurrentDialogPosY"
-msgstr ""
-#
-msgid "otcurrentDialogSizeX"
-msgstr ""
-#
-msgid "otcurrentDialogSizeY"
-msgstr ""
-#
-msgid "otcurrentFolder"
-msgstr ""
-#
-msgid "otcurrentInterval"
-msgstr ""
-#
-msgid "otcurrentUseDirection"
-msgstr ""
-#
-msgid "otcurrentUseFillColour"
-msgstr ""
-#
-msgid "otcurrentUseRate"
+msgid "rte Invalid xml file"
 msgstr ""
 #
 #
+#~ msgid "About Tidal Arrows"
+#~ msgstr "Sobre as setas das marés"
 #
 #
+#~ msgid "Help"
+#~ msgstr "Ajuda"
 #
 #
+#~ msgid "Next"
+#~ msgstr "Próximo"
 #
 #
+#~ msgid "Now"
+#~ msgstr "Agora"
 #
 #
+#~ msgid "Previous"
+#~ msgstr "Anterior"
 #
 #
+#~ msgid "Select a folder"
+#~ msgstr "Escolha uma pasta"
 #
 #
+#~ msgid "Step (Minutes)"
+#~ msgstr "Passo (minutos)"
 #
 #
+#~ msgid "Using Tide/Current data from:  "
+#~ msgstr "Usando os dados de maré/corrente de:  "
 #
 #
+#~ msgid "otcurrent"
+#~ msgstr "otcurrent"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Colors"
-#~ msgstr "Fechar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "GRIB"
-#~ msgstr "GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "GRIB File Directory"
-#~ msgstr "Pasta de Ficheiros GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view invisible overlays:"
-#~ msgstr "Ajuste Zoom ou Escala para ver HTSGW GRIB escondido"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Air Temp.(2m) GRIB"
-#~ msgstr "Ajuste Zoom ou Escala para ver HTSGW GRIB escondido"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed CURRENT GRIB"
-#~ msgstr "Ajuste Zoom ou Escala para ver CRAIN GRIB escondido"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Clouds Cover GRIB"
-#~ msgstr "Ajuste Zoom ou Escala para ver CRAIN GRIB escondido"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Sea Surf.Temp. GRIB"
-#~ msgstr "Ajuste Zoom ou Escala para ver HTSGW GRIB escondido"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Please Zoom or Scale Out to view suppressed Total Rainfall GRIB"
-#~ msgstr "Ajuste Zoom ou Escala para ver CRAIN GRIB escondido"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Pressure"
-#~ msgstr "Pressão, mBar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Pressure (MSL)"
-#~ msgstr "Pressão, mBar"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Show GRIB icon"
-#~ msgstr "Mostrar Ícone GRIB"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Sign.Wave Height"
-#~ msgstr "Altura de Vaga Significativa, m"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Use High Definition Graphics"
-#~ msgstr "Usar Gráficos Alta Definição"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "WARNING:  QuickScat GRIB data is %d hours old."
-#~ msgstr "ATENÇÃO:  Os dados GRIB QuickScat já têm %d horas atraso."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Direction(10m)"
-#~ msgstr "Direcção Vento"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Speed and Direction(10m)"
-#~ msgstr "Direcção Vento"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "Wind Speed(10m)"
-#~ msgstr "Velocidade Vento, Kts."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Wind Speed, Kts."
-#~ msgstr "Velocidade Vento, Kts."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid "tcdata"
-#~ msgstr "Dados GRIB"
+#~ msgid ""
+#~ "otcurrent PlugIn for OpenCPN\n"
+#~ "Provides an overlay of Tidal Current (Stream) Arrows.\n"
+#~ "\n"
+#~ "\t\t\t   "
+#~ msgstr ""
+#~ "Extensão otcurrent para OpenCPN\n"
+#~ "Disponibiliza uma sobreposição de Setas de Corrente (fluxo) de Maré.\n"
+#~ "\n"
+#~ "\t\t\t   "

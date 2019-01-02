@@ -18,10 +18,10 @@ otidalrouteUIDialogBase::otidalrouteUIDialogBase(wxWindow* parent, wxWindowID id
 	wxFlexGridSizer* fgSizer1;
 	fgSizer1 = new wxFlexGridSizer(0, 1, 0, 0);
 	fgSizer1->SetFlexibleDirection(wxBOTH);
-	fgSizer1->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
+	fgSizer1->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_ALL);
 
 	wxStaticBoxSizer* sbSizer4;
-	sbSizer4 = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, wxT("Route Calculation")), wxHORIZONTAL);
+	sbSizer4 = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, wxT("Calculation")), wxHORIZONTAL);
 
 	wxStaticBoxSizer* sbSizer3;
 	sbSizer3 = new wxStaticBoxSizer(new wxStaticBox(sbSizer4->GetStaticBox(), wxID_ANY, wxT("Speed")), wxVERTICAL);
@@ -30,22 +30,42 @@ otidalrouteUIDialogBase::otidalrouteUIDialogBase(wxWindow* parent, wxWindowID id
 	sbSizer3->Add(m_tSpeed, 0, wxALL, 5);
 
 	wxStaticBoxSizer* sbSizer2;
-	sbSizer2 = new wxStaticBoxSizer(new wxStaticBox(sbSizer3->GetStaticBox(), wxID_ANY, wxT("Date/Time")), wxVERTICAL);
+	sbSizer2 = new wxStaticBoxSizer(new wxStaticBox(sbSizer3->GetStaticBox(), wxID_ANY, wxT("Start Date/Time")), wxVERTICAL);
 
 	m_textCtrl1 = new wxTextCtrl(sbSizer2->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
 	sbSizer2->Add(m_textCtrl1, 0, wxALL, 5);
 
-	wxStaticBoxSizer* sbSizer11;
-	sbSizer11 = new wxStaticBoxSizer(new wxStaticBox(sbSizer2->GetStaticBox(), wxID_ANY, wxT("Calculation")), wxVERTICAL);
+	wxStaticBoxSizer* sbSizer91;
+	sbSizer91 = new wxStaticBoxSizer(new wxStaticBox(sbSizer2->GetStaticBox(), wxID_ANY, wxT("DR/ETA")), wxVERTICAL);
 
-	m_bHourlyCTS = new wxButton(sbSizer11->GetStaticBox(), wxID_ANY, wxT("Hourly CTS"), wxDefaultPosition, wxDefaultSize, 0);
-	sbSizer11->Add(m_bHourlyCTS, 0, wxALL, 5);
+	m_staticText4 = new wxStaticText(sbSizer91->GetStaticBox(), wxID_ANY, wxT("Route Name"), wxDefaultPosition, wxDefaultSize, 0);
+	m_staticText4->Wrap(-1);
+	sbSizer91->Add(m_staticText4, 0, wxALL, 5);
 
-	m_bSingleCTS = new wxButton(sbSizer11->GetStaticBox(), wxID_ANY, wxT("Single CTS"), wxDefaultPosition, wxDefaultSize, 0);
-	sbSizer11->Add(m_bSingleCTS, 0, wxALL, 5);
+	m_tRouteName = new wxTextCtrl(sbSizer91->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
+	sbSizer91->Add(m_tRouteName, 0, wxALL, 5);
+
+	m_cbGPX = new wxCheckBox(sbSizer91->GetStaticBox(), wxID_ANY, wxT("Save as GPX file"), wxDefaultPosition, wxDefaultSize, 0);
+	sbSizer91->Add(m_cbGPX, 0, wxALL, 5);
+
+	m_staticText2 = new wxStaticText(sbSizer91->GetStaticBox(), wxID_ANY, wxT("Departure Times"), wxDefaultPosition, wxDefaultSize, 0);
+	m_staticText2->Wrap(-1);
+	sbSizer91->Add(m_staticText2, 0, wxALL, 5);
+
+	wxString m_choiceDepartureTimesChoices[] = { wxT("1"), wxT("2"), wxT("3"), wxT("4"), wxT("5"), wxT("6") };
+	int m_choiceDepartureTimesNChoices = sizeof(m_choiceDepartureTimesChoices) / sizeof(wxString);
+	m_choiceDepartureTimes = new wxChoice(sbSizer91->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceDepartureTimesNChoices, m_choiceDepartureTimesChoices, 0);
+	m_choiceDepartureTimes->SetSelection(0);
+	sbSizer91->Add(m_choiceDepartureTimes, 0, wxALL, 5);
+
+	m_bCalcDR = new wxButton(sbSizer91->GetStaticBox(), wxID_ANY, wxT("Calculate DR"), wxDefaultPosition, wxDefaultSize, 0);
+	sbSizer91->Add(m_bCalcDR, 0, wxALL | wxEXPAND, 5);
+
+	m_bCalcETA = new wxButton(sbSizer91->GetStaticBox(), wxID_ANY, wxT("Calculate EP"), wxDefaultPosition, wxDefaultSize, 0);
+	sbSizer91->Add(m_bCalcETA, 0, wxALL| wxEXPAND, 5);
 
 
-	sbSizer2->Add(sbSizer11, 1, wxEXPAND, 5);
+	sbSizer2->Add(sbSizer91, 1, wxEXPAND, 5);
 
 
 	sbSizer3->Add(sbSizer2, 1, wxEXPAND, 5);
@@ -53,75 +73,15 @@ otidalrouteUIDialogBase::otidalrouteUIDialogBase(wxWindow* parent, wxWindowID id
 
 	sbSizer4->Add(sbSizer3, 1, wxEXPAND, 5);
 
-	wxStaticBoxSizer* sbSizer9;
-	sbSizer9 = new wxStaticBoxSizer(new wxStaticBox(sbSizer4->GetStaticBox(), wxID_ANY, wxEmptyString), wxVERTICAL);
-
-	wxStaticBoxSizer* sbSizer10;
-	sbSizer10 = new wxStaticBoxSizer(new wxStaticBox(sbSizer9->GetStaticBox(), wxID_ANY, wxT("Route")), wxVERTICAL);
-
-	m_staticText2 = new wxStaticText(sbSizer10->GetStaticBox(), wxID_ANY, wxT("From:"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText2->Wrap(-1);
-	sbSizer10->Add(m_staticText2, 0, wxALL, 5);
-
-	m_textCtrl3 = new wxTextCtrl(sbSizer10->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	sbSizer10->Add(m_textCtrl3, 0, wxALL, 5);
-
-	m_staticText3 = new wxStaticText(sbSizer10->GetStaticBox(), wxID_ANY, wxT("Towards:"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText3->Wrap(-1);
-	sbSizer10->Add(m_staticText3, 0, wxALL, 5);
-
-	m_textCtrl4 = new wxTextCtrl(sbSizer10->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	sbSizer10->Add(m_textCtrl4, 0, wxALL, 5);
-
-	m_staticText4 = new wxStaticText(sbSizer10->GetStaticBox(), wxID_ANY, wxT("Route Name"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText4->Wrap(-1);
-	sbSizer10->Add(m_staticText4, 0, wxALL, 5);
-
-	m_tRouteName = new wxTextCtrl(sbSizer10->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	sbSizer10->Add(m_tRouteName, 0, wxALL, 5);
-
-
-	sbSizer9->Add(sbSizer10, 1, wxEXPAND, 5);
-
-
-	sbSizer4->Add(sbSizer9, 1, wxEXPAND, 5);
-
-
+	
 	fgSizer1->Add(sbSizer4, 1, wxEXPAND, 5);
-
-	wxStaticBoxSizer* sbSizer6;
-	sbSizer6 = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, wxT("Positions")), wxVERTICAL);
-
-	m_lPositions = new wxListCtrl(sbSizer6->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_HRULES | wxLC_REPORT | wxLC_SINGLE_SEL);
-	sbSizer6->Add(m_lPositions, 0, wxEXPAND | wxALL, 5);
-
-
-	fgSizer1->Add(sbSizer6, 1, wxEXPAND, 5);
 
 
 	this->SetSizer(fgSizer1);
 	this->Layout();
 
 	m_menubar3 = new wxMenuBar(0);
-	m_menu2 = new wxMenu();
-	wxMenuItem* m_mNewPosition;
-	m_mNewPosition = new wxMenuItem(m_menu2, wxID_ANY, wxString(wxT("&New Position")), wxEmptyString, wxITEM_NORMAL);
-	m_menu2->Append(m_mNewPosition);
-
-	//wxMenuItem* m_mUpdateBoat;
-	//m_mUpdateBoat = new wxMenuItem(m_menu2, wxID_ANY, wxString(wxT("&Update Boat Position")), wxEmptyString, wxITEM_NORMAL);
-	//m_menu2->Append(m_mUpdateBoat);
-
-	wxMenuItem* m_mDeletePosition;
-	m_mDeletePosition = new wxMenuItem(m_menu2, wxID_ANY, wxString(wxT("&Delete Position")), wxEmptyString, wxITEM_NORMAL);
-	m_menu2->Append(m_mDeletePosition);
-
-	wxMenuItem* m_mDeleteAllPositions;
-	m_mDeleteAllPositions = new wxMenuItem(m_menu2, wxID_ANY, wxString(wxT("Delete &All Positions")), wxEmptyString, wxITEM_NORMAL);
-	m_menu2->Append(m_mDeleteAllPositions);
-
-	m_menubar3->Append(m_menu2, wxT("Position"));
-
+	
 	m_menu3 = new wxMenu();
 
 	wxMenuItem* m_mSummary;
@@ -129,41 +89,19 @@ otidalrouteUIDialogBase::otidalrouteUIDialogBase(wxWindow* parent, wxWindowID id
 	m_menu3->Append(m_mSummary);
 
 	wxMenuItem* m_mNewRoute;
-	m_mNewRoute = new wxMenuItem(m_menu3, wxID_ANY, wxString(wxT("Configuration")), wxEmptyString, wxITEM_NORMAL);
+	m_mNewRoute = new wxMenuItem(m_menu3, wxID_ANY, wxString(wxT("View Route Tables")), wxEmptyString, wxITEM_NORMAL);
 	m_menu3->Append(m_mNewRoute);
-
-	wxMenuItem* m_mDeleteRoute;
-	m_mDeleteRoute = new wxMenuItem(m_menu3, wxID_ANY, wxString(wxT("Delete Route")), wxEmptyString, wxITEM_NORMAL);
-	m_menu3->Append(m_mDeleteRoute);
 
 	wxMenuItem* m_mDeleteAllRoutes;
 	m_mDeleteAllRoutes = new wxMenuItem(m_menu3, wxID_ANY, wxString(wxT("Delete All Routes")), wxEmptyString, wxITEM_NORMAL);
 	m_menu3->Append(m_mDeleteAllRoutes);
 
-	m_menubar3->Append(m_menu3, wxT("Route"));
-
-	//m_menu4 = new wxMenu();
-	//wxMenuItem* m_menuItem13;
-	//m_menuItem13 = new wxMenuItem(m_menu4, wxID_ANY, wxString(wxT("Help")), wxEmptyString, wxITEM_NORMAL);
-	//m_menu4->Append(m_menuItem13);
-	/*
-	wxMenuItem* m_menuItem14;
-	m_menuItem14 = new wxMenuItem(m_menu4, wxID_ANY, wxString(wxT("MyMenuItem")), wxEmptyString, wxITEM_NORMAL);
-	m_menu4->Append(m_menuItem14);
-
-	wxMenuItem* m_menuItem15;
-	m_menuItem15 = new wxMenuItem(m_menu4, wxID_ANY, wxString(wxT("MyMenuItem")), wxEmptyString, wxITEM_NORMAL);
-	m_menu4->Append(m_menuItem15);
-
-	wxMenuItem* m_menuItem8;
-	m_menuItem8 = new wxMenuItem(m_menu4, wxID_ANY, wxString(wxT("MyMenuItem")), wxEmptyString, wxITEM_NORMAL);
-	m_menu4->Append(m_menuItem8);
-	*/
+	m_menubar3->Append(m_menu3, wxT("Routes"));
 
 	m_mHelp = new wxMenu();
 
 	wxMenuItem* m_mInformation;
-	m_mInformation = new wxMenuItem(m_mHelp, wxID_ANY, wxString(_("&Information")) + wxT('\t') + wxT("F1"), wxEmptyString, wxITEM_NORMAL);
+	m_mInformation = new wxMenuItem(m_mHelp, wxID_ANY, wxString(_("&Guide")) + wxT('\t') + wxT("F1"), wxEmptyString, wxITEM_NORMAL);
 	m_mHelp->Append(m_mInformation);
 
 	wxMenuItem* m_mAbout;
@@ -179,22 +117,14 @@ otidalrouteUIDialogBase::otidalrouteUIDialogBase(wxWindow* parent, wxWindowID id
 
 
 	// Connect Events
-	this->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(otidalrouteUIDialogBase::otidalrouteOnContextMenu), NULL, this);
-
 	this->Connect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(otidalrouteUIDialogBase::OnClose));
 	this->Connect(wxEVT_SIZE, wxSizeEventHandler(otidalrouteUIDialogBase::OnSize));
 
-	//this->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(otidalrouteUIDialogBase::otidalrouteOnContextMenu), NULL, this);
+	m_bCalcDR->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(otidalrouteUIDialogBase::DRCalculate), NULL, this);
+	m_bCalcETA->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(otidalrouteUIDialogBase::ETACalculate), NULL, this);
 
-	m_bHourlyCTS->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(otidalrouteUIDialogBase::HourlyCTS), NULL, this);
-	m_bSingleCTS->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(otidalrouteUIDialogBase::SingleCTS), NULL, this);
-	this->Connect(m_mNewPosition->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnNewPosition));
-	//this->Connect(m_mUpdateBoat->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnUpdateBoat));
-	this->Connect(m_mDeletePosition->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnDeletePosition));
-	this->Connect(m_mDeleteAllPositions->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnDeleteAllPositions));
 	this->Connect(m_mSummary->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnSummary));
-	this->Connect(m_mNewRoute->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnNewRoute));
-	this->Connect(m_mDeleteRoute->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnDeleteRoute));
+	this->Connect(m_mNewRoute->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnShowTables));
 	this->Connect(m_mDeleteAllRoutes->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnDeleteAllRoutes));
 	this->Connect(m_mInformation->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnInformation));
 	this->Connect(m_mAbout->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnAbout));
@@ -207,17 +137,11 @@ otidalrouteUIDialogBase::~otidalrouteUIDialogBase()
 	this->Disconnect(wxEVT_CLOSE_WINDOW, wxCloseEventHandler(otidalrouteUIDialogBase::OnClose));
 	this->Disconnect(wxEVT_SIZE, wxSizeEventHandler(otidalrouteUIDialogBase::OnSize));
 
-	//this->Disconnect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(otidalrouteUIDialogBase::otidalrouteOnContextMenu), NULL, this);
-	m_bHourlyCTS->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(otidalrouteUIDialogBase::HourlyCTS), NULL, this);
-	m_bSingleCTS->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(otidalrouteUIDialogBase::SingleCTS), NULL, this);
-	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnNewPosition));
-	//this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnUpdateBoat));
-	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnDeletePosition));
-	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnDeleteAllPositions));
+	m_bCalcDR->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(otidalrouteUIDialogBase::DRCalculate), NULL, this);
+	m_bCalcETA->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(otidalrouteUIDialogBase::ETACalculate), NULL, this);
 
 	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnSummary));
-	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnNewRoute));
-	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnDeleteRoute));
+	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnShowTables));
 	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnDeleteAllRoutes));
 	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnInformation));
 	this->Disconnect(wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(otidalrouteUIDialogBase::OnAbout));
@@ -344,63 +268,11 @@ ConfigurationDialog::ConfigurationDialog(wxWindow* parent, wxWindowID id, const 
 	fgSizer95->SetFlexibleDirection(wxBOTH);
 	fgSizer95->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
 
-	wxFlexGridSizer* fgSizer108;
-	fgSizer108 = new wxFlexGridSizer(2, 2, 0, 0);
-	fgSizer108->AddGrowableCol(0);
-	fgSizer108->AddGrowableCol(1);
-	fgSizer108->SetFlexibleDirection(wxBOTH);
-	fgSizer108->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-
-	wxStaticBoxSizer* sbSizer3;
-	sbSizer3 = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("Start")), wxVERTICAL);
-
-	m_cStart = new wxComboBox(sbSizer3->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0);
-	sbSizer3->Add(m_cStart, 0, wxALL | wxEXPAND, 5);
-
-
-	fgSizer108->Add(sbSizer3, 1, wxEXPAND, 5);
-
-	wxStaticBoxSizer* sbSizer5;
-	sbSizer5 = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("End")), wxVERTICAL);
-
-	m_cEnd = new wxComboBox(sbSizer5->GetStaticBox(), wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0);
-	sbSizer5->Add(m_cEnd, 0, wxALL | wxEXPAND, 5);
-
-
-	fgSizer108->Add(sbSizer5, 1, wxEXPAND, 5);
-
-
-	fgSizer95->Add(fgSizer108, 1, wxEXPAND, 5);
-
-	wxFlexGridSizer* fgSizer109;
-	fgSizer109 = new wxFlexGridSizer(1, 4, 0, 0);
-	fgSizer109->SetFlexibleDirection(wxBOTH);
-	fgSizer109->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-
-	m_staticText28 = new wxStaticText(this, wxID_ANY, _("   Route Name"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText28->Wrap(-1);
-	fgSizer109->Add(m_staticText28, 0, wxALIGN_LEFT | wxALL, 5);
-
-	m_tRouteName = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	m_tRouteName->SetMinSize(wxSize(200, -1));
-	fgSizer109->Add(m_tRouteName, 0, wxALIGN_LEFT | wxALL, 5);
-	
-	//m_staticText29 = new wxStaticText(this, wxID_ANY, _("CTS"), wxDefaultPosition, wxDefaultSize, 0);
-	//m_staticText29->Wrap(-1);
-	//fgSizer109->Add(m_staticText29, 0, wxALIGN_LEFT | wxALL, 5);
-
-	//m_tCTS = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	//m_tCTS->SetMinSize(wxSize(20, -1));
-	//fgSizer109->Add(m_tCTS, 0, wxALIGN_LEFT | wxALL, 5);
-	
-
-	fgSizer95->Add(fgSizer109, 1, wxEXPAND, 5);
-
 	wxStaticBoxSizer* sbSizer29;
 	sbSizer29 = new wxStaticBoxSizer(new wxStaticBox(this, wxID_ANY, _("Routes")), wxVERTICAL);
 
 	m_lRoutes = new wxListBox(sbSizer29->GetStaticBox(), wxID_ANY, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 | wxLB_ALWAYS_SB);
-	sbSizer29->Add(m_lRoutes, 0, wxALL | wxEXPAND, 5);
+	sbSizer29->Add(m_lRoutes, 1, wxALL | wxEXPAND, 5);
 
 
 	fgSizer95->Add(sbSizer29, 1, wxEXPAND, 5);
@@ -413,19 +285,16 @@ ConfigurationDialog::ConfigurationDialog(wxWindow* parent, wxWindowID id, const 
 	m_bDelete = new wxButton(this, wxID_ANY, _("Delete"), wxDefaultPosition, wxDefaultSize, 0);
 	fgSizer78->Add(m_bDelete, 0, wxALL, 5);
 
-	m_bSelect = new wxButton(this, wxID_ANY, _("Information"), wxDefaultPosition, wxDefaultSize, 0);
+	m_bSelect = new wxButton(this, wxID_ANY, _("Route Table"), wxDefaultPosition, wxDefaultSize, 0);
 	fgSizer78->Add(m_bSelect, 0, wxALL, 5);
 
-	m_bGenerate = new wxButton(this, wxID_ANY, _("Generate"), wxDefaultPosition, wxDefaultSize, 0);
+	m_bGenerate = new wxButton(this, wxID_ANY, _("Chart Route"), wxDefaultPosition, wxDefaultSize, 0);
 	fgSizer78->Add(m_bGenerate, 0, wxALL, 5);
 
 	m_bClose = new wxButton(this, wxID_ANY, _("Close"), wxDefaultPosition, wxDefaultSize, 0);
 	fgSizer78->Add(m_bClose, 0, wxALL, 5);
 
-
 	fgSizer95->Add(fgSizer78, 1, wxEXPAND, 5);
-
-
 
 	this->SetSizer(fgSizer95);
 	this->Layout();
@@ -433,13 +302,6 @@ ConfigurationDialog::ConfigurationDialog(wxWindow* parent, wxWindowID id, const 
 	this->Centre(wxBOTH);
 
 	// Connect Events
-	m_cStart->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(ConfigurationDialog::OnUpdate), NULL, this);
-	//m_dpStartDate->Connect(wxEVT_DATE_CHANGED, wxDateEventHandler(ConfigurationDialog::OnUpdateDate), NULL, this);
-	//m_bGribTime->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnGribTime), NULL, this);
-	m_tRouteName->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(ConfigurationDialog::OnUpdate), NULL, this);
-	//m_bRouteName->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnCurrentTime), NULL, this);
-	m_cEnd->Connect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(ConfigurationDialog::OnUpdate), NULL, this);
-
 	m_bDelete->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnDelete), NULL, this);
 	m_bSelect->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnInformation), NULL, this);
 	m_bGenerate->Connect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnGenerate), NULL, this);
@@ -450,43 +312,13 @@ ConfigurationDialog::ConfigurationDialog(wxWindow* parent, wxWindowID id, const 
 ConfigurationDialog::~ConfigurationDialog()
 {
 	// Disconnect Events
-	m_cStart->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(ConfigurationDialog::OnUpdate), NULL, this);
-	//m_dpStartDate->Disconnect(wxEVT_DATE_CHANGED, wxDateEventHandler(ConfigurationDialog::OnUpdateDate), NULL, this);
-	//m_bGribTime->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnGribTime), NULL, this);
-	m_tRouteName->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(ConfigurationDialog::OnUpdate), NULL, this);
-	//m_bRouteName->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnCurrentTime), NULL, this);
-	m_cEnd->Disconnect(wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler(ConfigurationDialog::OnUpdate), NULL, this);
-
+	m_bDelete->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnDelete), NULL, this);
 	m_bSelect->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnInformation), NULL, this);
 	m_bGenerate->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnGenerate), NULL, this);
 	m_bClose->Disconnect(wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(ConfigurationDialog::OnClose), NULL, this);
 
 }
 
-void ConfigurationDialog::AddSource(wxString name){
-
-	m_cStart->Append(name);
-	m_cEnd->Append(name);
-}
-
-void ConfigurationDialog::RemoveSource( wxString name )
-{
-    int i = m_cStart->FindString(name, true);
-    if(i >= 0) {
-        m_cStart->Delete(i);
-    }
-	i = m_cEnd->FindString(name, true);
-	if (i >= 0) {		
-		m_cEnd->Delete(i);
-	}
-
-}
-
-void ConfigurationDialog::ClearSources()
-{
-    m_cStart->Clear();
-    m_cEnd->Clear();
-}
 
 
 
@@ -517,53 +349,35 @@ void ConfigurationDialog::OnInformation(wxCommandEvent& event)
 		wxMessageBox(_("Please select a route"));
 		return; 
 	}
-
-	//wxString myS = wxString::Format(_T("%i"), s);
-	//wxMessageBox(myS);
-
+	
 	rn = m_lRoutes->GetString(s);
+	/*
+	
 	if (m_lRoutes->IsEmpty()){
 		wxMessageBox(_("Please select positions and generate a route"));
 		return;
 	}
-	
+	*/
 	pPlugIn->m_potidalrouteDialog->GetTable(rn);
 	return; //
-
-	/*
-	for (std::list<TidalRoute>::iterator it = pPlugIn->m_potidalrouteDialog->m_TidalRoutes.begin();
-		it != pPlugIn->m_potidalrouteDialog->m_TidalRoutes.end(); it++) {
-		if ((*it).Name == rn) {
-			pPlugIn->m_potidalrouteDialog->m_tRouteName->SetValue(rn);
-			wxString sl = (*it).Start;
-			m_cStart->SetValue(sl);			
-			sl = (*it).End;
-			m_cEnd->SetValue(sl);
-			sl = (*it).Type;
-			m_tCTS->SetValue(sl);
-			sl = (*it).Name;
-			m_tRouteName->SetValue(sl);
-		}
-	}
-	*/
 }
+
 
 void ConfigurationDialog::OnGenerate(wxCommandEvent& event)
 {
 	wxString rn;
-	pPlugIn->m_potidalrouteDialog->m_textCtrl3->SetValue(m_cStart->GetValue());
-	pPlugIn->m_potidalrouteDialog->m_textCtrl4->SetValue(m_cEnd->GetValue());
-	if (m_tRouteName->GetValue() != _T("")){
-		pPlugIn->m_potidalrouteDialog->m_tRouteName->SetValue(m_tRouteName->GetValue());
-	}
-	else {
-		wxString s = m_cStart->GetValue() + m_cEnd->GetValue();
-		pPlugIn->m_potidalrouteDialog->m_tRouteName->SetValue(s);
+	int s;
+	s = m_lRoutes->GetSelection();
+
+	if (s == -1) {
+		wxMessageBox(_("Please select a route"));
+		return;
 	}
 
-	Hide();
+	rn = m_lRoutes->GetString(s);
+
+	pPlugIn->m_potidalrouteDialog->AddChartRoute(rn);
 }
-
 
 
 void ConfigurationDialog::OnClose(wxCommandEvent& event)
@@ -574,106 +388,6 @@ void ConfigurationDialog::OnClose(wxCommandEvent& event)
 
 ///////////////////////////////////////////////////////////////////////////
 
-NewPositionDialog::NewPositionDialog(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxDialog(parent, id, title, pos, size, style)
-{
-	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
-
-	wxFlexGridSizer* fgSizer120;
-	fgSizer120 = new wxFlexGridSizer(0, 1, 0, 0);
-	fgSizer120->SetFlexibleDirection(wxBOTH);
-	fgSizer120->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-
-	wxFlexGridSizer* fgSizer119;
-	fgSizer119 = new wxFlexGridSizer(0, 2, 0, 0);
-	fgSizer119->AddGrowableCol(1);
-	fgSizer119->SetFlexibleDirection(wxBOTH);
-	fgSizer119->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-
-	m_staticText140 = new wxStaticText(this, wxID_ANY, _("name"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText140->Wrap(-1);
-	fgSizer119->Add(m_staticText140, 0, wxALL, 5);
-
-	m_tName = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	fgSizer119->Add(m_tName, 0, wxALL | wxEXPAND, 5);
-
-
-	fgSizer120->Add(fgSizer119, 1, wxEXPAND, 5);
-
-	wxFlexGridSizer* fgSizer122;
-	fgSizer122 = new wxFlexGridSizer(0, 6, 0, 0);
-	fgSizer122->SetFlexibleDirection(wxBOTH);
-	fgSizer122->SetNonFlexibleGrowMode(wxFLEX_GROWMODE_SPECIFIED);
-
-	m_staticText142 = new wxStaticText(this, wxID_ANY, _("latitude"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText142->Wrap(-1);
-	fgSizer122->Add(m_staticText142, 0, wxALL, 5);
-
-	m_tLatitudeDegrees = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	fgSizer122->Add(m_tLatitudeDegrees, 0, wxALL, 5);
-
-	m_staticText143 = new wxStaticText(this, wxID_ANY, _("degrees"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText143->Wrap(-1);
-	fgSizer122->Add(m_staticText143, 0, wxALL, 5);
-
-	m_tLatitudeMinutes = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	fgSizer122->Add(m_tLatitudeMinutes, 0, wxALL, 5);
-
-	m_staticText144 = new wxStaticText(this, wxID_ANY, _("minutes"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText144->Wrap(-1);
-	fgSizer122->Add(m_staticText144, 0, wxALL, 5);
-
-	wxString m_cNSChoices[] = { _("N"), _("S") };
-	int m_cNSNChoices = sizeof(m_cNSChoices) / sizeof(wxString);
-	m_cNS = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_cNSNChoices, m_cNSChoices, 0);
-	m_cNS->SetSelection(0);
-	fgSizer122->Add(m_cNS, 0, wxALL, 5);
-
-	m_staticText145 = new wxStaticText(this, wxID_ANY, _("longitude"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText145->Wrap(-1);
-	fgSizer122->Add(m_staticText145, 0, wxALL, 5);
-
-	m_tLongitudeDegrees = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	fgSizer122->Add(m_tLongitudeDegrees, 0, wxALL, 5);
-
-	m_staticText146 = new wxStaticText(this, wxID_ANY, _("degrees"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText146->Wrap(-1);
-	fgSizer122->Add(m_staticText146, 0, wxALL, 5);
-
-	m_tLongitudeMinutes = new wxTextCtrl(this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0);
-	fgSizer122->Add(m_tLongitudeMinutes, 0, wxALL, 5);
-
-	m_staticText147 = new wxStaticText(this, wxID_ANY, _("minutes"), wxDefaultPosition, wxDefaultSize, 0);
-	m_staticText147->Wrap(-1);
-	fgSizer122->Add(m_staticText147, 0, wxALL, 5);
-
-	wxString m_cEWChoices[] = { _("E"), _("W") };
-	int m_cEWNChoices = sizeof(m_cEWChoices) / sizeof(wxString);
-	m_cEW = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_cEWNChoices, m_cEWChoices, 0);
-	m_cEW->SetSelection(0);
-	fgSizer122->Add(m_cEW, 0, wxALL, 5);
-
-
-	fgSizer120->Add(fgSizer122, 1, wxEXPAND, 5);
-
-	m_sdbSizer4 = new wxStdDialogButtonSizer();
-	m_sdbSizer4OK = new wxButton(this, wxID_OK);
-	m_sdbSizer4->AddButton(m_sdbSizer4OK);
-	m_sdbSizer4Cancel = new wxButton(this, wxID_CANCEL);
-	m_sdbSizer4->AddButton(m_sdbSizer4Cancel);
-	m_sdbSizer4->Realize();
-
-	fgSizer120->Add(m_sdbSizer4, 1, wxEXPAND, 5);
-
-
-	this->SetSizer(fgSizer120);
-	this->Layout();
-
-	this->Centre(wxBOTH);
-}
-
-NewPositionDialog::~NewPositionDialog()
-{
-}
 AboutDialogBase::AboutDialogBase(wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style) : wxDialog(parent, id, title, pos, size, style)
 {
 	this->SetSizeHints(wxDefaultSize, wxDefaultSize);
