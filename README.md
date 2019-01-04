@@ -1,5 +1,5 @@
 # otidalroute_pi
 
-This "master" branch is for the pre-Beta version of OpenCPN, 4.99. It compiles with wxWidgets 3.1.1.
+This "4.8.8" branch is for the OpenCPN, 4.8.8 or less. It compiles with wxWidgets 3.0.2.
 
 
