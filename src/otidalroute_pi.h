@@ -121,7 +121,6 @@ public:
       void SendTimelineMessage(wxDateTime time);
       void SetDefaults(void);
       int  GetToolbarToolCount(void);
-      void ShowPreferencesDialog( wxWindow* parent );
       void OnToolbarToolCallback(int id);
 
 	  double GetCursorLon(void) { return m_cursor_lon; }
@@ -202,19 +201,4 @@ private:
 
 };
 
-//----------------------------------------------------------------------------------------
-// Prefrence dialog definition
-//----------------------------------------------------------------------------------------
-
-class otidalroutePreferencesDialog : public otidalroutePreferencesDialogBase
-{
-public:
-		
-	otidalroutePreferencesDialog( wxWindow *pparent)
-    : otidalroutePreferencesDialogBase(pparent) {}
-    ~otidalroutePreferencesDialog() {}
-
-private:
-    
-};
 #endif

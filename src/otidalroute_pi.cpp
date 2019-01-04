@@ -123,7 +123,7 @@ int otidalroute_pi::Init(void)
 	  //    This PlugIn needs a toolbar icon, so request its insertion
 	  if (m_botidalrouteShowIcon) {
 #ifdef OTIDALROUTE_USE_SVG
-		  m_leftclick_tool_id = InsertPlugInToolSVG(_T("ShipDriver"), _svg_otidalroute, _svg_otidalroute_rollover, _svg_otidalroute_toggled,
+		  m_leftclick_tool_id = InsertPlugInToolSVG(_T("oTidalRoute"), _svg_otidalroute, _svg_otidalroute_rollover, _svg_otidalroute_toggled,
 			  wxITEM_CHECK, _("oTidalRoute"), _T(""), NULL, otidalroute_TOOL_POSITION, 0, this);
 #else
 		  m_leftclick_tool_id = InsertPlugInTool(_T(""), _img_otidalroute, _img_otidalroute, wxITEM_CHECK,
@@ -138,8 +138,7 @@ int otidalroute_pi::Init(void)
               WANTS_OPENGL_OVERLAY_CALLBACK |
               WANTS_TOOLBAR_CALLBACK    |
               INSTALLS_TOOLBAR_TOOL     |
-              WANTS_CONFIG              |
-              WANTS_PREFERENCES         |
+              WANTS_CONFIG              |              
               WANTS_PLUGIN_MESSAGING
             );
 }
@@ -221,87 +220,6 @@ void otidalroute_pi::SetDefaults(void)
 int otidalroute_pi::GetToolbarToolCount(void)
 {
       return 1;
-}
-
-void otidalroute_pi::ShowPreferencesDialog( wxWindow* parent )
-{
-    otidalroutePreferencesDialog *Pref = new otidalroutePreferencesDialog(parent);
-
-    Pref->m_cbUseRate->SetValue(m_bCopyUseRate);
-    Pref->m_cbUseDirection->SetValue(m_bCopyUseDirection);
-	Pref->m_cbFillColour->SetValue(m_botidalrouteUseHiDef);
-
-	wxColour myC0 = wxColour(myVColour[0]);
-	Pref->myColourPicker0->SetColour(myC0);
-    
-	wxColour myC1 = wxColour(myVColour[1]);
-	Pref->myColourPicker1->SetColour(myC1);
-
-	wxColour myC2 = wxColour(myVColour[2]);
-	Pref->myColourPicker2->SetColour(myC2);
-
-	wxColour myC3 = wxColour(myVColour[3]);
-	Pref->myColourPicker3->SetColour(myC3);
-
-	wxColour myC4 = wxColour(myVColour[4]);
-	Pref->myColourPicker4->SetColour(myC4);
-
-
- if( Pref->ShowModal() == wxID_OK ) {
-
-	 //bool copyFillColour = true;
-    
-	 myVColour[0] = Pref->myColourPicker0->GetColour().GetAsString();
-	 myVColour[1] = Pref->myColourPicker1->GetColour().GetAsString();
-	 myVColour[2] = Pref->myColourPicker2->GetColour().GetAsString();
-	 myVColour[3] = Pref->myColourPicker3->GetColour().GetAsString();
-	 myVColour[4] = Pref->myColourPicker4->GetColour().GetAsString();
-
-
-     bool copyrate = Pref->m_cbUseRate->GetValue();
-     bool copydirection = Pref->m_cbUseDirection->GetValue();
-	 bool FillColour = Pref->m_cbFillColour->GetValue();
-
-		 if (m_botidalrouteUseHiDef != FillColour){		 
-			 m_botidalrouteUseHiDef = FillColour;
-		 }
-	 
-        if( m_bCopyUseRate != copyrate || m_bCopyUseDirection != copydirection||  m_botidalrouteUseHiDef != FillColour ) {
-             m_bCopyUseRate = copyrate;
-             m_bCopyUseDirection = copydirection;   
-			 m_botidalrouteUseHiDef = FillColour;
-         }
-
-		
-         if(m_potidalrouteDialog )
-		 {	
-			 m_potidalrouteDialog->OpenFile(true);
-			 m_potidalrouteDialog->m_FolderSelected = m_CopyFolderSelected;
-			 m_potidalrouteDialog->m_IntervalSelected = m_CopyIntervalSelected;
-
-			 m_potidalrouteDialog->m_bUseRate = m_bCopyUseRate;
-			 m_potidalrouteDialog->m_bUseDirection = m_bCopyUseDirection;	
-			 m_potidalrouteDialog->m_bUseFillColour = m_botidalrouteUseHiDef;
-
-			 m_potidalrouteDialog->myUseColour[0] = myVColour[0];
- 			 m_potidalrouteDialog->myUseColour[1] = myVColour[1];
- 			 m_potidalrouteDialog->myUseColour[2] = myVColour[2];
- 			 m_potidalrouteDialog->myUseColour[3] = myVColour[3];
- 			 m_potidalrouteDialog->myUseColour[4] = myVColour[4];			 
-		 }
-
-		 if (m_potidalrouteOverlayFactory)
-		 {			 
-			 m_potidalrouteOverlayFactory->m_bShowRate = m_bCopyUseRate;
-			 m_potidalrouteOverlayFactory->m_bShowDirection = m_bCopyUseDirection;
-			 m_potidalrouteOverlayFactory->m_bShowFillColour = m_botidalrouteUseHiDef;
-		 }
-
-         SaveConfig();
-		 
-		 RequestRefresh(m_parent_window); // refresh main window
-     }
-	
 }
 
 
@@ -418,7 +336,7 @@ void otidalroute_pi::SetPluginMessage(wxString &message_id, wxString &message_bo
 
 		if (m_potidalrouteDialog){
 			m_potidalrouteDialog->m_GribTimelineTime = time.ToUTC();
-			m_potidalrouteDialog->m_textCtrl1->SetValue(dt);
+			m_potidalrouteDialog->m_tSpeed->SetValue(dt);
 		}
 	}
 	if (message_id == _T("GRIB_TIMELINE_RECORD"))
@@ -570,23 +488,7 @@ bool otidalroute_pi::LoadConfig(void)
 
     pConf->SetPath ( _T( "/PlugIns/otidalroute" ) );
 	pConf->Read(_T("ShowotidalrouteIcon"), &m_botidalrouteShowIcon, 1);
-	m_bCopyUseRate = pConf->Read ( _T( "otidalrouteUseRate" ),1);
-    m_bCopyUseDirection = pConf->Read ( _T( "otidalrouteUseDirection" ), 1);
-	m_botidalrouteUseHiDef = pConf->Read ( _T( "otidalrouteUseFillColour" ), 1);
-
-	//m_CopyFolderSelected = pConf->Read ( _T( "otidalrouteFolder" ));
-	//if (m_CopyFolderSelected == wxEmptyString){
-
-	 // wxString g_SData_Locn = *GetpSharedDataLocation();
-
-      // Establish location of Tide and Current data
-     // pTC_Dir = new wxString(_T("tcdata"));
-     // pTC_Dir->Prepend(g_SData_Locn);
-
-	 // m_CopyFolderSelected = *pTC_Dir;	  
-	//}
-
-	//m_CopyIntervalSelected = pConf->Read ( _T ( "otidalrouteInterval"), 20L);
+	
 
     m_otidalroute_dialog_sx = pConf->Read ( _T( "otidalrouteDialogSizeX" ), 300L );
     m_otidalroute_dialog_sy = pConf->Read ( _T( "otidalrouteDialogSizeY" ), 540L );
@@ -599,12 +501,7 @@ bool otidalroute_pi::LoadConfig(void)
 	m_otidalroute_dialog_x =  pConf->Read ( _T( "otidalrouteDialogPosX" ), 20L );
     m_otidalroute_dialog_y =  pConf->Read ( _T( "otidalrouteDialogPosY" ), 170L );
 	
-    pConf->Read( _T("VColour0"), &myVColour[0], myVColour[0] );
-    pConf->Read( _T("VColour1"), &myVColour[1], myVColour[1] );
-	pConf->Read( _T("VColour2"), &myVColour[2], myVColour[2] );
-	pConf->Read( _T("VColour3"), &myVColour[3], myVColour[3] );
-	pConf->Read( _T("VColour4"), &myVColour[4], myVColour[4] );
-	
+  
     return true;
 }
 
@@ -617,23 +514,13 @@ bool otidalroute_pi::SaveConfig(void)
 
     pConf->SetPath ( _T( "/PlugIns/otidalroute" ) );
 	pConf->Write(_T("ShowotidalrouteIcon"), m_botidalrouteShowIcon);
-    pConf->Write ( _T( "otidalrouteUseRate" ), m_bCopyUseRate );
-    pConf->Write ( _T( "otidalrouteUseDirection" ), m_bCopyUseDirection );
-	pConf->Write ( _T( "otidalrouteUseFillColour" ), m_botidalrouteUseHiDef );
-
-	//pConf->Write ( _T( "otidalrouteFolder" ), m_CopyFolderSelected); 
-	//pConf->Write ( _T( "otidalrouteInterval" ), m_CopyIntervalSelected);
+    
 
     pConf->Write ( _T( "otidalrouteDialogSizeX" ),  m_otidalroute_dialog_sx );
     pConf->Write ( _T( "otidalrouteDialogSizeY" ),  m_otidalroute_dialog_sy );
     pConf->Write ( _T( "otidalrouteDialogPosX" ),   m_otidalroute_dialog_x );
     pConf->Write ( _T( "otidalrouteDialogPosY" ),   m_otidalroute_dialog_y );
 
-	pConf->Write( _T("VColour0"), myVColour[0] );
-	pConf->Write( _T("VColour1"), myVColour[1] );
-	pConf->Write( _T("VColour2"), myVColour[2] );
-	pConf->Write( _T("VColour3"), myVColour[3] );
-	pConf->Write( _T("VColour4"), myVColour[4] );
 
 
     return true;
