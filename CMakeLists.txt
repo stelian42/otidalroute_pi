@@ -65,8 +65,8 @@ SET(SRC_otidalroute
 		src/tinyxml.cpp
 	    src/tinyxmlerror.cpp
 		src/tinyxmlparser.cpp		
-		src/Navfunc.cpp
-		src/Navfunc.h
+		src/NavFunc.cpp
+		src/NavFunc.h
 		src/routeprop.cpp
 		src/routeprop.h
 		src/tableroutes.cpp
