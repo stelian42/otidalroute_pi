@@ -119,14 +119,19 @@ int otidalroute_pi::Init(void)
       // Get a pointer to the opencpn display canvas, to use as a parent for the otidalroute dialog
       m_parent_window = GetOCPNCanvasWindow();
 
-	
-
-      //    This PlugIn needs a toolbar icon, so request its insertion if enabled locally
-      if(m_botidalrouteShowIcon)
-          m_leftclick_tool_id = InsertPlugInTool(_T(""), _img_otidalroute, _img_otidalroute, wxITEM_CHECK,
-                                                 _("otidalroute"), _T(""), NULL,
-                                                 otidalroute_TOOL_POSITION, 0, this);	  
 	 
+	  //    This PlugIn needs a toolbar icon, so request its insertion
+	  if (m_botidalrouteShowIcon) {
+#ifdef OTIDALROUTE_USE_SVG
+		  m_leftclick_tool_id = InsertPlugInToolSVG(_T("ShipDriver"), _svg_otidalroute, _svg_otidalroute_rollover, _svg_otidalroute_toggled,
+			  wxITEM_CHECK, _("oTidalRoute"), _T(""), NULL, otidalroute_TOOL_POSITION, 0, this);
+#else
+		  m_leftclick_tool_id = InsertPlugInTool(_T(""), _img_otidalroute, _img_otidalroute, wxITEM_CHECK,
+			  _("oTidalRoute"), _T(""), NULL,
+			  otidalroute_TOOL_POSITION, 0, this);
+#endif
+	  }
+
 
 
       return (WANTS_OVERLAY_CALLBACK |
@@ -142,9 +147,21 @@ int otidalroute_pi::Init(void)
 bool otidalroute_pi::DeInit(void)
 {
     if(m_potidalrouteDialog) {
+
+		//Capture dialog position
+		wxPoint p = m_potidalrouteDialog->GetPosition();
+		wxRect r = m_potidalrouteDialog->GetRect();
+		SetotidalrouteDialogX(p.x);
+		SetotidalrouteDialogY(p.y);
+		SetotidalrouteDialogSizeX(r.GetWidth());
+		SetotidalrouteDialogSizeY(r.GetHeight());
+
         m_potidalrouteDialog->Close();
         delete m_potidalrouteDialog;
         m_potidalrouteDialog = NULL;
+
+		m_bShowotidalroute = false;
+		SetToolbarItemState(m_leftclick_tool_id, m_bShowotidalroute);
     }
 
     delete m_potidalrouteOverlayFactory;
@@ -368,10 +385,9 @@ void otidalroute_pi::OnToolbarToolCallback(int id)
 
 void otidalroute_pi::OnotidalrouteDialogClose()
 {
-    m_bShowotidalroute = false;
-    //SetToolbarItemState( m_leftclick_tool_id, m_bShowotidalroute );
-	//SetCanvasContextMenuItemViz(m_position_menu_id, m_bShowotidalroute);
-
+   
+	m_bShowotidalroute = false;
+	SetToolbarItemState(m_leftclick_tool_id, m_bShowotidalroute);
     m_potidalrouteDialog->Hide();
 
     SaveConfig();
@@ -553,7 +569,7 @@ bool otidalroute_pi::LoadConfig(void)
         return false;
 
     pConf->SetPath ( _T( "/PlugIns/otidalroute" ) );
-
+	pConf->Read(_T("ShowotidalrouteIcon"), &m_botidalrouteShowIcon, 1);
 	m_bCopyUseRate = pConf->Read ( _T( "otidalrouteUseRate" ),1);
     m_bCopyUseDirection = pConf->Read ( _T( "otidalrouteUseDirection" ), 1);
 	m_botidalrouteUseHiDef = pConf->Read ( _T( "otidalrouteUseFillColour" ), 1);
@@ -574,7 +590,13 @@ bool otidalroute_pi::LoadConfig(void)
 
     m_otidalroute_dialog_sx = pConf->Read ( _T( "otidalrouteDialogSizeX" ), 300L );
     m_otidalroute_dialog_sy = pConf->Read ( _T( "otidalrouteDialogSizeY" ), 540L );
-    m_otidalroute_dialog_x =  pConf->Read ( _T( "otidalrouteDialogPosX" ), 20L );
+#ifdef __WXOSX__
+	m_otidalroute_dialog_sy = pConf->Read(_T("otidalrouteDialogSizeY"), 540L);
+#else
+	m_otidalroute_dialog_sy = pConf->Read(_T("otidalrouteDialogSizeY"), 540L);
+#endif
+	
+	m_otidalroute_dialog_x =  pConf->Read ( _T( "otidalrouteDialogPosX" ), 20L );
     m_otidalroute_dialog_y =  pConf->Read ( _T( "otidalrouteDialogPosY" ), 170L );
 	
     pConf->Read( _T("VColour0"), &myVColour[0], myVColour[0] );
@@ -594,6 +616,7 @@ bool otidalroute_pi::SaveConfig(void)
         return false;
 
     pConf->SetPath ( _T( "/PlugIns/otidalroute" ) );
+	pConf->Write(_T("ShowotidalrouteIcon"), m_botidalrouteShowIcon);
     pConf->Write ( _T( "otidalrouteUseRate" ), m_bCopyUseRate );
     pConf->Write ( _T( "otidalrouteUseDirection" ), m_bCopyUseDirection );
 	pConf->Write ( _T( "otidalrouteUseFillColour" ), m_botidalrouteUseHiDef );

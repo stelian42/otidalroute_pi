@@ -12,4 +12,10 @@ extern void initialize_images(void);
 extern wxBitmap *_img_otidalroute;
 extern wxBitmap *_img_otidalroute_pi;
 
+#ifdef OTIDALROUTE_USE_SVG
+extern wxString _svg_otidalroute;
+extern wxString _svg_otidalroute_rollover;
+extern wxString _svg_otidalroute_toggled;
+#endif
+
 #endif /* ICONS_H */
