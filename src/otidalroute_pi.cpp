@@ -313,7 +313,7 @@ void otidalroute_pi::SetPluginMessage(wxString &message_id, wxString &message_bo
 
 		if (m_potidalrouteDialog){
 			m_potidalrouteDialog->m_GribTimelineTime = time.ToUTC();
-			m_potidalrouteDialog->m_tSpeed->SetValue(dt);
+			m_potidalrouteDialog->m_textCtrl1->SetValue(dt);
 		}
 	}
 	if (message_id == _T("GRIB_TIMELINE_RECORD"))
