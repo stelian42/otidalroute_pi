@@ -96,7 +96,7 @@ int otidalroute_pi::Init(void)
       // Set some default private member parameters
       m_otidalroute_dialog_x = 0;
       m_otidalroute_dialog_y = 0;
-      m_otidalroute_dialog_sx = 200;
+      m_otidalroute_dialog_sx = 300;
       m_otidalroute_dialog_sy = 400;
       m_potidalrouteDialog = NULL;
       m_potidalrouteOverlayFactory = NULL;
@@ -114,7 +114,7 @@ int otidalroute_pi::Init(void)
       //    And load the configuration items
       LoadConfig();
 
-
+	 // wxMessageBox(wxString::Format(wxT("%i"), m_otidalroute_dialog_sx));
 
       // Get a pointer to the opencpn display canvas, to use as a parent for the otidalroute dialog
       m_parent_window = GetOCPNCanvasWindow();
@@ -132,7 +132,7 @@ int otidalroute_pi::Init(void)
 #endif
 	  }
 
-
+	  m_potidalrouteDialog = NULL;
 
       return (WANTS_OVERLAY_CALLBACK |
               WANTS_OPENGL_OVERLAY_CALLBACK |
@@ -145,7 +145,8 @@ int otidalroute_pi::Init(void)
 
 bool otidalroute_pi::DeInit(void)
 {
-    if(m_potidalrouteDialog) {
+   	
+	if(NULL != m_potidalrouteDialog) {
 
 		//Capture dialog position
 		wxPoint p = m_potidalrouteDialog->GetPosition();
@@ -165,6 +166,8 @@ bool otidalroute_pi::DeInit(void)
 
     delete m_potidalrouteOverlayFactory;
     m_potidalrouteOverlayFactory = NULL;
+
+	SaveConfig();
 
     return true;
 }
@@ -226,13 +229,15 @@ int otidalroute_pi::GetToolbarToolCount(void)
 void otidalroute_pi::OnToolbarToolCallback(int id)
 {
     
-	if(!m_potidalrouteDialog)
+	if(NULL == m_potidalrouteDialog)
     {
 		       		
 		m_potidalrouteDialog = new otidalrouteUIDialog(m_parent_window, this);
         wxPoint p = wxPoint(m_otidalroute_dialog_x, m_otidalroute_dialog_y);
         m_potidalrouteDialog->Move(0,0);        // workaround for gtk autocentre dialog behavior
         m_potidalrouteDialog->Move(p);
+		m_potidalrouteDialog->SetSize(m_otidalroute_dialog_sx, m_otidalroute_dialog_sy);
+
 
         // Create the drawing factory
         m_potidalrouteOverlayFactory = new otidalrouteOverlayFactory( *m_potidalrouteDialog );
@@ -243,51 +248,15 @@ void otidalroute_pi::OnToolbarToolCallback(int id)
 	SendPluginMessage(wxString(_T("GRIB_TIMELINE_REQUEST")), _T(""));
 
 
-      // Qualify the otidalroute dialog position
-            bool b_reset_pos = false;
 
-#ifdef __WXMSW__
-        //  Support MultiMonitor setups which an allow negative window positions.
-        //  If the requested window does not intersect any installed monitor,
-        //  then default to simple primary monitor positioning.
-            RECT frame_title_rect;
-            frame_title_rect.left =   m_otidalroute_dialog_x;
-            frame_title_rect.top =    m_otidalroute_dialog_y;
-            frame_title_rect.right =  m_otidalroute_dialog_x + m_otidalroute_dialog_sx;
-            frame_title_rect.bottom = m_otidalroute_dialog_y + 30;
-
-
-            if(NULL == MonitorFromRect(&frame_title_rect, MONITOR_DEFAULTTONULL))
-                  b_reset_pos = true;
-#else
-       //    Make sure drag bar (title bar) of window on Client Area of screen, with a little slop...
-            wxRect window_title_rect;                    // conservative estimate
-            window_title_rect.x = m_otidalroute_dialog_x;
-            window_title_rect.y = m_otidalroute_dialog_y;
-            window_title_rect.width = m_otidalroute_dialog_sx;
-            window_title_rect.height = 30;
-
-            wxRect ClientRect = wxGetClientDisplayRect();
-            ClientRect.Deflate(60, 60);      // Prevent the new window from being too close to the edge
-            if(!ClientRect.Intersects(window_title_rect))
-                  b_reset_pos = true;
-
-#endif
-			/*
-            if(b_reset_pos)
-            {
-                  m_otidalroute_dialog_x = 20;
-                  m_otidalroute_dialog_y = 170;
-                  m_otidalroute_dialog_sx = 300;
-                  m_otidalroute_dialog_sy = 540;
-            }
-			*/
 
       //Toggle otidalroute overlay display
       m_bShowotidalroute = !m_bShowotidalroute;
 
       //    Toggle dialog?
       if(m_bShowotidalroute) {
+		  m_potidalrouteDialog->Move(wxPoint(m_otidalroute_dialog_x, m_otidalroute_dialog_y));
+		  m_potidalrouteDialog->SetSize(m_otidalroute_dialog_sx, m_otidalroute_dialog_sy);
           m_potidalrouteDialog->Show();
       } else {
           m_potidalrouteDialog->Hide();         
@@ -298,12 +267,20 @@ void otidalroute_pi::OnToolbarToolCallback(int id)
       SetToolbarItemState( m_leftclick_tool_id, m_bShowotidalroute );
 	  //SetCanvasContextMenuItemViz(m_position_menu_id, true);
 
+	  //Capture dialog position
+	  wxPoint p = m_potidalrouteDialog->GetPosition();
+	  wxRect r = m_potidalrouteDialog->GetRect();
+	  SetotidalrouteDialogX(p.x);
+	  SetotidalrouteDialogY(p.y);
+	  SetotidalrouteDialogSizeX(r.GetWidth());
+	  SetotidalrouteDialogSizeY(r.GetHeight());
+
       RequestRefresh(m_parent_window); // refresh main window
 }
 
 void otidalroute_pi::OnotidalrouteDialogClose()
 {
-   
+
 	m_bShowotidalroute = false;
 	SetToolbarItemState(m_leftclick_tool_id, m_bShowotidalroute);
     m_potidalrouteDialog->Hide();
@@ -486,7 +463,7 @@ bool otidalroute_pi::LoadConfig(void)
     if(!pConf)
         return false;
 
-    pConf->SetPath ( _T( "/PlugIns/otidalroute" ) );
+    pConf->SetPath ( _T( "/Settings/otidalroute" ) );
 	pConf->Read(_T("ShowotidalrouteIcon"), &m_botidalrouteShowIcon, 1);
 	
 
@@ -509,19 +486,18 @@ bool otidalroute_pi::SaveConfig(void)
 {
     wxFileConfig *pConf = (wxFileConfig *)m_pconfig;
 
+
+
     if(!pConf)
         return false;
 
-    pConf->SetPath ( _T( "/PlugIns/otidalroute" ) );
+    pConf->SetPath ( _T( "/Settings/otidalroute" ) );
 	pConf->Write(_T("ShowotidalrouteIcon"), m_botidalrouteShowIcon);
     
-
     pConf->Write ( _T( "otidalrouteDialogSizeX" ),  m_otidalroute_dialog_sx );
     pConf->Write ( _T( "otidalrouteDialogSizeY" ),  m_otidalroute_dialog_sy );
     pConf->Write ( _T( "otidalrouteDialogPosX" ),   m_otidalroute_dialog_x );
     pConf->Write ( _T( "otidalrouteDialogPosY" ),   m_otidalroute_dialog_y );
-
-
 
     return true;
 }

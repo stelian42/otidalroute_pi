@@ -157,6 +157,11 @@ public:
 	  wxString StandardPath();
 	  otidalrouteUIDialog     *m_potidalrouteDialog;
 
+	  bool             m_botidalrouteShowIcon;
+	  int              m_otidalroute_dialog_x, m_otidalroute_dialog_y;
+	  int              m_otidalroute_dialog_sx, m_otidalroute_dialog_sy;
+
+
 private:
 	  double m_cursor_lat, m_cursor_lon;
       bool LoadConfig(void);
@@ -171,9 +176,7 @@ private:
       int              m_display_width, m_display_height;
       int              m_leftclick_tool_id;
 
-      int              m_otidalroute_dialog_x, m_otidalroute_dialog_y;
-      int              m_otidalroute_dialog_sx, m_otidalroute_dialog_sy;
-
+      
       // preference data
       bool              m_botidalrouteUseHiDef;
       bool              m_botidalrouteUseGradualColors;
@@ -190,10 +193,8 @@ private:
       wxString         m_RequestConfig;
       wxString         *pTC_Dir;
       
-      bool             m_botidalrouteShowIcon;
 
       int              m_height;
-
       bool			   m_bShowotidalroute;
 
 	  int              m_position_menu_id;

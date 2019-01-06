@@ -25,7 +25,7 @@
  ***************************************************************************
  */
 #include "NavFunc.h"
-#include <math.h>
+#include <cmath>
 
 
 #define DTOL                 1e-12

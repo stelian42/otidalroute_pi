@@ -34,7 +34,7 @@
 #include <wx/stdpaths.h>
 
 #include <stdlib.h>
-#include <math.h>
+#include <cmath>
 #include <time.h>
 
 #include "otidalroute_pi.h"
@@ -153,32 +153,10 @@ otidalrouteUIDialog::otidalrouteUIDialog(wxWindow *parent, otidalroute_pi *ppi)
 	: otidalrouteUIDialogBase(parent), m_ConfigurationDialog(this, wxID_ANY, _("Tidal Routes"),
 	wxDefaultPosition, wxSize(-1, -1), wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER)
 {
+	
+
 	pParent = parent;
     pPlugIn = ppi;
-
-    wxFileConfig *pConf = GetOCPNConfigObject();
-
-    if(pConf) {
-        pConf->SetPath ( _T ( "/Settings/otidalroute" ) );
-
-		pConf->Read ( _T ( "otidalrouteUseRate" ), &m_bUseRate );
-        pConf->Read ( _T ( "otidalrouteUseDirection" ), &m_bUseDirection);
-		pConf->Read ( _T ( "otidalrouteUseFillColour" ), &m_bUseFillColour);
-
-		pConf->Read( _T("VColour0"), &myVColour[0], myVColour[0] );
-		pConf->Read( _T("VColour1"), &myVColour[1], myVColour[1] );
-		pConf->Read( _T("VColour2"), &myVColour[2], myVColour[2] );
-		pConf->Read( _T("VColour3"), &myVColour[3], myVColour[3] );
-		pConf->Read( _T("VColour4"), &myVColour[4], myVColour[4] );
-		
-		myUseColour[0] = myVColour[0];
-		myUseColour[1] = myVColour[1];
-		myUseColour[2] = myVColour[2];
-		myUseColour[3] = myVColour[3];
-		myUseColour[4] = myVColour[4];
-
-    }
-
 
 	m_default_configuration_path = ppi->StandardPath()
 		+ _T("otidalroute_config.xml");
@@ -207,30 +185,14 @@ otidalrouteUIDialog::otidalrouteUIDialog(wxWindow *parent, otidalroute_pi *ppi)
 
 	DimeWindow( this );
 
-    Fit();
-    SetMinSize( GetBestSize() );
+    //Fit();
+    //SetMinSize( GetBestSize() );
 	
 }
 
 otidalrouteUIDialog::~otidalrouteUIDialog()
 {
-    wxFileConfig *pConf = GetOCPNConfigObject();;
-
-    if(pConf) {
-
-        pConf->SetPath ( _T ( "/Settings/otidalroute" ) );
-
-		pConf->Write ( _T ( "otidalrouteUseRate" ), m_bUseRate );
-		pConf->Write ( _T ( "otidalrouteUseDirection" ), m_bUseDirection );
-		pConf->Write ( _T ( "otidalrouteUseFillColour" ), m_bUseFillColour );
-
-		pConf->Write( _T("VColour0"), myVColour[0] );
-		pConf->Write( _T("VColour1"), myVColour[1] );
-		pConf->Write( _T("VColour2"), myVColour[2] );
-		pConf->Write( _T("VColour3"), myVColour[3] );
-		pConf->Write( _T("VColour4"), myVColour[4] );
-		
-    }
+   
 	SaveXML(m_default_configuration_path);
 	
 }
@@ -831,7 +793,7 @@ void otidalrouteUIDialog::CalcDR(wxCommandEvent& event, bool write_file, int Pat
 			double myD, myB;
 			double myDI;
 
-			boolean skipleg = false;
+			bool skipleg = false;
 			double lastVBG = 0;
 			double lastVBG1 = 0;
 			double VBG2 = 0;
@@ -1598,7 +1560,7 @@ void otidalrouteUIDialog::CalcETA(wxCommandEvent& event, bool write_file, int Pa
 				double myD, myB;
 				double myDI;
 
-				boolean skipleg = false;
+				bool skipleg = false;
 				double lastVBG = 0;
 				double lastVBG1 = 0;
 				double VBG2 = 0;
