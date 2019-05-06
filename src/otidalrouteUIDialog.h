@@ -109,8 +109,9 @@ static const long long lNaN = 0xfff8000000000000;
 #define RT_RCDATA2           MAKEINTRESOURCE(999)
 
 /* Maximum value that can be returned by the rand function. */
+#ifndef RAND_MAX
 #define RAND_MAX 0x7fff
-
+#endif
 
 #define distance(X, Y) sqrt((X)*(X) + (Y)*(Y)) // much faster than hypot#define distance(X, Y) sqrt((X)*(X) + (Y)*(Y)) // much faster than hypot
 

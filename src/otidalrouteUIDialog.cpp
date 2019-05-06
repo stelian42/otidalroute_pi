@@ -831,7 +831,7 @@ void otidalrouteUIDialog::CalcDR(wxCommandEvent& event, bool write_file, int Pat
 			double myD, myB;
 			double myDI;
 
-			boolean skipleg = false;
+			bool skipleg = false;
 			double lastVBG = 0;
 			double lastVBG1 = 0;
 			double VBG2 = 0;
@@ -1598,7 +1598,7 @@ void otidalrouteUIDialog::CalcETA(wxCommandEvent& event, bool write_file, int Pa
 				double myD, myB;
 				double myDI;
 
-				boolean skipleg = false;
+				bool skipleg = false;
 				double lastVBG = 0;
 				double lastVBG1 = 0;
 				double VBG2 = 0;
@@ -2244,7 +2244,7 @@ bool otidalrouteUIDialog::OpenXML(bool gotGPXFile)
 			}
 
 		}
-		else if (response = wxID_CANCEL) {
+		else if (response == wxID_CANCEL) {
 			gotMyGPXFile = false;
 			return false;
 		}
