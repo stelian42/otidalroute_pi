@@ -2347,7 +2347,6 @@ void otidalrouteUIDialog::Addpoint(TiXmlElement* Route, wxString ptlat, wxString
 
 bool otidalrouteUIDialog::GetGribSpdDir(wxDateTime dt, double lat, double lon, double &spd, double &dir)
 {	
-std::cout << "GetGribSpdDir at " << lat << " " << lon << std::endl;
 	wxDateTime dtime = dt;
 	
 	pPlugIn->m_grib_lat = lat;
@@ -2356,11 +2355,9 @@ std::cout << "GetGribSpdDir at " << lat << " " << lon << std::endl;
 	if (pPlugIn->m_bGribValid){
 		spd = pPlugIn->m_tr_spd;
 		dir = pPlugIn->m_tr_dir;
-std::cout << "GetGribSpdDir TRUE at " << lat << " " << lon << std::endl;
 		return true;
 	}
 	else {		
-std::cout << "GetGribSpdDir FALSE at " << lat << " " << lon << std::endl;
 		return false;
 	}
 
