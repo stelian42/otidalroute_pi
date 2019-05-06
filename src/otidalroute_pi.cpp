@@ -383,70 +383,72 @@ void otidalroute_pi::OnotidalrouteDialogClose()
 
 void otidalroute_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
 {
-	if (message_id == _T("GRIB_TIMELINE"))
-	{
-		wxJSONReader r;
-		wxJSONValue v;
-		r.Parse(message_body, &v);
+    if (message_id == _T("GRIB_TIMELINE"))
+    {
+        Json::Reader r;
+        Json::Value v;
+        r.parse(static_cast<std::string>(message_body), v);
 
-		wxDateTime time, adjTime;
-		time.Set
-			(v[_T("Day")].AsInt(), (wxDateTime::Month)v[_T("Month")].AsInt(), v[_T("Year")].AsInt(),
-			v[_T("Hour")].AsInt(), v[_T("Minute")].AsInt(), v[_T("Second")].AsInt());
+        if (v["Day"].asInt() != -1) {
+            wxDateTime time, adjTime;
 
-		wxTimeSpan correctTCTime = wxTimeSpan::Minutes(30);
-		adjTime = time - correctTCTime;
+            time.Set(
+              v["Day"].asInt(), (wxDateTime::Month)v["Month"].asInt(), v["Year"].asInt(),
+              v["Hour"].asInt(), v["Minute"].asInt(), v["Second"].asInt());
 
-		wxString dt;
-		dt = adjTime.Format(_T("%Y-%m-%d  %H:%M "));
+            wxTimeSpan correctTCTime = wxTimeSpan::Minutes(30);
+            adjTime = time - correctTCTime;
 
-		if (m_potidalrouteDialog){
-			m_potidalrouteDialog->m_GribTimelineTime = time.ToUTC();
-			m_potidalrouteDialog->m_textCtrl1->SetValue(dt);
-		}
-	}
-	if (message_id == _T("GRIB_TIMELINE_RECORD"))
-	{
-		wxJSONReader r;
-		wxJSONValue v;
-		r.Parse(message_body, &v);
+            wxString dt;
+            dt = adjTime.Format(_T("%Y-%m-%d  %H:%M "));
 
-		static bool shown_warnings;
-		if (!shown_warnings) {
-			shown_warnings = true;
+            if (m_potidalrouteDialog){
+                m_potidalrouteDialog->m_GribTimelineTime = time.ToUTC();
+                m_potidalrouteDialog->m_textCtrl1->SetValue(dt);
+            }
+        }
+    }
+    if (message_id == _T("GRIB_TIMELINE_RECORD"))
+    {
+        Json::Reader r;
+	Json::Value v;
+	r.parse(static_cast<std::string>(message_body), v);
 
-			int grib_version_major = v[_T("GribVersionMajor")].AsInt();
-			int grib_version_minor = v[_T("GribVersionMinor")].AsInt();
+        static bool shown_warnings;
+        if (!shown_warnings) {
+            shown_warnings = true;
 
-			int grib_version = 1000 * grib_version_major + grib_version_minor;
-			int grib_min = 1000 * GRIB_MIN_MAJOR + GRIB_MIN_MINOR;
-			int grib_max = 1000 * GRIB_MAX_MAJOR + GRIB_MAX_MINOR;
+            int grib_version_major = v["GribVersionMajor"].asInt();
+            int grib_version_minor = v["GribVersionMinor"].asInt();
 
-			if (grib_version < grib_min || grib_version > grib_max) {
-				wxMessageDialog mdlg(m_parent_window,
-					_("Grib plugin version not supported.")
-					+ _T("\n\n") +
-					wxString::Format(_("Use versions %d.%d to %d.%d"), GRIB_MIN_MAJOR, GRIB_MIN_MINOR, GRIB_MAX_MAJOR, GRIB_MAX_MINOR),
-					_("Weather Routing"), wxOK | wxICON_WARNING);
-				mdlg.ShowModal();
-			}
-		}
+            int grib_version = 1000 * grib_version_major + grib_version_minor;
+            int grib_min = 1000 * GRIB_MIN_MAJOR + GRIB_MIN_MINOR;
+            int grib_max = 1000 * GRIB_MAX_MAJOR + GRIB_MAX_MINOR;
 
-		wxString sptr = v[_T("TimelineSetPtr")].AsString();
-		wxCharBuffer bptr = sptr.To8BitData();
-		const char* ptr = bptr.data();
+            if (grib_version < grib_min || grib_version > grib_max) {
+                wxMessageDialog mdlg(m_parent_window,
+                                     _("Grib plugin version not supported.")
+                                     + _T("\n\n") +
+                                     wxString::Format(_("Use versions %d.%d to %d.%d"), GRIB_MIN_MAJOR, GRIB_MIN_MINOR, GRIB_MAX_MAJOR, GRIB_MAX_MINOR),
+                                     _("Tidal Routing"), wxOK | wxICON_WARNING);
+                mdlg.ShowModal();
+            }
+        }
 
-		GribRecordSet *gptr;
-		sscanf(ptr, "%p", &gptr);
-		
-		double dir, spd;
-		
-		m_bGribValid = GribCurrent(gptr, m_grib_lat, m_grib_lon, dir, spd);
-		
-		m_tr_spd = spd;
-		m_tr_dir = dir;
+        wxString sptr = v["TimelineSetPtr"].asString();
+        wxCharBuffer bptr = sptr.To8BitData();
+        const char* ptr = bptr.data();
 
-	}
+        GribRecordSet *gptr;
+        sscanf(ptr, "%p", &gptr);
+
+	double dir, spd;
+
+        m_bGribValid = GribCurrent(gptr, m_grib_lat, m_grib_lon, dir, spd);
+
+        m_tr_spd = spd;
+        m_tr_dir = dir;
+    }
 }
 
 bool otidalroute_pi::GribWind(GribRecordSet *grib, double lat, double lon,

@@ -60,8 +60,8 @@ SET(SRC_otidalroute
 		src/tinyxml.cpp
 	    src/tinyxmlerror.cpp
 		src/tinyxmlparser.cpp		
-		src/Navfunc.cpp
-		src/Navfunc.h
+		src/NavFunc.cpp
+		src/NavFunc.h
 		src/routeprop.cpp
 		src/routeprop.h
 		src/tableroutes.cpp
@@ -69,17 +69,11 @@ SET(SRC_otidalroute
 
     )
 
-IF(WIN32)
-SET(SRC_JSON
-            src/wxJSON/jsonval.cpp
-            src/wxJSON/jsonreader.cpp
-            src/wxJSON/jsonwriter.cpp)
-ENDIF(WIN32)
-
 ADD_DEFINITIONS(-DTIXML_USE_STL)
 
-ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_otidalroute} ${SRC_JSON}
- )
+ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_otidalroute})
+
+INCLUDE("cmake/PluginJSON.cmake")
 
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")

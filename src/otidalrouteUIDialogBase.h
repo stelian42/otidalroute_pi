@@ -37,6 +37,7 @@
 #include <wx/combobox.h>
 #include <wx/splitter.h>
 #include <wx/listbox.h>
+#include <wx/radiobox.h>
 
 class ConfigurationDialog;
 class otidalroute_pi;

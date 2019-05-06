@@ -42,8 +42,7 @@
 #include "ocpn_plugin.h"
 #include "otidalrouteOverlayFactory.h"
 #include "otidalrouteUIDialog.h"
-#include "wx/jsonreader.h"
-#include "wx/jsonwriter.h"
+#include "json/json.h"
 #include <wx/datetime.h>
 
 

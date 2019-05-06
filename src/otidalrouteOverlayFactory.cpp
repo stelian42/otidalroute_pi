@@ -441,7 +441,7 @@ wxImage &otidalrouteOverlayFactory::DrawGLTextString( wxString myText ){
             a[ioff] = 255-(r+g+b)/3;
         }
 	
-	return m_labelCacheText[myText];
+    return m_labelCacheText[myText];
 }
 
 void otidalrouteOverlayFactory::DrawGLLine( double x1, double y1, double x2, double y2, double width, wxColour myColour )
