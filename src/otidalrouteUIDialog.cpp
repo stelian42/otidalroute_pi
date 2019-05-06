@@ -611,22 +611,20 @@ void otidalrouteUIDialog::AddTidalRoute(TidalRoute tr)
 }
 
 void otidalrouteUIDialog::RequestGrib(wxDateTime time)
-{	
-	wxJSONValue v;
+{
+        Json::Value v;
 	time = time.FromUTC();
 
-	v[_T("Day")] = time.GetDay();
-	v[_T("Month")] = time.GetMonth();
-	v[_T("Year")] = time.GetYear();
-	v[_T("Hour")] = time.GetHour();
-	v[_T("Minute")] = time.GetMinute();
-	v[_T("Second")] = time.GetSecond();
+	v["Day"] = time.GetDay();
+	v["Month"] = time.GetMonth();
+	v["Year"] = time.GetYear();
+	v["Hour"] = time.GetHour();
+	v["Minute"] = time.GetMinute();
+	v["Second"] = time.GetSecond();
 
-	wxJSONWriter w;
-	wxString out;
-	w.Write(v, out);
+        Json::FastWriter w;
 
-	SendPluginMessage(wxString(_T("GRIB_TIMELINE_RECORD_REQUEST")), out);
+	SendPluginMessage("GRIB_TIMELINE_RECORD_REQUEST", w.write(v));
 
 	Lock();
 	m_bNeedsGrib = false;
@@ -2349,6 +2347,7 @@ void otidalrouteUIDialog::Addpoint(TiXmlElement* Route, wxString ptlat, wxString
 
 bool otidalrouteUIDialog::GetGribSpdDir(wxDateTime dt, double lat, double lon, double &spd, double &dir)
 {	
+std::cout << "GetGribSpdDir at " << lat << " " << lon << std::endl;
 	wxDateTime dtime = dt;
 	
 	pPlugIn->m_grib_lat = lat;
@@ -2357,9 +2356,11 @@ bool otidalrouteUIDialog::GetGribSpdDir(wxDateTime dt, double lat, double lon, d
 	if (pPlugIn->m_bGribValid){
 		spd = pPlugIn->m_tr_spd;
 		dir = pPlugIn->m_tr_dir;
+std::cout << "GetGribSpdDir TRUE at " << lat << " " << lon << std::endl;
 		return true;
 	}
 	else {		
+std::cout << "GetGribSpdDir FALSE at " << lat << " " << lon << std::endl;
 		return false;
 	}
 

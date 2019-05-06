@@ -53,8 +53,7 @@
 #include "wx/window.h"
 #include <wx/colordlg.h>
 #include <wx/event.h>
-#include "wx/jsonreader.h"
-#include "wx/jsonwriter.h"
+#include "json/json.h"
 #include "tinyxml.h"
 #include <wx/scrolwin.h>
 #include <wx/datetime.h>
